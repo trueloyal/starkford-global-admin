@@ -139,6 +139,45 @@ select.f-inp { cursor: pointer; }
 .inst-stat { text-align: center; background: var(--bg); border-radius: 7px; padding: 8px; }
 .inst-stat-val { font-size: 15px; font-weight: 800; }
 .inst-stat-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-top: 2px; }
+.inst-foot { padding: 10px 18px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.wh-ok { font-size: 11px; font-weight: 700; color: #16a34a; }
+.wh-no { font-size: 11px; font-weight: 700; color: #dc2626; }
+.inst-last { font-size: 11px; color: var(--muted); margin-left: 8px; }
+/* Member drawer */
+.drawer-ov { position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 60; display: none; }
+.drawer-ov.open { display: block; }
+.mem-drawer { position: fixed; top: 0; right: -480px; width: 480px; height: 100vh; background: #fff; z-index: 70; display: flex; flex-direction: column; transition: right .25s ease; box-shadow: -4px 0 20px rgba(0,0,0,.14); overflow: hidden; }
+.mem-drawer.open { right: 0; }
+.drawer-head { display: flex; align-items: flex-start; justify-content: space-between; padding: 20px 22px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.drawer-name { font-size: 16px; font-weight: 800; }
+.drawer-email { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.drawer-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); padding: 0 4px; line-height: 1; }
+.drawer-tier-wrap { padding: 16px 22px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.drawer-tier-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.drawer-tier-name { font-weight: 800; font-size: 14px; }
+.drawer-tier-pts { font-size: 13px; color: var(--muted); }
+.tier-bar-wrap { background: var(--bg); border-radius: 20px; height: 8px; overflow: hidden; }
+.tier-bar-fill { height: 100%; border-radius: 20px; transition: width .4s; }
+.tier-bar-next { font-size: 11px; color: var(--muted); margin-top: 6px; }
+.drawer-scroll { flex: 1; overflow-y: auto; }
+.drawer-section { padding: 14px 22px 8px; }
+.drawer-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+.dr-tx-row { display: flex; align-items: center; gap: 8px; padding: 9px 0; border-bottom: 1px solid #f0f2f7; }
+.dr-tx-row:last-child { border-bottom: none; }
+.drawer-actions { padding: 16px 22px; border-top: 1px solid var(--border); display: flex; gap: 10px; flex-shrink: 0; }
+/* Coupon statuses */
+.cpn-status-active  { background: rgba(34,197,94,.12); color: #16a34a; display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700; }
+.cpn-status-used    { background: rgba(99,102,241,.12); color: #4338ca; display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700; }
+.cpn-status-expired { background: rgba(148,163,184,.15); color: #64748b; display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700; }
+.cpn-status-paused  { background: rgba(245,158,11,.12); color: #b45309; display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700; }
+/* Bulk / return */
+.bulk-ok  { color: #16a34a; font-weight: 700; font-size: 12px; }
+.bulk-err { color: #dc2626; font-weight: 700; font-size: 12px; }
+.bdg-return { background: rgba(245,158,11,.12); color: #b45309; }
+.modal-lg { width: 560px; }
+textarea.f-inp { resize: vertical; font-family: inherit; }
+/* Compare */
+.cmp-selectors { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -152,11 +191,13 @@ select.f-inp { cursor: pointer; }
   <div class="s-section">
     <div class="s-label">Analytics</div>
     <div class="nav active" onclick="go('global',this)"><span class="ni">◈</span> Global Overview</div>
+    <div class="nav" onclick="go('compare',this)"><span class="ni">⇌</span> Compare Markets</div>
   </div>
   <div class="s-section">
     <div class="s-label">Operations</div>
     <div class="nav" onclick="go('members',this)"><span class="ni">👥</span> Members</div>
     <div class="nav" onclick="go('transactions',this)"><span class="ni">⇅</span> Transactions</div>
+    <div class="nav" onclick="go('coupons',this)"><span class="ni">🏷</span> Coupons</div>
     <div class="nav" onclick="go('events',this)"><span class="ni">⚡</span> Webhook Events</div>
   </div>
   <div class="s-section">
@@ -270,7 +311,11 @@ select.f-inp { cursor: pointer; }
             <span class="p-title">Members</span>
             <span class="mem-count" id="mem-count"></span>
           </div>
-          <span class="p-action" onclick="openModal('adjust')">+ Adjust Points</span>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn-refresh" onclick="openModal('bulk')">Bulk Adjust</button>
+            <button class="btn-refresh" onclick="openModal('merge')">Merge Accounts</button>
+            <span class="p-action" onclick="openModal('adjust')">+ Adjust Points</span>
+          </div>
         </div>
         <div class="search"><span style="color:var(--muted)">⌕</span><input id="mem-search" placeholder="Search by name or email…" oninput="filterMem(this.value)"></div>
         <table>
@@ -285,7 +330,7 @@ select.f-inp { cursor: pointer; }
       <div class="panel">
         <div class="p-head"><span class="p-title">Transaction Log</span><span class="p-action">Export CSV →</span></div>
         <table>
-          <thead><tr><th>Date</th><th>Member</th><th>Market</th><th>Type</th><th>Amount (Local)</th><th>USD Equiv.</th><th>Points</th></tr></thead>
+          <thead><tr><th>Date</th><th>Member</th><th>Market</th><th>Type</th><th>Amount (Local)</th><th>USD Equiv.</th><th>Points</th><th></th></tr></thead>
           <tbody id="tx-tbl"></tbody>
         </table>
       </div>
@@ -304,6 +349,61 @@ select.f-inp { cursor: pointer; }
         </div>
         <div class="ev-filters" id="ev-filters"></div>
         <div id="ev-full"></div>
+      </div>
+    </div>
+
+    <!-- COUPONS -->
+    <div id="view-coupons" class="view">
+      <div class="panel">
+        <div class="p-head">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="p-title">Coupons</span>
+            <span class="mem-count" id="cpn-count"></span>
+          </div>
+        </div>
+        <div class="ev-filters" id="cpn-filters"></div>
+        <table>
+          <thead><tr><th>Code</th><th>Member</th><th>Type</th><th>Status</th><th>Issued</th><th>Expires</th><th></th></tr></thead>
+          <tbody id="cpn-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- COMPARE -->
+    <div id="view-compare" class="view">
+      <div class="panel">
+        <div class="p-head"><span class="p-title">Market Comparison</span></div>
+        <div class="cmp-selectors">
+          <div>
+            <label class="f-lbl">Market A</label>
+            <select class="f-inp" id="cmp-a" onchange="renderCompare()">
+              <option value="sv-us">Stylevana US — USD</option><option value="sv-uk">Stylevana UK — GBP</option>
+              <option value="sv-eu">Stylevana EU — EUR</option><option value="sv-ca">Stylevana CA — CAD</option>
+              <option value="sv-au">Stylevana AU — AUD</option><option value="sv-hk">Stylevana HK — HKD</option>
+              <option value="sv-nz">Stylevana NZ — NZD</option><option value="sv-my">Stylevana MY — MYR</option>
+              <option value="sv-ae">Stylevana AE — AED</option><option value="sv-mx">Stylevana MX — MXN</option>
+              <option value="sv-pl">Stylevana PL — PLN</option><option value="tsv-us">Beauty Amora US — USD</option>
+              <option value="tsv-uk">Beauty Amora UK — GBP</option><option value="tsv-eu">Beauty Amora EU — EUR</option>
+              <option value="tsv-hk">Beauty Amora HK — HKD</option><option value="tsv-my">Beauty Amora MY — MYR</option>
+              <option value="tsv-au">Beauty Amora AU — AUD</option>
+            </select>
+          </div>
+          <div>
+            <label class="f-lbl">Market B</label>
+            <select class="f-inp" id="cmp-b" onchange="renderCompare()">
+              <option value="sv-us">Stylevana US — USD</option><option value="sv-uk" selected>Stylevana UK — GBP</option>
+              <option value="sv-eu">Stylevana EU — EUR</option><option value="sv-ca">Stylevana CA — CAD</option>
+              <option value="sv-au">Stylevana AU — AUD</option><option value="sv-hk">Stylevana HK — HKD</option>
+              <option value="sv-nz">Stylevana NZ — NZD</option><option value="sv-my">Stylevana MY — MYR</option>
+              <option value="sv-ae">Stylevana AE — AED</option><option value="sv-mx">Stylevana MX — MXN</option>
+              <option value="sv-pl">Stylevana PL — PLN</option><option value="tsv-us">Beauty Amora US — USD</option>
+              <option value="tsv-uk">Beauty Amora UK — GBP</option><option value="tsv-eu">Beauty Amora EU — EUR</option>
+              <option value="tsv-hk">Beauty Amora HK — HKD</option><option value="tsv-my">Beauty Amora MY — MYR</option>
+              <option value="tsv-au">Beauty Amora AU — AUD</option>
+            </select>
+          </div>
+        </div>
+        <div id="cmp-result" style="padding:20px"></div>
       </div>
     </div>
 
@@ -355,6 +455,41 @@ select.f-inp { cursor: pointer; }
   </div>
 </div>
 
+<!-- MEMBER DRAWER -->
+<div class="drawer-ov" id="drawer-ov" onclick="closeDrawer()"></div>
+<div class="mem-drawer" id="mem-drawer">
+  <div class="drawer-head">
+    <div>
+      <div class="drawer-name" id="dr-name"></div>
+      <div class="drawer-email" id="dr-email"></div>
+      <div style="margin-top:6px" id="dr-mkt-wrap"></div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">×</button>
+  </div>
+  <div class="drawer-tier-wrap">
+    <div class="drawer-tier-row">
+      <span class="drawer-tier-name" id="dr-tier"></span>
+      <span class="drawer-tier-pts" id="dr-pts"></span>
+    </div>
+    <div class="tier-bar-wrap"><div class="tier-bar-fill" id="dr-tier-bar"></div></div>
+    <div class="tier-bar-next" id="dr-tier-next"></div>
+  </div>
+  <div class="drawer-scroll">
+    <div class="drawer-section">
+      <div class="drawer-section-title">Recent Transactions</div>
+      <div id="dr-txs"></div>
+    </div>
+    <div class="drawer-section">
+      <div class="drawer-section-title">Member Attributes</div>
+      <div id="dr-attrs"></div>
+    </div>
+  </div>
+  <div class="drawer-actions">
+    <button class="btn btn-prim" id="dr-adj-btn">Adjust Points</button>
+    <button class="btn btn-sec" id="dr-merge-btn">Merge Account</button>
+  </div>
+</div>
+
 <!-- MODAL: Point Adjustment -->
 <div class="modal-ov" id="modal-adjust" onclick="bgClose(event,'adjust')">
   <div class="modal">
@@ -402,6 +537,77 @@ select.f-inp { cursor: pointer; }
     <div class="f-grp"><label class="f-lbl">Data Type</label><select class="f-inp"><option>String</option><option>Number</option><option>List</option><option>Date</option></select></div>
     <div class="f-grp"><label class="f-lbl">Description</label><input class="f-inp" placeholder="Optional"></div>
     <div class="modal-act"><button class="btn btn-sec" onclick="closeModal('attr')">Cancel</button><button class="btn btn-prim">Create Attribute</button></div>
+  </div>
+</div>
+
+<!-- MODAL: Return Processing -->
+<div class="modal-ov" id="modal-return" onclick="bgClose(event,'return')">
+  <div class="modal">
+    <div id="ret-form">
+      <div class="modal-title">Process Return</div>
+      <div class="modal-sub">Reverses points awarded for a purchase transaction.</div>
+      <div id="ret-info" style="background:var(--bg);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;line-height:1.6"></div>
+      <div class="f-grp"><label class="f-lbl">Reason</label><input class="f-inp" id="ret-reason" placeholder="e.g. Customer return, defective item"></div>
+      <div class="modal-act"><button class="btn btn-sec" onclick="closeModal('return')">Cancel</button><button class="btn btn-prim" onclick="confirmReturn()">Confirm Return</button></div>
+    </div>
+    <div id="ret-success" style="display:none">
+      <div class="success-box">
+        <div class="success-icon">↩</div>
+        <div class="success-title">Return Processed</div>
+        <div class="success-sub" id="ret-success-sub"></div>
+      </div>
+      <div class="modal-act"><button class="btn btn-prim" onclick="resetReturn()">Done</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Merge Accounts -->
+<div class="modal-ov" id="modal-merge" onclick="bgClose(event,'merge')">
+  <div class="modal">
+    <div id="merge-form">
+      <div class="modal-title">Merge Accounts</div>
+      <div class="modal-sub">Transfers points from a secondary account into a primary. The secondary account is removed.</div>
+      <div class="f-grp"><label class="f-lbl">Primary — Keep</label><input class="f-inp" id="merge-primary" placeholder="primary@email.com"></div>
+      <div class="f-grp"><label class="f-lbl">Secondary — Remove</label><input class="f-inp" id="merge-secondary" placeholder="secondary@email.com"></div>
+      <div id="merge-error" style="color:#dc2626;font-size:12px;margin-bottom:10px;display:none"></div>
+      <div class="modal-act"><button class="btn btn-sec" onclick="closeModal('merge')">Cancel</button><button class="btn btn-prim" onclick="confirmMerge()">Merge Accounts</button></div>
+    </div>
+    <div id="merge-success" style="display:none">
+      <div class="success-box">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Accounts Merged</div>
+        <div class="success-sub" id="merge-success-sub"></div>
+      </div>
+      <div class="modal-act"><button class="btn btn-prim" onclick="resetMerge()">Done</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Bulk Point Adjustment -->
+<div class="modal-ov" id="modal-bulk" onclick="bgClose(event,'bulk')">
+  <div class="modal modal-lg">
+    <div id="bulk-form">
+      <div class="modal-title">Bulk Point Adjustment</div>
+      <div class="modal-sub">Adjust points for multiple members at once. One email per line.</div>
+      <div class="f-grp"><label class="f-lbl">Member Emails</label><textarea class="f-inp" id="bulk-emails" rows="6" placeholder="emily.j@email.com&#10;m.chen@email.com&#10;ashley.w@email.com"></textarea></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div class="f-grp"><label class="f-lbl">Market</label>
+          <select class="f-inp" id="bulk-mkt">
+            <option value="sv-us">SV US</option><option value="sv-uk">SV UK</option><option value="sv-eu">SV EU</option>
+            <option value="sv-ca">SV CA</option><option value="sv-au">SV AU</option><option value="sv-hk">SV HK</option>
+            <option value="sv-nz">SV NZ</option><option value="sv-my">SV MY</option><option value="sv-ae">SV AE</option>
+            <option value="sv-mx">SV MX</option><option value="sv-pl">SV PL</option>
+            <option value="tsv-us">BA US</option><option value="tsv-uk">BA UK</option><option value="tsv-eu">BA EU</option>
+            <option value="tsv-hk">BA HK</option><option value="tsv-my">BA MY</option><option value="tsv-au">BA AU</option>
+          </select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Operation</label><select class="f-inp" id="bulk-op"><option value="award">Award</option><option value="deduct">Deduct</option></select></div>
+        <div class="f-grp"><label class="f-lbl">Points</label><input class="f-inp" id="bulk-pts" type="number" min="1" placeholder="100"></div>
+      </div>
+      <div class="f-grp"><label class="f-lbl">Reason</label><input class="f-inp" id="bulk-reason" placeholder="Campaign reward"></div>
+      <div class="modal-act"><button class="btn btn-sec" onclick="closeModal('bulk')">Cancel</button><button class="btn btn-prim" onclick="confirmBulk()">Run Batch</button></div>
+    </div>
+    <div id="bulk-result" style="display:none"></div>
   </div>
 </div>
 
@@ -587,6 +793,35 @@ const EV_CATS = {
   'ORDER_CREATED':'Orders','ORDER_UPDATED':'Orders','ORDER_CANCELLED':'Orders','RETURN_PROCESSED':'Orders',
 };
 
+const COUPONS = [
+  {id:'CPV-001',mem:'Emily Johnson',   e:'emily.j@email.com',    mk:'sv-us',  code:'BDAY20-US-8821',     type:'Birthday 20% off',         status:'active',  issued:'Aug 18',expires:'Sep 17'},
+  {id:'CPV-002',mem:'Aiko Tanaka',     e:'aiko.t@email.com',     mk:'sv-hk',  code:'TIER-GOLD-HK4421',   type:'Tier Upgrade 10% off',     status:'active',  issued:'Aug 17',expires:'Sep 16'},
+  {id:'CPV-003',mem:'Min-Ji Park',     e:'minji.p@email.com',    mk:'sv-hk',  code:'REF-HK-2291',        type:'Referral HK$50 off',       status:'used',    issued:'Aug 10',expires:'Sep 9'},
+  {id:'CPV-004',mem:'Charlotte Hughes',e:'c.hughes@email.com',   mk:'sv-uk',  code:'ANNIV-UK-0021',      type:'Anniversary 15% off',      status:'active',  issued:'Aug 19',expires:'Sep 18'},
+  {id:'CPV-005',mem:'Olivia Martin',   e:'olivia.m@email.com',   mk:'sv-ca',  code:'RDMV-CA-5012',       type:'Redemption CA$10 off',     status:'used',    issued:'Aug 14',expires:'Sep 13'},
+  {id:'CPV-006',mem:'Lars Eriksson',   e:'lars.e@email.com',     mk:'sv-eu',  code:'WBACK-EU-7731',      type:'Win-back 20% off',         status:'paused',  issued:'Aug 12',expires:'Sep 11'},
+  {id:'CPV-007',mem:'Ethan Walker',    e:'ethan.w@email.com',    mk:'sv-nz',  code:'NZ-2840',            type:'Tier reward NZ$5 off',     status:'expired', issued:'Jul 20',expires:'Aug 19'},
+  {id:'CPV-008',mem:'Madison Lee',     e:'madison.l@email.com',  mk:'tsv-us', code:'BDAY20-US-3942',     type:'Birthday 20% off',         status:'active',  issued:'Aug 20',expires:'Sep 19'},
+  {id:'CPV-009',mem:'Hafiz Ismail',    e:'hafiz.i@email.com',    mk:'tsv-my', code:'TIER-GOLD-MY8821',   type:'Tier Upgrade RM20 off',    status:'active',  issued:'Aug 19',expires:'Sep 18'},
+  {id:'CPV-010',mem:'Sophie Müller',   e:'s.muller@email.com',   mk:'sv-eu',  code:'RDMV-EU-2204',       type:'Redemption €5 off',   status:'used',    issued:'Aug 18',expires:'Sep 17'},
+  {id:'CPV-011',mem:'Jack Morrison',   e:'jack.m@email.com',     mk:'sv-au',  code:'WBACK-AU-1122',      type:'Win-back A$10 off',        status:'paused',  issued:'Aug 1', expires:'Aug 31'},
+  {id:'CPV-012',mem:'Charlotte Brown', e:'charlotte.b@email.com',mk:'tsv-au', code:'REF-AU-7790',        type:'Referral A$15 off',        status:'active',  issued:'Aug 18',expires:'Sep 17'},
+  {id:'CPV-013',mem:'Poppy Graham',    e:'poppy.g@email.com',    mk:'tsv-uk', code:'WBACK-UK-5521',      type:'Win-back 25% off',         status:'expired', issued:'Jul 1', expires:'Jul 31'},
+  {id:'CPV-014',mem:'Isabella Torres', e:'isabella.t@email.com', mk:'sv-mx',  code:'RDMV-MX-4001',       type:'Redemption MX$80 off',     status:'used',    issued:'Aug 17',expires:'Sep 16'},
+  {id:'CPV-015',mem:'Rin Yamamoto',    e:'rin.y@email.com',      mk:'tsv-hk', code:'TIER-PLAT-HK9901',   type:'Platinum Reward HK$100 off',status:'active', issued:'Aug 18',expires:'Sep 17'},
+];
+
+const INST_HEALTH = {
+  'a523097c3a':{lastActive:'2 min ago',  webhooks:true},
+  '3274dec4f9':{lastActive:'18 min ago', webhooks:true},
+  '3d1022227d':{lastActive:'14 min ago', webhooks:true},
+  '0e3bba8847':{lastActive:'1 hr ago',   webhooks:true},
+  '95fa76d2ac':{lastActive:'3 hr ago',   webhooks:false},
+  '81a768aeff':{lastActive:'7 hr ago',   webhooks:true},
+  'fc6ba7950a':{lastActive:'2 days ago', webhooks:false},
+  'c1b1eeeb66':{lastActive:'3 hr ago',   webhooks:true},
+};
+
 // ---- FX ----
 const FX_API_KEY = 'ddd0fb5e47e557c29224c88c';
 let fxRates = {}, fxFetched = false, fxLastUpdated = null;
@@ -675,6 +910,7 @@ function renderEvFull(filter) {
 function renderInstances() {
   document.getElementById('inst-grid').innerHTML = INSTANCES.map(inst => {
     const mc = instMemCount(inst.id), pt = instPtsTotal(inst.id);
+    const h = INST_HEALTH[inst.id] || {lastActive:'Unknown',webhooks:false};
     return `<div class="inst-card">
       <div class="inst-head">
         <div class="inst-name">${inst.name}</div>
@@ -693,6 +929,10 @@ function renderInstances() {
           <div class="inst-stat"><div class="inst-stat-val">${fmt(pt)}</div><div class="inst-stat-lbl">Pts Issued</div></div>
         </div>
       </div>
+      <div class="inst-foot">
+        <div><span class="${h.webhooks?'wh-ok':'wh-no'}">${h.webhooks?'● Webhooks on':'● Webhooks off'}</span><span class="inst-last">Last active: ${h.lastActive}</span></div>
+        <a class="lock-link" href="#">Open TL Admin →</a>
+      </div>
     </div>`;
   }).join('');
 }
@@ -702,12 +942,12 @@ function renderMems(mems) {
   document.getElementById('mem-count').textContent = `${mems.length} member${mems.length!==1?'s':''}`;
   document.getElementById('mem-tbl').innerHTML = mems.length
     ? mems.map(m=>`<tr>
-        <td><div style="font-weight:600">${m.n}</div><div style="font-size:12px;color:var(--muted)">${m.e}</div></td>
+        <td><div style="font-weight:600;cursor:pointer;color:var(--navy)" onclick="openDrawer('${m.e}','${m.m}')">${m.n}</div><div style="font-size:12px;color:var(--muted)">${m.e}</div></td>
         <td style="font-size:12px">${mktName(m.m)}</td>
         <td><span class="bdg bdg-tier">${m.tier}</span></td>
         <td style="font-weight:600">${m.pts.toLocaleString()} pts</td>
         <td style="font-size:12px;color:var(--muted)">${m.last}</td>
-        <td><button class="btn btn-ghost" onclick="prefillAdjust('${m.e}','${m.m}')">Adjust Points</button></td>
+        <td><button class="btn btn-ghost" onclick="prefillAdjust('${m.e}','${m.m}')">Adjust</button> <button class="btn btn-ghost" style="margin-left:4px" onclick="openDrawer('${m.e}','${m.m}')">View →</button></td>
       </tr>`).join('')
     : '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">No members found.</td></tr>';
 }
@@ -723,6 +963,11 @@ function applyMemFilters() {
 function renderTxs() {
   document.getElementById('tx-tbl').innerHTML = TXS.map(tx => {
     const usd = (tx.localAmt && fxFetched && fxRates[tx.c]) ? fmtUSD(tx.localAmt/fxRates[tx.c]) : '—';
+    const act = tx.t==='award'
+      ? (tx.returned
+          ? '<span class="bdg bdg-return" style="font-size:10px">RETURNED</span>'
+          : `<button class="btn btn-ghost" onclick="initReturn(${tx._id})">Return</button>`)
+      : '';
     return `<tr>
       <td style="font-size:12px;color:var(--muted)">${tx.d}</td>
       <td>${tx.m}</td>
@@ -731,6 +976,7 @@ function renderTxs() {
       <td>${tx.display}</td>
       <td style="color:var(--muted);font-size:12px">${usd}</td>
       <td style="font-weight:700;color:${tx.t==='award'?'#16a34a':tx.t==='deduct'?'#dc2626':'#4338ca'}">${tx.pts}</td>
+      <td>${act}</td>
     </tr>`;
   }).join('');
 }
@@ -752,7 +998,7 @@ function go(v, el) {
   document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));
   document.getElementById('view-'+v).classList.add('active');
   el.classList.add('active');
-  const titles = {global:'Global Overview',members:'Members',transactions:'Transaction Log',events:'Webhook Events',instances:'Instances',config:'Configuration'};
+  const titles = {global:'Global Overview',members:'Members',transactions:'Transaction Log',coupons:'Coupons',events:'Webhook Events',compare:'Market Comparison',instances:'Instances',config:'Configuration'};
   document.getElementById('tb-title').textContent = titles[v]||v;
 }
 
@@ -826,6 +1072,200 @@ function openModal(id) { document.getElementById('modal-'+id).classList.add('ope
 function closeModal(id) { document.getElementById('modal-'+id).classList.remove('open'); }
 function bgClose(e,id) { if(e.target===e.currentTarget) closeModal(id); }
 
+// ---- TX STABLE IDs ----
+TXS.forEach((tx,i)=>{ tx._id=i; });
+let _nextTxId = TXS.length;
+
+// ---- MEMBER DRAWER ----
+let _drEmail='', _drMkt='';
+function openDrawer(email, mkt) {
+  _drEmail=email; _drMkt=mkt;
+  const mem=MEMS.find(m=>m.e===email); if(!mem) return;
+  document.getElementById('dr-name').textContent=mem.n;
+  document.getElementById('dr-email').textContent=mem.e;
+  document.getElementById('dr-mkt-wrap').innerHTML=`<span class="bdg bdg-${MKTS.find(m=>m.id===mkt)?.b?.toLowerCase()||'sv'}" style="font-size:10px">${mktName(mkt)}</span>`;
+  document.getElementById('dr-tier').textContent=mem.tier;
+  document.getElementById('dr-pts').textContent=mem.pts.toLocaleString()+' pts';
+  const tp=tierProgress(mem.pts);
+  document.getElementById('dr-tier-bar').style.width=tp.pct+'%';
+  document.getElementById('dr-tier-bar').style.background=tp.color;
+  document.getElementById('dr-tier-next').textContent=tp.next;
+  const memTxs=TXS.filter(tx=>tx.m===mem.n).slice(0,5);
+  document.getElementById('dr-txs').innerHTML=memTxs.length
+    ?memTxs.map(tx=>`<div class="dr-tx-row"><span class="bdg bdg-${tx.t}" style="font-size:10px">${tx.t.toUpperCase()}</span><span style="flex:1;font-size:12px;color:var(--muted);margin-left:8px">${tx.d}</span><span style="font-weight:700;font-size:12px;color:${tx.t==='award'?'#16a34a':tx.t==='deduct'?'#dc2626':'#4338ca'}">${tx.pts}</span></div>`).join('')
+    :'<div style="font-size:12px;color:var(--muted);padding:8px 0">No transactions recorded.</div>';
+  const sampleAttrs=[['skin_type','Combination'],['preferred_brand','COSRX, Laneige'],['vip_segment','2']];
+  document.getElementById('dr-attrs').innerHTML=sampleAttrs.map(([k,v])=>`<div class="attr-row"><div><div class="attr-name">${k}</div><div class="attr-meta">String · Member</div></div><div style="font-size:13px;color:var(--muted)">${v}</div></div>`).join('');
+  document.getElementById('dr-adj-btn').onclick=()=>{ prefillAdjust(email,mkt); closeDrawer(); };
+  document.getElementById('dr-merge-btn').onclick=()=>{ prefillMerge(email); closeDrawer(); };
+  document.getElementById('drawer-ov').classList.add('open');
+  document.getElementById('mem-drawer').classList.add('open');
+}
+function closeDrawer() {
+  document.getElementById('drawer-ov').classList.remove('open');
+  document.getElementById('mem-drawer').classList.remove('open');
+}
+function tierProgress(pts) {
+  if(pts>=40000) return {pct:100,next:'Max tier reached — Platinum',color:'#f59e0b'};
+  if(pts>=15000) return {pct:(pts-15000)/25000*100,next:`${(40000-pts).toLocaleString()} pts to Platinum`,color:'#f59e0b'};
+  if(pts>=5000)  return {pct:(pts-5000)/10000*100, next:`${(15000-pts).toLocaleString()} pts to Gold`,color:'#6366f1'};
+  return {pct:pts/5000*100,next:`${(5000-pts).toLocaleString()} pts to Silver`,color:'#94a3b8'};
+}
+
+// ---- RETURN PROCESSING ----
+let _retTxId=null;
+function initReturn(txId) {
+  _retTxId=txId;
+  const tx=TXS.find(t=>t._id===txId); if(!tx) return;
+  const pts=parseInt(tx.pts.replace(/[^0-9]/g,''));
+  document.getElementById('ret-info').innerHTML=`<strong>${tx.m}</strong> · ${mktName(tx.mk)}<br><span style="color:var(--muted)">${tx.d} · ${tx.display}</span><br><span style="font-weight:700;color:#dc2626;margin-top:4px;display:inline-block">−${pts.toLocaleString()} pts will be reversed</span>`;
+  document.getElementById('ret-reason').value='';
+  document.getElementById('ret-form').style.display='block';
+  document.getElementById('ret-success').style.display='none';
+  openModal('return');
+}
+function confirmReturn() {
+  const tx=TXS.find(t=>t._id===_retTxId); if(!tx) return;
+  const reason=document.getElementById('ret-reason').value.trim()||'Customer return';
+  const pts=parseInt(tx.pts.replace(/[^0-9]/g,''));
+  const mem=MEMS.find(m=>m.n===tx.m);
+  if(mem){ mem.pts=Math.max(0,mem.pts-pts); mem.tier=tierFor(mem.pts); }
+  tx.returned=true;
+  EVS.unshift({type:'RETURN_PROCESSED',mem:tx.m,mk:tx.mk,d:`Return processed — ${tx.display}, ${pts.toLocaleString()} pts reversed. ${reason}`,t:'Just now',c:'#f97316'});
+  renderTxs(); applyMemFilters(); renderEvFeed(); renderEvFull(activeEvFilter);
+  document.getElementById('ret-form').style.display='none';
+  document.getElementById('ret-success').style.display='block';
+  document.getElementById('ret-success-sub').textContent=`${pts.toLocaleString()} pts reversed from ${tx.m} · ${reason}`;
+}
+function resetReturn() { closeModal('return'); }
+
+// ---- MERGE ACCOUNTS ----
+function prefillMerge(email) {
+  document.getElementById('merge-primary').value=email;
+  document.getElementById('merge-secondary').value='';
+  document.getElementById('merge-error').style.display='none';
+  document.getElementById('merge-form').style.display='block';
+  document.getElementById('merge-success').style.display='none';
+  openModal('merge');
+}
+function confirmMerge() {
+  const pEmail=document.getElementById('merge-primary').value.trim();
+  const sEmail=document.getElementById('merge-secondary').value.trim();
+  const errEl=document.getElementById('merge-error');
+  errEl.style.display='none';
+  if(!pEmail||!sEmail){errEl.textContent='Both emails are required.';errEl.style.display='block';return;}
+  if(pEmail===sEmail){errEl.textContent='Primary and secondary must be different.';errEl.style.display='block';return;}
+  const primary=MEMS.find(m=>m.e===pEmail);
+  const secondary=MEMS.find(m=>m.e===sEmail);
+  if(!primary){errEl.textContent='Primary member not found.';errEl.style.display='block';return;}
+  if(!secondary){errEl.textContent='Secondary member not found.';errEl.style.display='block';return;}
+  const transferred=secondary.pts;
+  primary.pts+=transferred; primary.tier=tierFor(primary.pts);
+  MEMS.splice(MEMS.indexOf(secondary),1);
+  EVS.unshift({type:'ACCOUNT_MERGE',mem:primary.n,mk:primary.m,d:`Account merge — ${secondary.n} (${sEmail}) merged into ${primary.n}, ${transferred.toLocaleString()} pts transferred`,t:'Just now',c:'#94a3b8'});
+  applyMemFilters(); renderEvFeed(); renderEvFull(activeEvFilter);
+  document.getElementById('merge-form').style.display='none';
+  document.getElementById('merge-success').style.display='block';
+  document.getElementById('merge-success-sub').textContent=`${secondary.n} merged into ${primary.n} — ${transferred.toLocaleString()} pts transferred`;
+}
+function resetMerge() { closeModal('merge'); }
+
+// ---- BULK ADJUSTMENT ----
+function confirmBulk() {
+  const emailsRaw=document.getElementById('bulk-emails').value.trim();
+  const mkt=document.getElementById('bulk-mkt').value;
+  const op=document.getElementById('bulk-op').value;
+  const pts=parseInt(document.getElementById('bulk-pts').value);
+  const reason=document.getElementById('bulk-reason').value.trim()||'Bulk adjustment';
+  if(!emailsRaw||!pts||pts<1) return;
+  const emails=emailsRaw.split('\n').map(e=>e.trim()).filter(e=>e);
+  const results=[];
+  const mk=MKTS.find(m=>m.id===mkt);
+  emails.forEach(email=>{
+    const mem=MEMS.find(m=>m.e===email);
+    if(!mem){results.push({email,status:'err',msg:'Not found'});return;}
+    mem.pts=op==='award'?mem.pts+pts:Math.max(0,mem.pts-pts);
+    mem.tier=tierFor(mem.pts); mem.last='Just now';
+    const newTx={d:'Just now',m:mem.n,mk:mkt,t:op==='award'?'award':'deduct',localAmt:null,c:mk?.c||'USD',display:'—',pts:(op==='award'?'+':'-')+pts.toLocaleString()+' pts',_id:_nextTxId++};
+    TXS.unshift(newTx);
+    EVS.unshift({type:op==='award'?'POINTS_EARNED':'POINTS_DEDUCTED',mem:mem.n,mk:mkt,d:`${pts.toLocaleString()} pts ${op==='award'?'awarded':'deducted'} — ${reason} (bulk)`,t:'Just now',c:op==='award'?'#22c55e':'#ef4444'});
+    results.push({email,status:'ok',msg:`${op==='award'?'+':'-'}${pts.toLocaleString()} pts`});
+  });
+  applyMemFilters(); renderTxs(); renderEvFeed(); renderEvFull(activeEvFilter);
+  const ok=results.filter(r=>r.status==='ok').length, err=results.filter(r=>r.status==='err').length;
+  document.getElementById('bulk-form').style.display='none';
+  document.getElementById('bulk-result').innerHTML=`
+    <div style="padding:20px 24px">
+      <div style="margin-bottom:14px"><span class="delta up">${ok} succeeded</span>${err?` <span class="delta dn" style="margin-left:6px">${err} failed</span>`:''}</div>
+      <table><thead><tr><th>Email</th><th>Result</th></tr></thead><tbody>
+        ${results.map(r=>`<tr><td style="font-size:12px;font-family:monospace">${r.email}</td><td><span class="${r.status==='ok'?'bulk-ok':'bulk-err'}">${r.msg}</span></td></tr>`).join('')}
+      </tbody></table>
+      <div class="modal-act"><button class="btn btn-prim" onclick="resetBulk()">Done</button></div>
+    </div>`;
+  document.getElementById('bulk-result').style.display='block';
+}
+function resetBulk() {
+  document.getElementById('bulk-form').style.display='block';
+  document.getElementById('bulk-result').style.display='none';
+  ['bulk-emails','bulk-pts','bulk-reason'].forEach(id=>document.getElementById(id).value='');
+  closeModal('bulk');
+}
+
+// ---- COUPONS ----
+let activeCpnFilter='All';
+function renderCpnFilters() {
+  document.getElementById('cpn-filters').innerHTML=['All','Active','Used','Paused','Expired'].map(s=>
+    `<div class="ev-filter${s===activeCpnFilter?' active':''}" onclick="setCpnFilter('${s}')">${s}</div>`
+  ).join('');
+}
+function setCpnFilter(s){ activeCpnFilter=s; renderCpnFilters(); renderCoupons(s); }
+function cpnAction(id,ns){ const c=COUPONS.find(x=>x.id===id); if(c){c.status=ns; renderCoupons(activeCpnFilter); renderCpnFilters();} }
+function renderCoupons(filter) {
+  const cpns=filter==='All'?COUPONS:COUPONS.filter(c=>c.status===filter.toLowerCase());
+  document.getElementById('cpn-count').textContent=`${cpns.length} coupon${cpns.length!==1?'s':''}`;
+  document.getElementById('cpn-tbl').innerHTML=cpns.length
+    ?cpns.map(c=>{
+        const acts=c.status==='active'
+          ?`<button class="btn btn-ghost" onclick="cpnAction('${c.id}','paused')">Pause</button> <button class="btn btn-ghost" style="color:#dc2626;border-color:rgba(239,68,68,.3);margin-left:4px" onclick="cpnAction('${c.id}','expired')">Expire</button>`
+          :c.status==='paused'
+          ?`<button class="btn btn-ghost" onclick="cpnAction('${c.id}','active')">Reactivate</button>`:'';
+        return `<tr>
+          <td><div style="font-weight:600;font-size:12px;font-family:monospace">${c.code}</div></td>
+          <td><div>${c.mem}</div><div style="font-size:11px;color:var(--muted)">${mktName(c.mk)}</div></td>
+          <td style="font-size:12px">${c.type}</td>
+          <td><span class="cpn-status-${c.status}">${c.status.charAt(0).toUpperCase()+c.status.slice(1)}</span></td>
+          <td style="font-size:12px;color:var(--muted)">${c.issued}</td>
+          <td style="font-size:12px;color:var(--muted)">${c.expires}</td>
+          <td>${acts}</td>
+        </tr>`;
+      }).join('')
+    :'<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:30px">No coupons in this filter.</td></tr>';
+}
+
+// ---- MARKET COMPARISON ----
+function renderCompare() {
+  const aId=document.getElementById('cmp-a').value, bId=document.getElementById('cmp-b').value;
+  const res=document.getElementById('cmp-result');
+  if(aId===bId){res.innerHTML='<div style="text-align:center;color:var(--muted);padding:30px;font-size:13px">Select two different markets to compare.</div>';return;}
+  const a=MKTS.find(m=>m.id===aId), b=MKTS.find(m=>m.id===bId);
+  const rows=[
+    {label:'Members',     va:a.mem,         vb:b.mem,         fmt:v=>v.toLocaleString(), num:true},
+    {label:'Points Issued',va:a.pts,         vb:b.pts,         fmt:v=>fmt(v),             num:true},
+    {label:'Redemptions', va:a.rdm,          vb:b.rdm,         fmt:v=>fmt(v),             num:true},
+    {label:'Earn Rate',   va:a.earn,         vb:b.earn,        fmt:v=>v,                  num:false},
+    {label:'TL Instance', va:a.inst,         vb:b.inst,        fmt:v=>`<span style="font-family:monospace;font-size:11px">${v}</span>`,num:false},
+    {label:'Est. GMV (USD)',va:marketGMV(a)||0,vb:marketGMV(b)||0,fmt:v=>fxFetched?fmtUSD(v):'—',num:true},
+  ];
+  res.innerHTML=`<table>
+    <thead><tr><th>Metric</th><th>${a.n} <span class="bdg bdg-cur" style="margin-left:4px">${a.c}</span></th><th>${b.n} <span class="bdg bdg-cur" style="margin-left:4px">${b.c}</span></th><th>Delta (A vs B)</th></tr></thead>
+    <tbody>${rows.map(r=>{
+      const delta=r.num&&r.vb?((r.va-r.vb)/r.vb*100).toFixed(1):null;
+      const dHtml=delta!==null?`<span class="delta ${parseFloat(delta)>=0?'up':'dn'}">${parseFloat(delta)>=0?'↑':'↓'} ${Math.abs(delta)}%</span>`:'—';
+      return `<tr><td style="font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px">${r.label}</td><td style="font-weight:700">${r.fmt(r.va)}</td><td style="font-weight:700">${r.fmt(r.vb)}</td><td>${dHtml}</td></tr>`;
+    }).join('')}</tbody>
+  </table>`;
+}
+
 // ---- INIT ----
 renderMktTbl(MKTS);
 renderEvFeed();
@@ -835,6 +1275,9 @@ renderInstances();
 renderMems(MEMS);
 renderTxs();
 renderCurTbl();
+renderCpnFilters();
+renderCoupons('All');
+renderCompare();
 fetchRates();
 </script>
 </body>
