@@ -14,8 +14,6 @@
   --sidebar: 220px;
 }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; font-size: 14px; }
-
-/* SIDEBAR */
 .sidebar { width: var(--sidebar); background: var(--navy); display: flex; flex-direction: column; flex-shrink: 0; }
 .s-logo { padding: 24px 20px 18px; border-bottom: 1px solid rgba(255,255,255,.08); }
 .logo-true  { display: block; font-size: 14px; font-weight: 900; color: #fff; letter-spacing: 3px; }
@@ -33,8 +31,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--pink); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--navy); flex-shrink: 0; }
 .u-name { font-size: 13px; font-weight: 600; color: #fff; }
 .u-role { font-size: 11px; color: rgba(255,255,255,.4); }
-
-/* MAIN */
 .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
 .topbar { background: #fff; border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
 .tb-title { font-size: 15px; font-weight: 700; flex: 1; }
@@ -42,12 +38,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .mkt-sel { appearance: none; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 30px 7px 12px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; outline: none; min-width: 210px; }
 .mkt-arr { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--muted); font-size: 10px; }
 .cur-badge { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--muted); }
-.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,.2); flex-shrink: 0; }
+.proto-bar { background: #fff8f0; border-bottom: 1px solid #ffe0b2; padding: 8px 24px; font-size: 12px; color: #92400e; flex-shrink: 0; line-height: 1.5; }
 .content { flex: 1; overflow-y: auto; padding: 24px; }
 .view { display: none; }
 .view.active { display: block; }
-
-/* KPI CARDS */
 .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 22px; }
 .kpi { background: #fff; border-radius: 10px; padding: 18px 20px; border: 1px solid var(--border); }
 .kpi.highlight { border-color: rgba(248,180,195,.5); background: linear-gradient(135deg, #fff 60%, rgba(248,180,195,.07)); }
@@ -60,33 +54,25 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .fx-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; background: rgba(34,197,94,.12); color: #16a34a; }
 .fx-tag.loading { background: rgba(245,158,11,.12); color: #b45309; }
 .fx-tag.error { background: rgba(239,68,68,.1); color: #dc2626; }
-
-/* PANELS */
 .panel { background: #fff; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
 .p-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border); }
 .p-title { font-size: 14px; font-weight: 700; }
 .p-action { font-size: 12px; color: var(--pink-d); cursor: pointer; font-weight: 600; }
 .two-col { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
-
-/* TABLES */
 table { width: 100%; border-collapse: collapse; }
 th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); padding: 10px 20px; text-align: left; border-bottom: 1px solid var(--border); background: #fafbfc; }
 td { padding: 12px 20px; border-bottom: 1px solid #f0f2f7; font-size: 13px; }
 tr:last-child td { border-bottom: none; }
 tr:hover td { background: #fafbfc; }
-
-/* BADGES */
 .bdg { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
-.bdg-cur  { background: rgba(248,180,195,.15); color: #c0446a; }
-.bdg-sv   { background: rgba(26,39,68,.1); color: var(--navy); }
-.bdg-tsv  { background: rgba(248,180,195,.2); color: #c0446a; }
-.bdg-tier { background: rgba(245,158,11,.12); color: #b45309; }
-.bdg-award  { background: rgba(34,197,94,.12); color: #16a34a; }
-.bdg-deduct { background: rgba(239,68,68,.1); color: #dc2626; }
-.bdg-redeem { background: rgba(99,102,241,.12); color: #4338ca; }
-.bdg-live { background: rgba(34,197,94,.12); color: #16a34a; font-size: 10px; }
-
-/* EVENTS FEED */
+.bdg-cur     { background: rgba(248,180,195,.15); color: #c0446a; }
+.bdg-sv      { background: rgba(26,39,68,.1); color: var(--navy); }
+.bdg-tsv     { background: rgba(248,180,195,.2); color: #c0446a; }
+.bdg-tier    { background: rgba(245,158,11,.12); color: #b45309; }
+.bdg-award   { background: rgba(34,197,94,.12); color: #16a34a; }
+.bdg-deduct  { background: rgba(239,68,68,.1); color: #dc2626; }
+.bdg-redeem  { background: rgba(99,102,241,.12); color: #4338ca; }
+.bdg-staging { background: rgba(14,165,233,.12); color: #0369a1; }
 .ev { display: flex; align-items: flex-start; gap: 13px; padding: 13px 20px; border-bottom: 1px solid #f0f2f7; }
 .ev:last-child { border-bottom: none; }
 .ev-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
@@ -94,20 +80,20 @@ tr:hover td { background: #fafbfc; }
 .ev-type { font-size: 12px; font-weight: 700; }
 .ev-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
 .ev-time { font-size: 11px; color: var(--muted); flex-shrink: 0; }
-
-/* SEARCH */
+.ev-filters { display: flex; gap: 8px; padding: 12px 20px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.ev-filter { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--muted); transition: all .15s; }
+.ev-filter.active { background: var(--navy); color: #fff; border-color: var(--navy); }
 .search { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 14px 20px; }
 .search input { border: none; background: none; outline: none; font-size: 13px; color: var(--text); flex: 1; width: 100%; }
 .search input::placeholder { color: var(--muted); }
-
-/* CONFIG */
+.mem-count { font-size: 12px; color: var(--muted); padding: 4px 10px; background: var(--bg); border-radius: 20px; font-weight: 600; }
 .cfg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .cfg-sec { background: #fff; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
 .cfg-head { display: flex; align-items: center; justify-content: space-between; padding: 13px 18px; border-bottom: 1px solid var(--border); }
 .cfg-title { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
 .api-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 20px; }
-.api-ok { background: rgba(34,197,94,.12); color: #16a34a; }
-.api-no { background: rgba(239,68,68,.1); color: #dc2626; }
+.api-ok    { background: rgba(34,197,94,.12); color: #16a34a; }
+.api-no    { background: rgba(239,68,68,.1); color: #dc2626; }
 .api-layer { background: rgba(14,165,233,.12); color: #0369a1; }
 .lock-box { padding: 20px; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .lock-icon { font-size: 22px; display: block; margin-bottom: 8px; }
@@ -117,17 +103,13 @@ tr:hover td { background: #fafbfc; }
 .attr-name { font-size: 13px; font-weight: 600; }
 .attr-meta { font-size: 11px; color: var(--muted); }
 .fx-updated { font-size: 11px; color: var(--muted); }
-
-/* BTNS */
 .btn { padding: 7px 14px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; transition: all .15s; }
 .btn-prim { background: var(--navy); color: #fff; }
 .btn-prim:hover { background: var(--navy-l); }
 .btn-sec { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-.btn-ghost { background: none; color: var(--pink-d); border: 1px solid rgba(248,180,195,.4); padding: 4px 10px; font-size: 11px; }
+.btn-ghost { background: none; color: var(--pink-d); border: 1px solid rgba(248,180,195,.4); padding: 4px 10px; font-size: 11px; border-radius: 6px; cursor: pointer; font-weight: 700; }
 .btn-refresh { background: none; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; font-size: 11px; border-radius: 6px; cursor: pointer; font-weight: 600; }
 .btn-refresh:hover { color: var(--text); border-color: var(--muted); }
-
-/* MODAL */
 .modal-ov { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 100; }
 .modal-ov.open { display: flex; }
 .modal { background: #fff; border-radius: 12px; width: 420px; padding: 24px; }
@@ -140,14 +122,23 @@ tr:hover td { background: #fafbfc; }
 select.f-inp { cursor: pointer; }
 .modal-act { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
 .notice { font-size: 12px; color: var(--muted); margin-bottom: 20px; background: #fff8f0; border: 1px solid #ffe0b2; border-radius: 8px; padding: 10px 14px; }
-
-/* FX rate cell */
+.success-box { text-align: center; padding: 16px 0 20px; }
+.success-icon { font-size: 40px; margin-bottom: 10px; }
+.success-title { font-size: 16px; font-weight: 800; color: #16a34a; margin-bottom: 6px; }
+.success-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
 .rate-cell { display: flex; align-items: center; gap: 6px; }
 .rate-live { font-size: 10px; font-weight: 700; color: #16a34a; }
-.rate-stale { font-size: 10px; font-weight: 700; color: #b45309; }
-
-/* Prototype notice bar */
-.proto-bar { background: #fff8f0; border-bottom: 1px solid #ffe0b2; padding: 8px 24px; font-size: 12px; color: #92400e; flex-shrink: 0; line-height: 1.5; }
+.inst-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.inst-card { background: #fff; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
+.inst-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.inst-name { font-size: 14px; font-weight: 700; }
+.inst-body { padding: 14px 18px; }
+.inst-id { font-family: monospace; font-size: 11px; color: var(--muted); background: var(--bg); padding: 4px 8px; border-radius: 5px; display: inline-block; margin-bottom: 12px; }
+.inst-markets { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+.inst-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.inst-stat { text-align: center; background: var(--bg); border-radius: 7px; padding: 8px; }
+.inst-stat-val { font-size: 15px; font-weight: 800; }
+.inst-stat-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-top: 2px; }
 </style>
 </head>
 <body>
@@ -169,13 +160,17 @@ select.f-inp { cursor: pointer; }
     <div class="nav" onclick="go('events',this)"><span class="ni">⚡</span> Webhook Events</div>
   </div>
   <div class="s-section">
+    <div class="s-label">Infrastructure</div>
+    <div class="nav" onclick="go('instances',this)"><span class="ni">⬡</span> Instances</div>
+  </div>
+  <div class="s-section">
     <div class="s-label">Program</div>
     <div class="nav" onclick="go('config',this)"><span class="ni">⚙</span> Configuration</div>
   </div>
   <div class="s-spacer"></div>
   <div class="s-foot">
-    <div class="avatar">GH</div>
-    <div><div class="u-name">Gailan Hart</div><div class="u-role">Global Admin</div></div>
+    <div class="avatar">SX</div>
+    <div><div class="u-name">Starkford Admin</div><div class="u-role">Global Admin</div></div>
   </div>
 </aside>
 
@@ -214,7 +209,7 @@ select.f-inp { cursor: pointer; }
   </div>
 
   <div class="proto-bar">
-    <strong>Prototype — all figures are placeholder.</strong> Aggregate cross-instance stats (members, points, GMV) require a backend webhook listener and database. API-writable operations (member lookup, point adjustments, custom attributes) will connect to TrueLoyal staging once the backend proxy is in place. Currency conversion via ExchangeRate-API is live.
+    <strong>Prototype — all figures are placeholder.</strong> Aggregate cross-instance stats require a backend webhook listener and database. API-writable operations (member lookup, point adjustments, custom attributes) will connect to TrueLoyal staging once the backend proxy is in place. Currency conversion via ExchangeRate-API is live.
   </div>
 
   <div class="content">
@@ -245,7 +240,7 @@ select.f-inp { cursor: pointer; }
         <div class="kpi">
           <div class="kpi-lbl">Active Markets</div>
           <div class="kpi-val">17</div>
-          <div class="kpi-sub">9 TrueLoyal instances</div>
+          <div class="kpi-sub">8 TrueLoyal instances</div>
         </div>
       </div>
       <div class="two-col">
@@ -270,8 +265,14 @@ select.f-inp { cursor: pointer; }
     <!-- MEMBERS -->
     <div id="view-members" class="view">
       <div class="panel">
-        <div class="p-head"><span class="p-title">Members</span><span class="p-action" onclick="openModal('adjust')">+ Adjust Points</span></div>
-        <div class="search"><span style="color:var(--muted)">⌕</span><input placeholder="Search by name, email, or member ID…" oninput="filterMem(this.value)"></div>
+        <div class="p-head">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="p-title">Members</span>
+            <span class="mem-count" id="mem-count"></span>
+          </div>
+          <span class="p-action" onclick="openModal('adjust')">+ Adjust Points</span>
+        </div>
+        <div class="search"><span style="color:var(--muted)">⌕</span><input id="mem-search" placeholder="Search by name or email…" oninput="filterMem(this.value)"></div>
         <table>
           <thead><tr><th>Member</th><th>Market</th><th>Tier</th><th>Points</th><th>Last Activity</th><th></th></tr></thead>
           <tbody id="mem-tbl"></tbody>
@@ -295,17 +296,26 @@ select.f-inp { cursor: pointer; }
       <div class="panel">
         <div class="p-head">
           <span class="p-title">Webhook Event Log</span>
-          <div style="display:flex;gap:8px;align-items:center"><span style="font-size:11px;color:var(--muted)">Polled · requires webhook listener</span><span class="p-action">Configure Endpoints →</span></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:11px;color:var(--muted)">Polled · requires webhook listener</span>
+            <button class="btn-refresh" onclick="renderEvFull(activeEvFilter)">↻ Refresh</button>
+            <span class="p-action">Configure Endpoints →</span>
+          </div>
         </div>
+        <div class="ev-filters" id="ev-filters"></div>
         <div id="ev-full"></div>
       </div>
     </div>
 
+    <!-- INSTANCES -->
+    <div id="view-instances" class="view">
+      <div class="inst-grid" id="inst-grid"></div>
+    </div>
+
     <!-- CONFIGURATION -->
     <div id="view-config" class="view">
-      <div class="notice">Settings marked <strong style="color:#16a34a">API Writable</strong> are managed from this dashboard. Settings marked <strong style="color:#dc2626">TrueLoyal Admin Only</strong> require per-instance configuration in the TrueLoyal admin panel — no external write API exists for these.</div>
+      <div class="notice">Settings marked <strong style="color:#16a34a">API Writable</strong> are managed from this dashboard. Settings marked <strong style="color:#dc2626">TrueLoyal Admin Only</strong> require per-instance configuration in the TrueLoyal admin panel.</div>
       <div class="cfg-grid">
-
         <div class="cfg-sec">
           <div class="cfg-head">
             <div class="cfg-title">Custom Attributes <span class="api-tag api-ok">API Writable</span></div>
@@ -313,44 +323,32 @@ select.f-inp { cursor: pointer; }
           </div>
           <div class="attr-row"><div><div class="attr-name">skin_type</div><div class="attr-meta">String · Member</div></div><button class="btn btn-ghost">Edit</button></div>
           <div class="attr-row"><div><div class="attr-name">preferred_brand</div><div class="attr-meta">List · Member</div></div><button class="btn btn-ghost">Edit</button></div>
-          <div class="attr-row"><div><div class="attr-name">product_category</div><div class="attr-meta">String · Transaction</div></div><button class="btn btn-ghost">Edit</button></div>
           <div class="attr-row"><div><div class="attr-name">order_market</div><div class="attr-meta">String · Transaction</div></div><button class="btn btn-ghost">Edit</button></div>
+          <div class="attr-row"><div><div class="attr-name">product_category</div><div class="attr-meta">String · Transaction</div></div><button class="btn btn-ghost">Edit</button></div>
           <div class="attr-row"><div><div class="attr-name">vip_segment</div><div class="attr-meta">Number · Member</div></div><button class="btn btn-ghost">Edit</button></div>
         </div>
-
         <div class="cfg-sec">
           <div class="cfg-head"><div class="cfg-title">Tier Configuration <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
           <div class="lock-box"><span class="lock-icon">🔒</span>Tier names, point thresholds, and benefits are configured per-instance in the TrueLoyal admin panel. No external API write endpoint exists.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
         </div>
-
         <div class="cfg-sec">
           <div class="cfg-head"><div class="cfg-title">Earn Rules <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
-          <div class="lock-box"><span class="lock-icon">🔒</span>Point earn rates, multipliers, and SKU-level rules are configured per-instance in the TrueLoyal admin panel. The API exposes archive and reorder only.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
+          <div class="lock-box"><span class="lock-icon">🔒</span>Point earn rates, multipliers, and SKU-level rules are configured per-instance in the TrueLoyal admin panel.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
         </div>
-
         <div class="cfg-sec">
           <div class="cfg-head"><div class="cfg-title">Campaigns <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
-          <div class="lock-box"><span class="lock-icon">🔒</span>Campaign creation, scheduling, launch, and stop exist as internal service functions but are not exposed on the merchant REST API.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
+          <div class="lock-box"><span class="lock-icon">🔒</span>Campaign creation, scheduling, launch, and stop are not exposed on the merchant REST API.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
         </div>
-
         <div class="cfg-sec" style="grid-column:1/-1">
           <div class="cfg-head">
-            <div class="cfg-title">
-              Currency &amp; Market Config
-              <span class="api-tag api-layer">Dashboard Layer</span>
-              <span id="fx-status" class="fx-tag loading" style="margin-left:4px">⟳ Loading rates…</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:10px">
-              <span class="fx-updated" id="fx-updated"></span>
-              <button class="btn-refresh" onclick="fetchRates()">↻ Refresh Rates</button>
-            </div>
+            <div class="cfg-title">Currency &amp; Market Config <span class="api-tag api-layer">Dashboard Layer</span> <span id="fx-status" class="fx-tag loading" style="margin-left:4px">⟳ Loading…</span></div>
+            <div style="display:flex;align-items:center;gap:10px"><span class="fx-updated" id="fx-updated"></span><button class="btn-refresh" onclick="fetchRates()">↻ Refresh Rates</button></div>
           </div>
           <table>
             <thead><tr><th>Market</th><th>Currency</th><th>Earn Rate</th><th>Points → USD</th><th>Exchange Rate (per USD)</th><th>TL Instance</th></tr></thead>
             <tbody id="cur-tbl"></tbody>
           </table>
         </div>
-
       </div>
     </div>
 
@@ -360,18 +358,37 @@ select.f-inp { cursor: pointer; }
 <!-- MODAL: Point Adjustment -->
 <div class="modal-ov" id="modal-adjust" onclick="bgClose(event,'adjust')">
   <div class="modal">
-    <div class="modal-title">Adjust Points</div>
-    <div class="modal-sub">Award or deduct points for a member via TrueLoyal API.</div>
-    <div class="f-grp"><label class="f-lbl">Member Email</label><input class="f-inp" placeholder="member@email.com"></div>
-    <div class="f-grp"><label class="f-lbl">Market</label>
-      <select class="f-inp">
-        <option>Stylevana US — USD</option><option>Stylevana HK — HKD</option><option>Beauty Amora US — USD</option>
-      </select>
+    <div id="adj-form">
+      <div class="modal-title">Adjust Points</div>
+      <div class="modal-sub">Award or deduct points for a member via TrueLoyal API.</div>
+      <div class="f-grp"><label class="f-lbl">Member Email</label><input class="f-inp" id="adj-email" placeholder="member@email.com"></div>
+      <div class="f-grp"><label class="f-lbl">Market</label>
+        <select class="f-inp" id="adj-mkt">
+          <option value="sv-us">Stylevana US</option><option value="sv-uk">Stylevana UK</option>
+          <option value="sv-eu">Stylevana EU</option><option value="sv-ca">Stylevana CA</option>
+          <option value="sv-au">Stylevana AU</option><option value="sv-hk">Stylevana HK</option>
+          <option value="sv-nz">Stylevana NZ</option><option value="sv-my">Stylevana MY</option>
+          <option value="sv-ae">Stylevana AE</option><option value="sv-mx">Stylevana MX</option>
+          <option value="sv-pl">Stylevana PL</option>
+          <option value="tsv-us">Beauty Amora US</option><option value="tsv-uk">Beauty Amora UK</option>
+          <option value="tsv-eu">Beauty Amora EU</option><option value="tsv-hk">Beauty Amora HK</option>
+          <option value="tsv-my">Beauty Amora MY</option><option value="tsv-au">Beauty Amora AU</option>
+        </select>
+      </div>
+      <div class="f-grp"><label class="f-lbl">Operation</label><select class="f-inp" id="adj-op"><option value="award">Award Points</option><option value="deduct">Deduct Points</option></select></div>
+      <div class="f-grp"><label class="f-lbl">Points</label><input class="f-inp" id="adj-pts" type="number" min="1" placeholder="500"></div>
+      <div class="f-grp"><label class="f-lbl">Reason / Note</label><input class="f-inp" id="adj-reason" placeholder="Customer service adjustment"></div>
+      <div id="adj-error" style="color:#dc2626;font-size:12px;margin-bottom:10px;display:none"></div>
+      <div class="modal-act"><button class="btn btn-sec" onclick="closeModal('adjust')">Cancel</button><button class="btn btn-prim" onclick="confirmAdjust()">Confirm Adjustment</button></div>
     </div>
-    <div class="f-grp"><label class="f-lbl">Operation</label><select class="f-inp"><option>Award Points</option><option>Deduct Points</option></select></div>
-    <div class="f-grp"><label class="f-lbl">Points</label><input class="f-inp" type="number" placeholder="500"></div>
-    <div class="f-grp"><label class="f-lbl">Reason / Note</label><input class="f-inp" placeholder="Customer service adjustment"></div>
-    <div class="modal-act"><button class="btn btn-sec" onclick="closeModal('adjust')">Cancel</button><button class="btn btn-prim">Confirm Adjustment</button></div>
+    <div id="adj-success" style="display:none">
+      <div class="success-box">
+        <div class="success-icon">✓</div>
+        <div class="success-title" id="adj-success-title">Points Awarded</div>
+        <div class="success-sub" id="adj-success-sub"></div>
+      </div>
+      <div class="modal-act"><button class="btn btn-prim" onclick="resetAdjust()">Done</button></div>
+    </div>
   </div>
 </div>
 
@@ -389,171 +406,225 @@ select.f-inp { cursor: pointer; }
 </div>
 
 <script>
-// ---- MARKET DATA ----
-// earnPPU = points earned per 1 unit of local currency
-// e.g. HK$5 = 1pt → earnPPU = 0.2; €1 = 1.5pts → earnPPU = 1.5
 const MKTS = [
-  // inst = TrueLoyal partner_id (staging). API keys stored server-side only.
-  // Staging region assignment (testing phase — production IDs TBD):
-  //   a523097c3a (Stylevana Marketing) → USD group
-  //   3274dec4f9 (Staging US)          → HKD group
-  //   3d1022227d (Staging 3)           → EUR group
-  //   0e3bba8847 (Staging 4)           → GBP group
-  //   95fa76d2ac (Staging 5)           → AUD/NZD group
-  //   81a768aeff (Staging 6)           → MYR group
-  //   fc6ba7950a (Staging DEV)         → AED/MXN group
-  {id:'sv-us', n:'Stylevana US',    b:'SV',  c:'USD',sym:'$',   earnPPU:1,    earn:'$1 = 1 pt',       inst:'a523097c3a', mem:142850, pts:8420000,  rdm:1240000},
-  {id:'sv-uk', n:'Stylevana UK',    b:'SV',  c:'GBP',sym:'£',   earnPPU:1.27, earn:'£1 = 1.27 pts',   inst:'0e3bba8847', mem:38200,  pts:2140000,  rdm:380000},
-  {id:'sv-eu', n:'Stylevana EU',    b:'SV',  c:'EUR',sym:'€',   earnPPU:1.5,  earn:'€1 = 1.5 pts',    inst:'3d1022227d', mem:52100,  pts:3250000,  rdm:520000},
-  {id:'sv-ca', n:'Stylevana CA',    b:'SV',  c:'CAD',sym:'CA$', earnPPU:1,    earn:'CA$1 = 1 pt',     inst:'a523097c3a', mem:28400,  pts:1820000,  rdm:290000},
-  {id:'sv-au', n:'Stylevana AU',    b:'SV',  c:'AUD',sym:'A$',  earnPPU:1,    earn:'A$1 = 1 pt',      inst:'95fa76d2ac', mem:31500,  pts:2100000,  rdm:340000},
-  {id:'sv-hk', n:'Stylevana HK',    b:'SV',  c:'HKD',sym:'HK$', earnPPU:0.2,  earn:'HK$5 = 1 pt',    inst:'3274dec4f9', mem:89200,  pts:12800000, rdm:2400000},
-  {id:'sv-nz', n:'Stylevana NZ',    b:'SV',  c:'NZD',sym:'NZ$', earnPPU:1,    earn:'NZ$1 = 1 pt',    inst:'95fa76d2ac', mem:12800,  pts:840000,   rdm:124000},
-  {id:'sv-my', n:'Stylevana MY',    b:'SV',  c:'MYR',sym:'RM',  earnPPU:0.25, earn:'RM4 = 1 pt',     inst:'81a768aeff', mem:41200,  pts:5200000,  rdm:840000},
-  {id:'sv-ae', n:'Stylevana AE',    b:'SV',  c:'AED',sym:'AED', earnPPU:0.278,earn:'AED3.6 = 1 pt',  inst:'fc6ba7950a', mem:18900,  pts:2100000,  rdm:380000},
-  {id:'sv-mx', n:'Stylevana MX',    b:'SV',  c:'MXN',sym:'MX$', earnPPU:0.1,  earn:'MX$10 = 1 pt',   inst:'fc6ba7950a', mem:35600,  pts:4800000,  rdm:720000},
-  {id:'sv-pl', n:'Stylevana PL',    b:'SV',  c:'PLN',sym:'zł',  earnPPU:0.25, earn:'zł4 = 1 pt',     inst:'3d1022227d', mem:22400,  pts:2800000,  rdm:420000},
-  {id:'tsv-us',n:'Beauty Amora US', b:'TSV', c:'USD',sym:'$',   earnPPU:1,    earn:'$1 = 1 pt',       inst:'c1b1eeeb66', mem:48200,  pts:2840000,  rdm:420000},
-  {id:'tsv-uk',n:'Beauty Amora UK', b:'TSV', c:'GBP',sym:'£',   earnPPU:1.27, earn:'£1 = 1.27 pts',   inst:'c1b1eeeb66', mem:12400,  pts:820000,   rdm:124000},
-  {id:'tsv-eu',n:'Beauty Amora EU', b:'TSV', c:'EUR',sym:'€',   earnPPU:1.5,  earn:'€1 = 1.5 pts',    inst:'c1b1eeeb66', mem:18200,  pts:1240000,  rdm:196000},
-  {id:'tsv-hk',n:'Beauty Amora HK', b:'TSV', c:'HKD',sym:'HK$', earnPPU:0.2,  earn:'HK$5 = 1 pt',    inst:'c1b1eeeb66', mem:28400,  pts:4200000,  rdm:780000},
-  {id:'tsv-my',n:'Beauty Amora MY', b:'TSV', c:'MYR',sym:'RM',  earnPPU:0.25, earn:'RM4 = 1 pt',     inst:'c1b1eeeb66', mem:14800,  pts:1840000,  rdm:280000},
-  {id:'tsv-au',n:'Beauty Amora AU', b:'TSV', c:'AUD',sym:'A$',  earnPPU:1,    earn:'A$1 = 1 pt',     inst:'c1b1eeeb66', mem:9200,   pts:620000,   rdm:92000},
+  {id:'sv-us', n:'Stylevana US',    b:'SV',  c:'USD',sym:'$',   earnPPU:1,    earn:'$1 = 1 pt',      inst:'a523097c3a', mem:142850, pts:8420000,  rdm:1240000},
+  {id:'sv-uk', n:'Stylevana UK',    b:'SV',  c:'GBP',sym:'£',   earnPPU:1.27, earn:'£1 = 1.27 pts',  inst:'0e3bba8847', mem:38200,  pts:2140000,  rdm:380000},
+  {id:'sv-eu', n:'Stylevana EU',    b:'SV',  c:'EUR',sym:'€',   earnPPU:1.5,  earn:'€1 = 1.5 pts',   inst:'3d1022227d', mem:52100,  pts:3250000,  rdm:520000},
+  {id:'sv-ca', n:'Stylevana CA',    b:'SV',  c:'CAD',sym:'CA$', earnPPU:1,    earn:'CA$1 = 1 pt',    inst:'a523097c3a', mem:28400,  pts:1820000,  rdm:290000},
+  {id:'sv-au', n:'Stylevana AU',    b:'SV',  c:'AUD',sym:'A$',  earnPPU:1,    earn:'A$1 = 1 pt',     inst:'95fa76d2ac', mem:31500,  pts:2100000,  rdm:340000},
+  {id:'sv-hk', n:'Stylevana HK',    b:'SV',  c:'HKD',sym:'HK$', earnPPU:0.2,  earn:'HK$5 = 1 pt',   inst:'3274dec4f9', mem:89200,  pts:12800000, rdm:2400000},
+  {id:'sv-nz', n:'Stylevana NZ',    b:'SV',  c:'NZD',sym:'NZ$', earnPPU:1,    earn:'NZ$1 = 1 pt',   inst:'95fa76d2ac', mem:12800,  pts:840000,   rdm:124000},
+  {id:'sv-my', n:'Stylevana MY',    b:'SV',  c:'MYR',sym:'RM',  earnPPU:0.25, earn:'RM4 = 1 pt',    inst:'81a768aeff', mem:41200,  pts:5200000,  rdm:840000},
+  {id:'sv-ae', n:'Stylevana AE',    b:'SV',  c:'AED',sym:'AED', earnPPU:0.278,earn:'AED3.6 = 1 pt', inst:'fc6ba7950a', mem:18900,  pts:2100000,  rdm:380000},
+  {id:'sv-mx', n:'Stylevana MX',    b:'SV',  c:'MXN',sym:'MX$', earnPPU:0.1,  earn:'MX$10 = 1 pt',  inst:'fc6ba7950a', mem:35600,  pts:4800000,  rdm:720000},
+  {id:'sv-pl', n:'Stylevana PL',    b:'SV',  c:'PLN',sym:'zł',  earnPPU:0.25, earn:'zł4 = 1 pt',    inst:'3d1022227d', mem:22400,  pts:2800000,  rdm:420000},
+  {id:'tsv-us',n:'Beauty Amora US', b:'TSV', c:'USD',sym:'$',   earnPPU:1,    earn:'$1 = 1 pt',      inst:'c1b1eeeb66', mem:48200,  pts:2840000,  rdm:420000},
+  {id:'tsv-uk',n:'Beauty Amora UK', b:'TSV', c:'GBP',sym:'£',   earnPPU:1.27, earn:'£1 = 1.27 pts',  inst:'c1b1eeeb66', mem:12400,  pts:820000,   rdm:124000},
+  {id:'tsv-eu',n:'Beauty Amora EU', b:'TSV', c:'EUR',sym:'€',   earnPPU:1.5,  earn:'€1 = 1.5 pts',   inst:'c1b1eeeb66', mem:18200,  pts:1240000,  rdm:196000},
+  {id:'tsv-hk',n:'Beauty Amora HK', b:'TSV', c:'HKD',sym:'HK$', earnPPU:0.2,  earn:'HK$5 = 1 pt',   inst:'c1b1eeeb66', mem:28400,  pts:4200000,  rdm:780000},
+  {id:'tsv-my',n:'Beauty Amora MY', b:'TSV', c:'MYR',sym:'RM',  earnPPU:0.25, earn:'RM4 = 1 pt',    inst:'c1b1eeeb66', mem:14800,  pts:1840000,  rdm:280000},
+  {id:'tsv-au',n:'Beauty Amora AU', b:'TSV', c:'AUD',sym:'A$',  earnPPU:1,    earn:'A$1 = 1 pt',    inst:'c1b1eeeb66', mem:9200,   pts:620000,   rdm:92000},
+];
+
+const INSTANCES = [
+  {id:'a523097c3a', name:'Stylevana Marketing',  region:'USD',     markets:['sv-us','sv-ca','tsv-us']},
+  {id:'3274dec4f9', name:'Stylevana Staging US',  region:'HKD',     markets:['sv-hk','tsv-hk']},
+  {id:'3d1022227d', name:'Stylevana Staging 3',   region:'EUR',     markets:['sv-eu','sv-pl','tsv-eu']},
+  {id:'0e3bba8847', name:'Stylevana Staging 4',   region:'GBP',     markets:['sv-uk','tsv-uk']},
+  {id:'95fa76d2ac', name:'Stylevana Staging 5',   region:'AUD/NZD', markets:['sv-au','sv-nz','tsv-au']},
+  {id:'81a768aeff', name:'Stylevana Staging 6',   region:'MYR',     markets:['sv-my','tsv-my']},
+  {id:'fc6ba7950a', name:'Stylevana DEV',          region:'AED/MXN', markets:['sv-ae','sv-mx']},
+  {id:'c1b1eeeb66', name:'Beauty Amora Staging',   region:'All TSV', markets:['tsv-us','tsv-uk','tsv-eu','tsv-hk','tsv-my','tsv-au']},
 ];
 
 const MEMS = [
-  {n:'Aiko Tanaka',      e:'aiko.t@email.com',   m:'sv-hk',  tier:'Platinum',pts:48200,last:'2 min ago'},
-  {n:'Sophie Müller',    e:'s.muller@email.com', m:'sv-eu',  tier:'Gold',    pts:21400,last:'14 min ago'},
-  {n:'Priya Rajan',      e:'priya.r@email.com',  m:'sv-my',  tier:'Gold',    pts:18900,last:'1 hr ago'},
-  {n:'Emma Wilson',      e:'e.wilson@email.com', m:'sv-us',  tier:'Silver',  pts:9240, last:'2 hr ago'},
-  {n:'Rin Yamamoto',     e:'rin.y@email.com',    m:'tsv-hk', tier:'Platinum',pts:62800,last:'3 hr ago'},
-  {n:'Fatima Al Rashid', e:'f.alr@email.com',    m:'sv-ae',  tier:'Silver',  pts:7400, last:'5 hr ago'},
-  {n:'Lucia García',     e:'lucia.g@email.com',  m:'sv-mx',  tier:'Bronze',  pts:3200, last:'6 hr ago'},
-  {n:'Charlotte Dubois', e:'c.dubois@email.com', m:'sv-eu',  tier:'Gold',    pts:24800,last:'8 hr ago'},
-  {n:'Min-Ji Park',      e:'minji.p@email.com',  m:'sv-hk',  tier:'Platinum',pts:58100,last:'10 hr ago'},
-  {n:'Sarah Thompson',   e:'sarah.t@email.com',  m:'tsv-us', tier:'Silver',  pts:11200,last:'12 hr ago'},
+  {n:'Emily Johnson',      e:'emily.j@email.com',    m:'sv-us',  tier:'Platinum', pts:52400, last:'5 min ago'},
+  {n:'Michael Chen',       e:'m.chen@email.com',     m:'sv-us',  tier:'Gold',     pts:24800, last:'1 hr ago'},
+  {n:'Ashley Williams',    e:'ashley.w@email.com',   m:'sv-us',  tier:'Gold',     pts:18200, last:'2 hr ago'},
+  {n:'James Rodriguez',    e:'j.rod@email.com',      m:'sv-us',  tier:'Silver',   pts:9600,  last:'4 hr ago'},
+  {n:'Sarah Thompson',     e:'sarah.t@email.com',    m:'sv-us',  tier:'Silver',   pts:11200, last:'6 hr ago'},
+  {n:'David Kim',          e:'david.k@email.com',    m:'sv-us',  tier:'Bronze',   pts:2800,  last:'2 days ago'},
+  {n:'Charlotte Hughes',   e:'c.hughes@email.com',   m:'sv-uk',  tier:'Platinum', pts:48600, last:'18 min ago'},
+  {n:'Oliver Bennett',     e:'o.bennett@email.com',  m:'sv-uk',  tier:'Gold',     pts:22100, last:'3 hr ago'},
+  {n:'Amelia Clarke',      e:'a.clarke@email.com',   m:'sv-uk',  tier:'Silver',   pts:8400,  last:'1 day ago'},
+  {n:'Harry Walsh',        e:'h.walsh@email.com',    m:'sv-uk',  tier:'Bronze',   pts:3200,  last:'3 days ago'},
+  {n:'Sophie Müller',      e:'s.muller@email.com',   m:'sv-eu',  tier:'Gold',     pts:21400, last:'14 min ago'},
+  {n:'Lars Eriksson',      e:'lars.e@email.com',     m:'sv-eu',  tier:'Platinum', pts:41200, last:'2 hr ago'},
+  {n:'Charlotte Dubois',   e:'c.dubois@email.com',   m:'sv-eu',  tier:'Gold',     pts:24800, last:'8 hr ago'},
+  {n:'Elena Rossi',        e:'e.rossi@email.com',    m:'sv-eu',  tier:'Silver',   pts:12400, last:'5 hr ago'},
+  {n:'Anna Kowalski',      e:'anna.k@email.com',     m:'sv-eu',  tier:'Bronze',   pts:1800,  last:'1 day ago'},
+  {n:'Olivia Martin',      e:'olivia.m@email.com',   m:'sv-ca',  tier:'Gold',     pts:19600, last:'45 min ago'},
+  {n:'Liam Tremblay',      e:'liam.t@email.com',     m:'sv-ca',  tier:'Silver',   pts:7800,  last:'6 hr ago'},
+  {n:'Emma Bouchard',      e:'emma.b@email.com',     m:'sv-ca',  tier:'Bronze',   pts:2400,  last:'2 days ago'},
+  {n:'Chloe Anderson',     e:'chloe.a@email.com',    m:'sv-au',  tier:'Gold',     pts:17800, last:'1 hr ago'},
+  {n:'Jack Morrison',      e:'jack.m@email.com',     m:'sv-au',  tier:'Silver',   pts:6400,  last:'8 hr ago'},
+  {n:'Zoe Campbell',       e:'zoe.c@email.com',      m:'sv-au',  tier:'Bronze',   pts:1600,  last:'4 days ago'},
+  {n:'Aiko Tanaka',        e:'aiko.t@email.com',     m:'sv-hk',  tier:'Platinum', pts:48200, last:'2 min ago'},
+  {n:'Min-Ji Park',        e:'minji.p@email.com',    m:'sv-hk',  tier:'Platinum', pts:58100, last:'10 hr ago'},
+  {n:'Mei Lin',            e:'mei.lin@email.com',    m:'sv-hk',  tier:'Gold',     pts:28400, last:'3 hr ago'},
+  {n:'Kevin Ng',           e:'kevin.ng@email.com',   m:'sv-hk',  tier:'Gold',     pts:21600, last:'6 hr ago'},
+  {n:'Liu Wei',            e:'liu.w@email.com',      m:'sv-hk',  tier:'Silver',   pts:9800,  last:'1 hr ago'},
+  {n:'Yan Fong',           e:'yan.f@email.com',      m:'sv-hk',  tier:'Bronze',   pts:3400,  last:'2 days ago'},
+  {n:'Ruby Cooper',        e:'ruby.c@email.com',     m:'sv-nz',  tier:'Silver',   pts:8200,  last:'3 hr ago'},
+  {n:'Ethan Walker',       e:'ethan.w@email.com',    m:'sv-nz',  tier:'Bronze',   pts:2100,  last:'1 day ago'},
+  {n:'Priya Rajan',        e:'priya.r@email.com',    m:'sv-my',  tier:'Gold',     pts:18900, last:'1 hr ago'},
+  {n:'Ahmad Razali',       e:'ahmad.r@email.com',    m:'sv-my',  tier:'Gold',     pts:22400, last:'4 hr ago'},
+  {n:'Nurul Ain',          e:'nurul.a@email.com',    m:'sv-my',  tier:'Silver',   pts:7600,  last:'10 hr ago'},
+  {n:'Wei Ming',           e:'wei.m@email.com',      m:'sv-my',  tier:'Bronze',   pts:1900,  last:'3 days ago'},
+  {n:'Mohammed Al Zaabi',  e:'m.alz@email.com',      m:'sv-ae',  tier:'Gold',     pts:16800, last:'2 hr ago'},
+  {n:'Fatima Al Rashid',   e:'f.alr@email.com',      m:'sv-ae',  tier:'Silver',   pts:7400,  last:'5 hr ago'},
+  {n:'Layla Hassan',       e:'layla.h@email.com',    m:'sv-ae',  tier:'Bronze',   pts:3100,  last:'1 day ago'},
+  {n:'Isabella Torres',    e:'isabella.t@email.com', m:'sv-mx',  tier:'Gold',     pts:19200, last:'1 hr ago'},
+  {n:'Carlos Mendoza',     e:'carlos.m@email.com',   m:'sv-mx',  tier:'Silver',   pts:8800,  last:'3 hr ago'},
+  {n:'Lucia García',       e:'lucia.g@email.com',    m:'sv-mx',  tier:'Bronze',   pts:3200,  last:'6 hr ago'},
+  {n:'Piotr Wiśniewski',   e:'p.wis@email.com',      m:'sv-pl',  tier:'Gold',     pts:24400, last:'4 hr ago'},
+  {n:'Katarzyna Nowak',    e:'k.nowak@email.com',    m:'sv-pl',  tier:'Silver',   pts:9200,  last:'7 hr ago'},
+  {n:'Monika Kowalczyk',   e:'m.kow@email.com',      m:'sv-pl',  tier:'Bronze',   pts:2600,  last:'2 days ago'},
+  {n:'Madison Lee',        e:'madison.l@email.com',  m:'tsv-us', tier:'Platinum', pts:44200, last:'45 min ago'},
+  {n:'Tyler Brooks',       e:'tyler.b@email.com',    m:'tsv-us', tier:'Gold',     pts:26800, last:'2 hr ago'},
+  {n:'Jordan Casey',       e:'jordan.c@email.com',   m:'tsv-us', tier:'Silver',   pts:11400, last:'5 hr ago'},
+  {n:'Noah Davis',         e:'noah.d@email.com',     m:'tsv-us', tier:'Bronze',   pts:1400,  last:'5 days ago'},
+  {n:'Isla Robertson',     e:'isla.r@email.com',     m:'tsv-uk', tier:'Gold',     pts:23400, last:'3 hr ago'},
+  {n:'Finn Mackenzie',     e:'finn.m@email.com',     m:'tsv-uk', tier:'Silver',   pts:7200,  last:'1 day ago'},
+  {n:'Poppy Graham',       e:'poppy.g@email.com',    m:'tsv-uk', tier:'Bronze',   pts:2800,  last:'4 days ago'},
+  {n:'Emma Schmidt',       e:'emma.s@email.com',     m:'tsv-eu', tier:'Gold',     pts:20600, last:'5 hr ago'},
+  {n:'Lucas Petit',        e:'lucas.p@email.com',    m:'tsv-eu', tier:'Silver',   pts:8800,  last:'2 hr ago'},
+  {n:'Sofia Bianchi',      e:'sofia.b@email.com',    m:'tsv-eu', tier:'Bronze',   pts:3600,  last:'1 day ago'},
+  {n:'Rin Yamamoto',       e:'rin.y@email.com',      m:'tsv-hk', tier:'Platinum', pts:62800, last:'3 hr ago'},
+  {n:'Hana Kim',           e:'hana.k@email.com',     m:'tsv-hk', tier:'Gold',     pts:31200, last:'6 hr ago'},
+  {n:'Chen Jing',          e:'chen.j@email.com',     m:'tsv-hk', tier:'Silver',   pts:12400, last:'8 hr ago'},
+  {n:'Tommy Lam',          e:'tommy.l@email.com',    m:'tsv-hk', tier:'Bronze',   pts:4200,  last:'2 days ago'},
+  {n:'Hafiz Ismail',       e:'hafiz.i@email.com',    m:'tsv-my', tier:'Gold',     pts:18400, last:'7 hr ago'},
+  {n:'Siti Rahimah',       e:'siti.r@email.com',     m:'tsv-my', tier:'Silver',   pts:6800,  last:'4 hr ago'},
+  {n:'Aisyah Zainal',      e:'aisyah.z@email.com',   m:'tsv-my', tier:'Bronze',   pts:2200,  last:'3 days ago'},
+  {n:'Charlotte Brown',    e:'charlotte.b@email.com',m:'tsv-au', tier:'Silver',   pts:9400,  last:'6 hr ago'},
+  {n:'Lachlan Smith',      e:'lachlan.s@email.com',  m:'tsv-au', tier:'Bronze',   pts:1800,  last:'2 days ago'},
 ];
 
-// TXS include local amount and currency for USD conversion
 const TXS = [
-  {d:'Today 14:32',m:'Aiko Tanaka',      mk:'sv-hk', t:'award', localAmt:480,   c:'HKD',display:'HK$480',  pts:'+96 pts'},
-  {d:'Today 14:18',m:'Sophie Müller',    mk:'sv-eu', t:'redeem',localAmt:null,   c:'EUR',display:'—',       pts:'-500 pts'},
-  {d:'Today 13:55',m:'Priya Rajan',      mk:'sv-my', t:'award', localAmt:120,   c:'MYR',display:'RM120',   pts:'+30 pts'},
-  {d:'Today 13:41',m:'Rin Yamamoto',     mk:'tsv-hk',t:'award', localAmt:2400,  c:'HKD',display:'HK$2400', pts:'+480 pts'},
-  {d:'Today 13:20',m:'Emma Wilson',      mk:'sv-us', t:'deduct',localAmt:null,   c:'USD',display:'—',       pts:'-200 pts'},
-  {d:'Today 12:58',m:'Charlotte Dubois', mk:'sv-eu', t:'award', localAmt:96,    c:'EUR',display:'€96',     pts:'+144 pts'},
-  {d:'Today 12:44',m:'Lucia García',     mk:'sv-mx', t:'award', localAmt:340,   c:'MXN',display:'MX$340',  pts:'+34 pts'},
-  {d:'Today 12:21',m:'Fatima Al Rashid', mk:'sv-ae', t:'redeem',localAmt:null,   c:'AED',display:'—',       pts:'-750 pts'},
-  {d:'Today 11:48',m:'Min-Ji Park',      mk:'sv-hk', t:'award', localAmt:960,   c:'HKD',display:'HK$960',  pts:'+192 pts'},
-  {d:'Today 11:30',m:'Sarah Thompson',   mk:'tsv-us',t:'award', localAmt:84,    c:'USD',display:'$84',     pts:'+84 pts'},
+  {d:'Today 14:32',m:'Aiko Tanaka',       mk:'sv-hk',  t:'award',  localAmt:480,  c:'HKD',display:'HK$480',   pts:'+96 pts'},
+  {d:'Today 14:18',m:'Sophie Müller',     mk:'sv-eu',  t:'redeem', localAmt:null, c:'EUR',display:'—',         pts:'-500 pts'},
+  {d:'Today 13:55',m:'Priya Rajan',       mk:'sv-my',  t:'award',  localAmt:120,  c:'MYR',display:'RM120',    pts:'+30 pts'},
+  {d:'Today 13:41',m:'Rin Yamamoto',      mk:'tsv-hk', t:'award',  localAmt:2400, c:'HKD',display:'HK$2,400', pts:'+480 pts'},
+  {d:'Today 13:20',m:'Emily Johnson',     mk:'sv-us',  t:'award',  localAmt:148,  c:'USD',display:'$148',     pts:'+148 pts'},
+  {d:'Today 12:58',m:'Charlotte Dubois',  mk:'sv-eu',  t:'award',  localAmt:96,   c:'EUR',display:'€96',      pts:'+144 pts'},
+  {d:'Today 12:44',m:'Carlos Mendoza',    mk:'sv-mx',  t:'award',  localAmt:340,  c:'MXN',display:'MX$340',   pts:'+34 pts'},
+  {d:'Today 12:21',m:'Fatima Al Rashid',  mk:'sv-ae',  t:'redeem', localAmt:null, c:'AED',display:'—',         pts:'-750 pts'},
+  {d:'Today 11:48',m:'Min-Ji Park',       mk:'sv-hk',  t:'award',  localAmt:960,  c:'HKD',display:'HK$960',   pts:'+192 pts'},
+  {d:'Today 11:30',m:'Tyler Brooks',      mk:'tsv-us', t:'award',  localAmt:84,   c:'USD',display:'$84',      pts:'+84 pts'},
+  {d:'Today 10:55',m:'Charlotte Hughes',  mk:'sv-uk',  t:'award',  localAmt:72,   c:'GBP',display:'£72',      pts:'+91 pts'},
+  {d:'Today 10:22',m:'Olivia Martin',     mk:'sv-ca',  t:'redeem', localAmt:null, c:'CAD',display:'—',         pts:'-1,000 pts'},
+  {d:'Today 09:48',m:'Mei Lin',           mk:'sv-hk',  t:'award',  localAmt:1200, c:'HKD',display:'HK$1,200', pts:'+240 pts'},
+  {d:'Today 09:15',m:'Madison Lee',       mk:'tsv-us', t:'award',  localAmt:220,  c:'USD',display:'$220',     pts:'+220 pts'},
+  {d:'Today 08:44',m:'Lars Eriksson',     mk:'sv-eu',  t:'deduct', localAmt:null, c:'EUR',display:'—',         pts:'-300 pts'},
+  {d:'Yesterday',  m:'Ahmad Razali',      mk:'sv-my',  t:'award',  localAmt:480,  c:'MYR',display:'RM480',    pts:'+120 pts'},
+  {d:'Yesterday',  m:'Piotr Wiśniewski',  mk:'sv-pl',  t:'award',  localAmt:240,  c:'PLN',display:'zł240',    pts:'+60 pts'},
+  {d:'Yesterday',  m:'Isabella Torres',   mk:'sv-mx',  t:'redeem', localAmt:null, c:'MXN',display:'—',         pts:'-800 pts'},
+  {d:'Yesterday',  m:'Chloe Anderson',    mk:'sv-au',  t:'award',  localAmt:95,   c:'AUD',display:'A$95',     pts:'+95 pts'},
+  {d:'Yesterday',  m:'Hana Kim',          mk:'tsv-hk', t:'award',  localAmt:3200, c:'HKD',display:'HK$3,200', pts:'+640 pts'},
+  {d:'Yesterday',  m:'Mohammed Al Zaabi', mk:'sv-ae',  t:'award',  localAmt:280,  c:'AED',display:'AED280',   pts:'+78 pts'},
+  {d:'2 days ago', m:'Kevin Ng',          mk:'sv-hk',  t:'redeem', localAmt:null, c:'HKD',display:'—',         pts:'-2,000 pts'},
+  {d:'2 days ago', m:'Isla Robertson',    mk:'tsv-uk', t:'award',  localAmt:88,   c:'GBP',display:'£88',      pts:'+112 pts'},
+  {d:'2 days ago', m:'Hafiz Ismail',      mk:'tsv-my', t:'award',  localAmt:320,  c:'MYR',display:'RM320',    pts:'+80 pts'},
+  {d:'2 days ago', m:'Ruby Cooper',       mk:'sv-nz',  t:'award',  localAmt:120,  c:'NZD',display:'NZ$120',   pts:'+120 pts'},
+  {d:'3 days ago', m:'Liam Tremblay',     mk:'sv-ca',  t:'award',  localAmt:180,  c:'CAD',display:'CA$180',   pts:'+180 pts'},
+  {d:'3 days ago', m:'Sofia Bianchi',     mk:'tsv-eu', t:'award',  localAmt:64,   c:'EUR',display:'€64',      pts:'+96 pts'},
+  {d:'3 days ago', m:'Chen Jing',         mk:'tsv-hk', t:'redeem', localAmt:null, c:'HKD',display:'—',         pts:'-1,500 pts'},
+  {d:'3 days ago', m:'Oliver Bennett',    mk:'sv-uk',  t:'deduct', localAmt:null, c:'GBP',display:'—',         pts:'-500 pts'},
+  {d:'3 days ago', m:'Katarzyna Nowak',   mk:'sv-pl',  t:'award',  localAmt:360,  c:'PLN',display:'zł360',    pts:'+90 pts'},
 ];
 
 const EVS = [
-  {type:'POINTS_EARNED',    mem:'Aiko Tanaka',      mk:'sv-hk',  d:'96 points awarded — purchase HK$480',       t:'2m ago',  c:'#22c55e'},
-  {type:'POINTS_REDEEMED',  mem:'Sophie Müller',    mk:'sv-eu',  d:'500 points redeemed — reward coupon issued', t:'14m ago', c:'#818cf8'},
-  {type:'POINTS_EARNED',    mem:'Priya Rajan',      mk:'sv-my',  d:'30 points awarded — purchase RM120',        t:'22m ago', c:'#22c55e'},
-  {type:'TIER_UPGRADE',     mem:'Rin Yamamoto',     mk:'tsv-hk', d:'Upgraded Gold → Platinum (62,800 pts)',      t:'38m ago', c:'#f59e0b'},
-  {type:'POINTS_DEDUCTED',  mem:'Emma Wilson',      mk:'sv-us',  d:'200 points deducted — CS adjustment',        t:'57m ago', c:'#ef4444'},
-  {type:'MEMBER_ENROLLMENT',mem:'Liu Wei',           mk:'sv-hk',  d:'New member enrolled via web widget',         t:'1hr ago', c:'#0ea5e9'},
-  {type:'POINTS_EARNED',    mem:'Charlotte Dubois', mk:'sv-eu',  d:'144 points awarded — purchase €96',         t:'1hr ago', c:'#22c55e'},
-  {type:'REFERRAL_SUCCESS', mem:'Min-Ji Park',      mk:'sv-hk',  d:'Referral converted — 500 bonus pts awarded', t:'2hr ago', c:'#8b5cf6'},
-  {type:'POINTS_EXPIRED',   mem:'142 members',       mk:'sv-us',  d:'Annual reset — points expired in batch',      t:'3hr ago', c:'#94a3b8'},
-  {type:'WINBACK_OFFER',    mem:'David Nguyen',      mk:'sv-au',  d:'Win-back offer triggered — 60 day lapse',    t:'4hr ago', c:'#f97316'},
+  {type:'POINTS_EARNED',        mem:'Aiko Tanaka',        mk:'sv-hk',  d:'96 points awarded — purchase HK$480',               t:'2m ago',   c:'#22c55e'},
+  {type:'POINTS_REDEEMED',      mem:'Sophie Müller',      mk:'sv-eu',  d:'500 points redeemed — reward coupon issued',         t:'14m ago',  c:'#818cf8'},
+  {type:'POINTS_EARNED',        mem:'Priya Rajan',        mk:'sv-my',  d:'30 points awarded — purchase RM120',                t:'22m ago',  c:'#22c55e'},
+  {type:'TIER_UPGRADE',         mem:'Rin Yamamoto',       mk:'tsv-hk', d:'Upgraded Gold → Platinum (62,800 pts)',              t:'38m ago',  c:'#f59e0b'},
+  {type:'POINTS_DEDUCTED',      mem:'Lars Eriksson',      mk:'sv-eu',  d:'300 points deducted — CS adjustment',                t:'57m ago',  c:'#ef4444'},
+  {type:'MEMBER_ENROLLMENT',    mem:'Liu Wei',            mk:'sv-hk',  d:'New member enrolled via web widget',                 t:'1hr ago',  c:'#0ea5e9'},
+  {type:'POINTS_EARNED',        mem:'Charlotte Dubois',   mk:'sv-eu',  d:'144 points awarded — purchase €96',                 t:'1hr ago',  c:'#22c55e'},
+  {type:'REFERRAL_SUCCESS',     mem:'Min-Ji Park',        mk:'sv-hk',  d:'Referral converted — 500 bonus pts awarded',         t:'2hr ago',  c:'#8b5cf6'},
+  {type:'COUPON_ISSUED',        mem:'Emily Johnson',      mk:'sv-us',  d:'Birthday coupon issued — 20% off skincare',          t:'2hr ago',  c:'#0891b2'},
+  {type:'POINTS_EARNED',        mem:'Tyler Brooks',       mk:'tsv-us', d:'84 points awarded — purchase $84',                   t:'2hr ago',  c:'#22c55e'},
+  {type:'ORDER_CREATED',        mem:'Charlotte Hughes',   mk:'sv-uk',  d:'Order created — £72, 3 items, pending fulfilment',   t:'3hr ago',  c:'#0ea5e9'},
+  {type:'ANNIVERSARY_REWARD',   mem:'Oliver Bennett',     mk:'sv-uk',  d:'1-year anniversary — 500 bonus pts awarded',         t:'3hr ago',  c:'#f472b6'},
+  {type:'POINTS_EXPIRED',       mem:'142 members',        mk:'sv-us',  d:'Annual batch reset — points expired (batch 10/10)',  t:'3hr ago',  c:'#94a3b8'},
+  {type:'MEMBER_PROFILE_UPDATE',mem:'Olivia Martin',      mk:'sv-ca',  d:'Email address updated — profile sync complete',      t:'4hr ago',  c:'#0ea5e9'},
+  {type:'WINBACK_TRIGGERED',    mem:'David Kim',          mk:'sv-us',  d:'Win-back offer triggered — 60 day inactivity',       t:'4hr ago',  c:'#f97316'},
+  {type:'COUPON_REDEEMED',      mem:'Fatima Al Rashid',   mk:'sv-ae',  d:'Coupon redeemed — 15% off order AED280',             t:'5hr ago',  c:'#0891b2'},
+  {type:'REFERRAL_CREATED',     mem:'Mei Lin',            mk:'sv-hk',  d:'Referral link generated — pending conversion',       t:'5hr ago',  c:'#8b5cf6'},
+  {type:'POINTS_EARNED',        mem:'Ahmad Razali',       mk:'sv-my',  d:'120 points awarded — purchase RM480',                t:'6hr ago',  c:'#22c55e'},
+  {type:'ORDER_UPDATED',        mem:'Madison Lee',        mk:'tsv-us', d:'Order status updated — shipped, tracking added',     t:'6hr ago',  c:'#0ea5e9'},
+  {type:'BIRTHDAY_REWARD',      mem:'Hana Kim',           mk:'tsv-hk', d:'Birthday reward issued — 300 bonus pts + coupon',    t:'7hr ago',  c:'#f472b6'},
+  {type:'TIER_DOWNGRADE',       mem:'Jordan Casey',       mk:'tsv-us', d:'Downgraded Gold → Silver — annual review',           t:'8hr ago',  c:'#f97316'},
+  {type:'POINTS_REDEEMED',      mem:'Isabella Torres',    mk:'sv-mx',  d:'800 points redeemed — reward voucher MX$80',         t:'9hr ago',  c:'#818cf8'},
+  {type:'RETURN_PROCESSED',     mem:'Jack Morrison',      mk:'sv-au',  d:'Return processed — A$45 refunded, 45 pts reversed',  t:'10hr ago', c:'#f97316'},
+  {type:'COUPON_EXPIRED',       mem:'Ethan Walker',       mk:'sv-nz',  d:'Coupon NZ-2840 expired — unused after 30 days',      t:'11hr ago', c:'#94a3b8'},
+  {type:'POINTS_EARNED',        mem:'Piotr Wiśniewski',   mk:'sv-pl',  d:'60 points awarded — purchase zł240',                t:'12hr ago', c:'#22c55e'},
+  {type:'ACCOUNT_MERGE',        mem:'Emma Schmidt',       mk:'tsv-eu', d:'Guest account merged into member — EU-48291',        t:'13hr ago', c:'#94a3b8'},
+  {type:'ORDER_CANCELLED',      mem:'Chen Jing',          mk:'tsv-hk', d:'Order cancelled — 480 pts reversed, refund issued',  t:'14hr ago', c:'#f97316'},
+  {type:'MEMBER_ENROLLMENT',    mem:'Layla Hassan',       mk:'sv-ae',  d:'New member enrolled — in-store POS registration',    t:'15hr ago', c:'#0ea5e9'},
+  {type:'POINTS_EARNED',        mem:'Mohammed Al Zaabi',  mk:'sv-ae',  d:'78 points awarded — purchase AED280',                t:'16hr ago', c:'#22c55e'},
+  {type:'WINBACK_TRIGGERED',    mem:'Poppy Graham',       mk:'tsv-uk', d:'Win-back offer triggered — 90 day inactivity',       t:'18hr ago', c:'#f97316'},
+  {type:'POINTS_DEDUCTED',      mem:'Tommy Lam',          mk:'tsv-hk', d:'1,500 points deducted — order return adjustment',    t:'20hr ago', c:'#ef4444'},
+  {type:'REFERRAL_SUCCESS',     mem:'Charlotte Brown',    mk:'tsv-au', d:'Referral converted — AU-friend promo, 200 pts',      t:'22hr ago', c:'#8b5cf6'},
+  {type:'COUPON_ISSUED',        mem:'Hafiz Ismail',       mk:'tsv-my', d:'Tier upgrade coupon — Gold reward, RM20 off',        t:'23hr ago', c:'#0891b2'},
+  {type:'POINTS_EARNED',        mem:'Lachlan Smith',      mk:'tsv-au', d:'95 points awarded — purchase A$95',                  t:'1 day ago',c:'#22c55e'},
+  {type:'MEMBER_PROFILE_UPDATE',mem:'Ruby Cooper',        mk:'sv-nz',  d:'Phone number added — SMS opt-in confirmed',          t:'1 day ago',c:'#0ea5e9'},
+  {type:'ANNIVERSARY_REWARD',   mem:'Kevin Ng',           mk:'sv-hk',  d:'2-year anniversary — 1,000 bonus pts awarded',       t:'1 day ago',c:'#f472b6'},
+  {type:'POINTS_REDEEMED',      mem:'Isla Robertson',     mk:'tsv-uk', d:'600 points redeemed — £6 reward voucher',            t:'1 day ago',c:'#818cf8'},
+  {type:'ORDER_CREATED',        mem:'Nurul Ain',          mk:'sv-my',  d:'Order created — RM280, 2 items',                     t:'1 day ago',c:'#0ea5e9'},
+  {type:'BIRTHDAY_REWARD',      mem:'Zoe Campbell',       mk:'sv-au',  d:'Birthday reward issued — 200 bonus pts',             t:'2 days ago',c:'#f472b6'},
+  {type:'ACCOUNT_MERGE',        mem:'Noah Davis',         mk:'tsv-us', d:'Duplicate email resolved — accounts merged',         t:'2 days ago',c:'#94a3b8'},
 ];
 
-// ---- FX STATE ----
-// Rates from ExchangeRate-API: base USD, so rates[currency] = units of that currency per 1 USD
-// e.g. rates.HKD = 7.84 means 1 USD = 7.84 HKD → to convert HKD→USD: amount / rates.HKD
+const EV_CATS = {
+  'POINTS_EARNED':'Points','POINTS_REDEEMED':'Points','POINTS_DEDUCTED':'Points','POINTS_EXPIRED':'Points',
+  'TIER_UPGRADE':'Tiers','TIER_DOWNGRADE':'Tiers',
+  'MEMBER_ENROLLMENT':'Members','MEMBER_PROFILE_UPDATE':'Members','ACCOUNT_MERGE':'Members',
+  'REFERRAL_CREATED':'Referrals','REFERRAL_SUCCESS':'Referrals',
+  'WINBACK_TRIGGERED':'Campaigns','BIRTHDAY_REWARD':'Campaigns','ANNIVERSARY_REWARD':'Campaigns',
+  'COUPON_ISSUED':'Coupons','COUPON_REDEEMED':'Coupons','COUPON_EXPIRED':'Coupons',
+  'ORDER_CREATED':'Orders','ORDER_UPDATED':'Orders','ORDER_CANCELLED':'Orders','RETURN_PROCESSED':'Orders',
+};
+
+// ---- FX ----
 const FX_API_KEY = 'ddd0fb5e47e557c29224c88c';
-let fxRates = {}; // populated from API
-let fxFetched = false;
-let fxLastUpdated = null;
+let fxRates = {}, fxFetched = false, fxLastUpdated = null;
 
 async function fetchRates() {
   const statusEl = document.getElementById('fx-status');
-  statusEl.className = 'fx-tag loading';
-  statusEl.textContent = '⟳ Fetching…';
+  statusEl.className = 'fx-tag loading'; statusEl.textContent = '⟳ Fetching…';
   document.getElementById('k-gmv').textContent = '—';
   document.getElementById('k-gmv-sub').innerHTML = '<span class="fx-tag loading">⟳ Fetching rates…</span>';
-
   try {
     const res = await fetch(`https://v6.exchangerate-api.com/v6/${FX_API_KEY}/latest/USD`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-
     if (data.result !== 'success') throw new Error(data['error-type'] || 'API error');
-
-    fxRates = data.conversion_rates;
-    fxFetched = true;
-    fxLastUpdated = new Date();
-
-    statusEl.className = 'fx-tag';
-    statusEl.textContent = '● Live';
-
-    const timeStr = fxLastUpdated.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
-    document.getElementById('fx-updated').textContent = `Updated ${timeStr}`;
-
-    // Recalculate and rerender everything that uses rates
-    const gmv = calcTotalGMV(MKTS);
-    document.getElementById('k-gmv').textContent = fmtUSD(gmv);
-    document.getElementById('k-gmv-sub').innerHTML = `<span class="fx-tag">● Live rates</span> <span class="delta up">↑ 6.3%</span>`;
-
-    renderMktTbl(MKTS);
-    renderTxs();
-    renderCurTbl();
-
+    fxRates = data.conversion_rates; fxFetched = true; fxLastUpdated = new Date();
+    statusEl.className = 'fx-tag'; statusEl.textContent = '● Live';
+    document.getElementById('fx-updated').textContent = `Updated ${fxLastUpdated.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
+    document.getElementById('k-gmv').textContent = fmtUSD(calcTotalGMV(MKTS));
+    document.getElementById('k-gmv-sub').innerHTML = '<span class="fx-tag">● Live rates</span> <span class="delta up">↑ 6.3%</span>';
+    renderMktTbl(MKTS); renderTxs(); renderCurTbl();
   } catch(err) {
-    statusEl.className = 'fx-tag error';
-    statusEl.textContent = '⚠ Rate error';
+    statusEl.className = 'fx-tag error'; statusEl.textContent = '⚠ Rate error';
     document.getElementById('k-gmv').textContent = '—';
     document.getElementById('k-gmv-sub').innerHTML = `<span class="fx-tag error">⚠ ${err.message}</span>`;
     document.getElementById('fx-updated').textContent = '';
-    console.error('FX fetch failed:', err);
   }
 }
 
-// Convert local currency amount to USD using live rates
-// rates[currency] = local units per 1 USD → localAmount / rates[currency] = USD
-function toUSD(amount, currency) {
-  if (!fxFetched || !fxRates[currency]) return null;
-  return amount / fxRates[currency];
-}
-
-// GMV for a single market: pts / earnPPU = local currency spend → convert to USD
-function marketGMV(m) {
-  if (!fxFetched || !fxRates[m.c]) return null;
-  const localSpend = m.pts / m.earnPPU;
-  return localSpend / fxRates[m.c];
-}
-
-function calcTotalGMV(mkts) {
-  return mkts.reduce((sum, m) => {
-    const g = marketGMV(m);
-    return sum + (g || 0);
-  }, 0);
-}
-
-// ---- HELPERS ----
+function marketGMV(m) { if (!fxFetched || !fxRates[m.c]) return null; return (m.pts / m.earnPPU) / fxRates[m.c]; }
+function calcTotalGMV(mkts) { return mkts.reduce((s,m) => s + (marketGMV(m)||0), 0); }
 function mktName(id) { const m = MKTS.find(x=>x.id===id); return m ? m.n : id; }
 function fmt(n) { if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1e3) return (n/1e3).toFixed(0)+'K'; return n.toLocaleString(); }
-function fmtUSD(n) {
-  if (!n) return '—';
-  if(n>=1e6) return '$'+(n/1e6).toFixed(1)+'M';
-  if(n>=1e3) return '$'+(n/1e3).toFixed(0)+'K';
-  return '$'+n.toLocaleString();
-}
-function fmtRate(currency) {
-  if (!fxFetched || !fxRates[currency]) return '<span style="color:var(--muted)">—</span>';
-  const r = fxRates[currency];
-  return `<div class="rate-cell">${r.toFixed(4)} <span class="rate-live">Live</span></div>`;
-}
-function fmtPtsToUSD(m) {
-  if (!fxFetched || !fxRates[m.c]) return '—';
-  // 1 pt = (1/earnPPU) local units → USD
-  const localPerPt = 1 / m.earnPPU;
-  const usdPerPt = localPerPt / fxRates[m.c];
-  return '$' + usdPerPt.toFixed(4);
-}
+function fmtUSD(n) { if(!n) return '—'; if(n>=1e6) return '$'+(n/1e6).toFixed(1)+'M'; if(n>=1e3) return '$'+(n/1e3).toFixed(0)+'K'; return '$'+n.toLocaleString(); }
+function fmtRate(c) { if(!fxFetched||!fxRates[c]) return '<span style="color:var(--muted)">—</span>'; return `<div class="rate-cell">${fxRates[c].toFixed(4)} <span class="rate-live">Live</span></div>`; }
+function fmtPtsToUSD(m) { if(!fxFetched||!fxRates[m.c]) return '—'; return '$'+((1/m.earnPPU)/fxRates[m.c]).toFixed(4); }
+function tierFor(pts) { if(pts>=40000) return 'Platinum'; if(pts>=15000) return 'Gold'; if(pts>=5000) return 'Silver'; return 'Bronze'; }
+function instMemCount(id) { const mids=(INSTANCES.find(i=>i.id===id)||{}).markets||[]; return MKTS.filter(m=>mids.includes(m.id)).reduce((s,m)=>s+m.mem,0); }
+function instPtsTotal(id) { const mids=(INSTANCES.find(i=>i.id===id)||{}).markets||[]; return MKTS.filter(m=>mids.includes(m.id)).reduce((s,m)=>s+m.pts,0); }
 
 // ---- RENDERS ----
 function renderMktTbl(mkts) {
@@ -564,7 +635,7 @@ function renderMktTbl(mkts) {
       <td><span class="bdg bdg-cur">${m.c}</span></td>
       <td>${m.mem.toLocaleString()}</td>
       <td>${fmt(m.pts)}</td>
-      <td style="font-weight:600;color:${gmv?'var(--text)':'var(--muted)'}">${gmv ? fmtUSD(gmv) : '—'}</td>
+      <td style="font-weight:600">${gmv ? fmtUSD(gmv) : '<span style="color:var(--muted)">—</span>'}</td>
     </tr>`;
   }).join('');
 }
@@ -577,19 +648,58 @@ function renderEvFeed() {
   </div>`).join('');
 }
 
-function renderEvFull() {
-  document.getElementById('ev-full').innerHTML = EVS.map(e=>`<div class="ev">
-    <div class="ev-dot" style="background:${e.c}"></div>
-    <div class="ev-body">
-      <div class="ev-type">${e.type} <span class="bdg bdg-cur" style="margin-left:6px;font-size:10px">${mktName(e.mk)}</span></div>
-      <div class="ev-detail">${e.d}</div>
-      <div class="ev-detail" style="margin-top:1px">${e.mem}</div>
-    </div>
-    <div class="ev-time">${e.t}</div>
-  </div>`).join('');
+let activeEvFilter = 'All';
+function renderEvFilters() {
+  const cats = ['All','Points','Tiers','Members','Referrals','Campaigns','Coupons','Orders'];
+  document.getElementById('ev-filters').innerHTML = cats.map(c=>
+    `<div class="ev-filter${c===activeEvFilter?' active':''}" onclick="setEvFilter('${c}')">${c}</div>`
+  ).join('');
+}
+function setEvFilter(cat) { activeEvFilter = cat; renderEvFilters(); renderEvFull(cat); }
+function renderEvFull(filter) {
+  filter = filter || 'All';
+  const evs = filter==='All' ? EVS : EVS.filter(e=>(EV_CATS[e.type]||'')===filter);
+  document.getElementById('ev-full').innerHTML = evs.length
+    ? evs.map(e=>`<div class="ev">
+        <div class="ev-dot" style="background:${e.c}"></div>
+        <div class="ev-body">
+          <div class="ev-type">${e.type} <span class="bdg bdg-cur" style="margin-left:6px;font-size:10px">${mktName(e.mk)}</span></div>
+          <div class="ev-detail">${e.d}</div>
+          <div class="ev-detail" style="margin-top:1px">${e.mem}</div>
+        </div>
+        <div class="ev-time">${e.t}</div>
+      </div>`).join('')
+    : '<div style="padding:30px;text-align:center;color:var(--muted);font-size:13px">No events in this category.</div>';
 }
 
+function renderInstances() {
+  document.getElementById('inst-grid').innerHTML = INSTANCES.map(inst => {
+    const mc = instMemCount(inst.id), pt = instPtsTotal(inst.id);
+    return `<div class="inst-card">
+      <div class="inst-head">
+        <div class="inst-name">${inst.name}</div>
+        <span class="bdg bdg-staging">Staging</span>
+      </div>
+      <div class="inst-body">
+        <div class="inst-id">${inst.id}</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:8px">Region: ${inst.region}</div>
+        <div class="inst-markets">${inst.markets.map(mid=>{
+          const mk=MKTS.find(m=>m.id===mid);
+          return mk?`<span class="bdg bdg-${mk.b.toLowerCase()}" style="font-size:10px">${mk.n.replace('Stylevana ','SV ').replace('Beauty Amora ','BA ')}</span>`:'';
+        }).join('')}</div>
+        <div class="inst-stats">
+          <div class="inst-stat"><div class="inst-stat-val">${inst.markets.length}</div><div class="inst-stat-lbl">Markets</div></div>
+          <div class="inst-stat"><div class="inst-stat-val">${fmt(mc)}</div><div class="inst-stat-lbl">Members</div></div>
+          <div class="inst-stat"><div class="inst-stat-val">${fmt(pt)}</div><div class="inst-stat-lbl">Pts Issued</div></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+let currentFilter = '';
 function renderMems(mems) {
+  document.getElementById('mem-count').textContent = `${mems.length} member${mems.length!==1?'s':''}`;
   document.getElementById('mem-tbl').innerHTML = mems.length
     ? mems.map(m=>`<tr>
         <td><div style="font-weight:600">${m.n}</div><div style="font-size:12px;color:var(--muted)">${m.e}</div></td>
@@ -597,16 +707,22 @@ function renderMems(mems) {
         <td><span class="bdg bdg-tier">${m.tier}</span></td>
         <td style="font-weight:600">${m.pts.toLocaleString()} pts</td>
         <td style="font-size:12px;color:var(--muted)">${m.last}</td>
-        <td><button class="btn btn-ghost" onclick="openModal('adjust')">Adjust Points</button></td>
+        <td><button class="btn btn-ghost" onclick="prefillAdjust('${m.e}','${m.m}')">Adjust Points</button></td>
       </tr>`).join('')
-    : '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">No members found for this market.</td></tr>';
+    : '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">No members found.</td></tr>';
+}
+
+function filterMem(val) { currentFilter = val.toLowerCase(); applyMemFilters(); }
+function applyMemFilters() {
+  const mktVal = document.getElementById('mkt').value;
+  let mems = mktVal==='all' ? MEMS : MEMS.filter(m=>m.m===mktVal);
+  if (currentFilter) mems = mems.filter(m=>m.n.toLowerCase().includes(currentFilter)||m.e.toLowerCase().includes(currentFilter));
+  renderMems(mems);
 }
 
 function renderTxs() {
   document.getElementById('tx-tbl').innerHTML = TXS.map(tx => {
-    const usd = (tx.localAmt && fxFetched && fxRates[tx.c])
-      ? fmtUSD(tx.localAmt / fxRates[tx.c])
-      : '—';
+    const usd = (tx.localAmt && fxFetched && fxRates[tx.c]) ? fmtUSD(tx.localAmt/fxRates[tx.c]) : '—';
     return `<tr>
       <td style="font-size:12px;color:var(--muted)">${tx.d}</td>
       <td>${tx.m}</td>
@@ -620,7 +736,7 @@ function renderTxs() {
 }
 
 function renderCurTbl() {
-  document.getElementById('cur-tbl').innerHTML = MKTS.map(m => `<tr>
+  document.getElementById('cur-tbl').innerHTML = MKTS.map(m=>`<tr>
     <td><span class="bdg bdg-${m.b.toLowerCase()}" style="margin-right:7px">${m.b}</span>${m.n}</td>
     <td><span class="bdg bdg-cur">${m.c}</span></td>
     <td style="font-weight:600">${m.earn}</td>
@@ -630,13 +746,13 @@ function renderCurTbl() {
   </tr>`).join('');
 }
 
-// ---- NAVIGATION ----
+// ---- NAV ----
 function go(v, el) {
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));
   document.getElementById('view-'+v).classList.add('active');
   el.classList.add('active');
-  const titles = {global:'Global Overview',members:'Members',transactions:'Transaction Log',events:'Webhook Events',config:'Configuration'};
+  const titles = {global:'Global Overview',members:'Members',transactions:'Transaction Log',events:'Webhook Events',instances:'Instances',config:'Configuration'};
   document.getElementById('tb-title').textContent = titles[v]||v;
 }
 
@@ -645,30 +761,67 @@ function switchMarket() {
   const v = document.getElementById('mkt').value;
   const m = MKTS.find(x=>x.id===v);
   const cb = document.getElementById('cur-badge');
-  if(v==='all') {
+  if (v==='all') {
     cb.textContent='All Currencies';
     document.getElementById('k-mem').textContent='646,150';
     document.getElementById('k-pts').textContent='57.2M';
     document.getElementById('k-rdm').textContent='9.3M pts';
-    if(fxFetched) {
-      const gmv = calcTotalGMV(MKTS);
-      document.getElementById('k-gmv').textContent = fmtUSD(gmv);
-    }
-    renderMktTbl(MKTS); renderMems(MEMS);
-  } else if(m) {
+    if (fxFetched) document.getElementById('k-gmv').textContent = fmtUSD(calcTotalGMV(MKTS));
+    renderMktTbl(MKTS);
+  } else if (m) {
     cb.textContent=m.c+' — '+m.sym;
     document.getElementById('k-mem').textContent=m.mem.toLocaleString();
     document.getElementById('k-pts').textContent=fmt(m.pts);
     document.getElementById('k-rdm').textContent=fmt(m.rdm)+' pts';
-    if(fxFetched) {
-      const gmv = marketGMV(m);
-      document.getElementById('k-gmv').textContent = fmtUSD(gmv);
-    }
-    renderMktTbl([m]); renderMems(MEMS.filter(x=>x.m===v));
+    if (fxFetched) document.getElementById('k-gmv').textContent = fmtUSD(marketGMV(m));
+    renderMktTbl([m]);
   }
+  currentFilter = '';
+  document.getElementById('mem-search').value = '';
+  applyMemFilters();
 }
 
-// ---- MODALS ----
+// ---- POINT ADJUSTMENT ----
+function prefillAdjust(email, mkt) {
+  document.getElementById('adj-email').value = email;
+  document.getElementById('adj-mkt').value = mkt;
+  openModal('adjust');
+}
+
+function confirmAdjust() {
+  const email  = document.getElementById('adj-email').value.trim();
+  const op     = document.getElementById('adj-op').value;
+  const pts    = parseInt(document.getElementById('adj-pts').value);
+  const reason = document.getElementById('adj-reason').value.trim() || 'CS adjustment';
+  const mkt    = document.getElementById('adj-mkt').value;
+  const errEl  = document.getElementById('adj-error');
+  errEl.style.display = 'none';
+  if (!email) { errEl.textContent='Member email is required.'; errEl.style.display='block'; return; }
+  if (!pts||pts<1) { errEl.textContent='Enter a valid point amount (minimum 1).'; errEl.style.display='block'; return; }
+  const mem = MEMS.find(m=>m.e===email);
+  if (mem) {
+    mem.pts = op==='award' ? mem.pts+pts : Math.max(0, mem.pts-pts);
+    mem.tier = tierFor(mem.pts);
+    mem.last = 'Just now';
+  }
+  const mk = MKTS.find(m=>m.id===mkt);
+  TXS.unshift({d:'Just now', m:mem?mem.n:email, mk:mkt, t:op==='award'?'award':'deduct', localAmt:null, c:mk?.c||'USD', display:'—', pts:(op==='award'?'+':'-')+pts.toLocaleString()+' pts'});
+  EVS.unshift({type:op==='award'?'POINTS_EARNED':'POINTS_DEDUCTED', mem:mem?mem.n:email, mk:mkt, d:`${pts.toLocaleString()} points ${op==='award'?'awarded':'deducted'} — ${reason}`, t:'Just now', c:op==='award'?'#22c55e':'#ef4444'});
+  applyMemFilters(); renderTxs(); renderEvFeed(); renderEvFull(activeEvFilter);
+  document.getElementById('adj-form').style.display='none';
+  document.getElementById('adj-success').style.display='block';
+  document.getElementById('adj-success-title').textContent = op==='award'?'Points Awarded':'Points Deducted';
+  document.getElementById('adj-success-sub').textContent = `${pts.toLocaleString()} pts ${op==='award'?'added to':'removed from'} ${mem?mem.n:email} · ${reason}`;
+}
+
+function resetAdjust() {
+  document.getElementById('adj-form').style.display='block';
+  document.getElementById('adj-success').style.display='none';
+  ['adj-email','adj-pts','adj-reason'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('adj-error').style.display='none';
+  closeModal('adjust');
+}
+
 function openModal(id) { document.getElementById('modal-'+id).classList.add('open'); }
 function closeModal(id) { document.getElementById('modal-'+id).classList.remove('open'); }
 function bgClose(e,id) { if(e.target===e.currentTarget) closeModal(id); }
@@ -676,11 +829,13 @@ function bgClose(e,id) { if(e.target===e.currentTarget) closeModal(id); }
 // ---- INIT ----
 renderMktTbl(MKTS);
 renderEvFeed();
-renderEvFull();
+renderEvFilters();
+renderEvFull('All');
+renderInstances();
 renderMems(MEMS);
 renderTxs();
 renderCurTbl();
-fetchRates(); // kick off live rate fetch immediately
+fetchRates();
 </script>
 </body>
 </html>
