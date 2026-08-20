@@ -145,6 +145,9 @@ select.f-inp { cursor: pointer; }
 .rate-cell { display: flex; align-items: center; gap: 6px; }
 .rate-live { font-size: 10px; font-weight: 700; color: #16a34a; }
 .rate-stale { font-size: 10px; font-weight: 700; color: #b45309; }
+
+/* Prototype notice bar */
+.proto-bar { background: #fff8f0; border-bottom: 1px solid #ffe0b2; padding: 8px 24px; font-size: 12px; color: #92400e; flex-shrink: 0; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -207,7 +210,11 @@ select.f-inp { cursor: pointer; }
       <span class="mkt-arr">▾</span>
     </div>
     <div class="cur-badge" id="cur-badge">All Currencies</div>
-    <div class="live-dot" title="All 9 instances connected"></div>
+    <span class="api-tag api-layer" style="font-size:11px;padding:5px 11px">Staging · Mock Data</span>
+  </div>
+
+  <div class="proto-bar">
+    <strong>Prototype — all figures are placeholder.</strong> Aggregate cross-instance stats (members, points, GMV) require a backend webhook listener and database. API-writable operations (member lookup, point adjustments, custom attributes) will connect to TrueLoyal staging once the backend proxy is in place. Currency conversion via ExchangeRate-API is live.
   </div>
 
   <div class="content">
@@ -253,7 +260,7 @@ select.f-inp { cursor: pointer; }
         </div>
         <div>
           <div class="panel">
-            <div class="p-head"><span class="p-title">Live Events</span><span class="bdg bdg-live">● Streaming</span></div>
+            <div class="p-head"><span class="p-title">Recent Events</span><button class="btn-refresh" onclick="renderEvFeed()">↻ Refresh</button></div>
             <div id="ev-feed"></div>
           </div>
         </div>
@@ -287,8 +294,8 @@ select.f-inp { cursor: pointer; }
     <div id="view-events" class="view">
       <div class="panel">
         <div class="p-head">
-          <span class="p-title">Webhook Event Stream</span>
-          <div style="display:flex;gap:8px"><span class="bdg bdg-live">● Live</span><span class="p-action">Configure Endpoints →</span></div>
+          <span class="p-title">Webhook Event Log</span>
+          <div style="display:flex;gap:8px;align-items:center"><span style="font-size:11px;color:var(--muted)">Polled · requires webhook listener</span><span class="p-action">Configure Endpoints →</span></div>
         </div>
         <div id="ev-full"></div>
       </div>
