@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Starkford — Global Loyalty Admin</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --navy: #1a2744; --navy-l: #243358; --navy-h: #2d3f6b;
+  --pink: #f8b4c3; --pink-d: #e8839d;
+  --bg: #f0f2f7; --white: #fff; --text: #1a2744; --muted: #6b7a99;
+  --border: #e2e6f0; --green: #22c55e; --red: #ef4444; --yellow: #f59e0b;
+  --sidebar: 220px;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); display: flex; height: 100vh; overflow: hidden; font-size: 14px; }
+
+/* SIDEBAR */
+.sidebar { width: var(--sidebar); background: var(--navy); display: flex; flex-direction: column; flex-shrink: 0; }
+.s-logo { padding: 24px 20px 18px; border-bottom: 1px solid rgba(255,255,255,.08); }
+.logo-true  { display: block; font-size: 14px; font-weight: 900; color: #fff; letter-spacing: 3px; }
+.logo-loyal { display: block; font-size: 14px; font-weight: 900; color: var(--pink); letter-spacing: 3px; }
+.logo-sub { display: block; font-size: 10px; color: rgba(255,255,255,.3); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 8px; }
+.s-section { padding: 18px 12px 6px; }
+.s-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.3); letter-spacing: 1.5px; text-transform: uppercase; padding: 0 8px; margin-bottom: 5px; }
+.nav { display: flex; align-items: center; gap: 9px; padding: 9px 10px; border-radius: 7px; cursor: pointer; color: rgba(255,255,255,.55); font-size: 13px; font-weight: 500; transition: all .15s; margin-bottom: 2px; }
+.nav:hover { background: var(--navy-h); color: rgba(255,255,255,.9); }
+.nav.active { background: var(--navy-h); color: #fff; }
+.nav.active .ni { color: var(--pink); }
+.ni { width: 16px; text-align: center; font-size: 14px; flex-shrink: 0; }
+.s-spacer { flex: 1; }
+.s-foot { padding: 14px 16px; border-top: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; gap: 10px; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--pink); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--navy); flex-shrink: 0; }
+.u-name { font-size: 13px; font-weight: 600; color: #fff; }
+.u-role { font-size: 11px; color: rgba(255,255,255,.4); }
+
+/* MAIN */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.topbar { background: #fff; border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.tb-title { font-size: 15px; font-weight: 700; flex: 1; }
+.mkt-wrap { position: relative; }
+.mkt-sel { appearance: none; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 30px 7px 12px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; outline: none; min-width: 210px; }
+.mkt-arr { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--muted); font-size: 10px; }
+.cur-badge { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,.2); flex-shrink: 0; }
+.content { flex: 1; overflow-y: auto; padding: 24px; }
+.view { display: none; }
+.view.active { display: block; }
+
+/* KPI CARDS */
+.kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 22px; }
+.kpi { background: #fff; border-radius: 10px; padding: 18px 20px; border: 1px solid var(--border); }
+.kpi.highlight { border-color: rgba(248,180,195,.5); background: linear-gradient(135deg, #fff 60%, rgba(248,180,195,.07)); }
+.kpi-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
+.kpi-val { font-size: 26px; font-weight: 800; line-height: 1; }
+.kpi-sub { font-size: 12px; color: var(--muted); margin-top: 6px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.delta { display: inline-flex; align-items: center; gap: 2px; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 20px; }
+.delta.up { background: rgba(34,197,94,.12); color: #16a34a; }
+.delta.dn { background: rgba(239,68,68,.1); color: #dc2626; }
+.fx-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; background: rgba(34,197,94,.12); color: #16a34a; }
+.fx-tag.loading { background: rgba(245,158,11,.12); color: #b45309; }
+.fx-tag.error { background: rgba(239,68,68,.1); color: #dc2626; }
+
+/* PANELS */
+.panel { background: #fff; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+.p-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.p-title { font-size: 14px; font-weight: 700; }
+.p-action { font-size: 12px; color: var(--pink-d); cursor: pointer; font-weight: 600; }
+.two-col { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+
+/* TABLES */
+table { width: 100%; border-collapse: collapse; }
+th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); padding: 10px 20px; text-align: left; border-bottom: 1px solid var(--border); background: #fafbfc; }
+td { padding: 12px 20px; border-bottom: 1px solid #f0f2f7; font-size: 13px; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafbfc; }
+
+/* BADGES */
+.bdg { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.bdg-cur  { background: rgba(248,180,195,.15); color: #c0446a; }
+.bdg-sv   { background: rgba(26,39,68,.1); color: var(--navy); }
+.bdg-tsv  { background: rgba(248,180,195,.2); color: #c0446a; }
+.bdg-tier { background: rgba(245,158,11,.12); color: #b45309; }
+.bdg-award  { background: rgba(34,197,94,.12); color: #16a34a; }
+.bdg-deduct { background: rgba(239,68,68,.1); color: #dc2626; }
+.bdg-redeem { background: rgba(99,102,241,.12); color: #4338ca; }
+.bdg-live { background: rgba(34,197,94,.12); color: #16a34a; font-size: 10px; }
+
+/* EVENTS FEED */
+.ev { display: flex; align-items: flex-start; gap: 13px; padding: 13px 20px; border-bottom: 1px solid #f0f2f7; }
+.ev:last-child { border-bottom: none; }
+.ev-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.ev-body { flex: 1; }
+.ev-type { font-size: 12px; font-weight: 700; }
+.ev-detail { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.ev-time { font-size: 11px; color: var(--muted); flex-shrink: 0; }
+
+/* SEARCH */
+.search { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; margin: 14px 20px; }
+.search input { border: none; background: none; outline: none; font-size: 13px; color: var(--text); flex: 1; width: 100%; }
+.search input::placeholder { color: var(--muted); }
+
+/* CONFIG */
+.cfg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cfg-sec { background: #fff; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
+.cfg-head { display: flex; align-items: center; justify-content: space-between; padding: 13px 18px; border-bottom: 1px solid var(--border); }
+.cfg-title { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.api-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 20px; }
+.api-ok { background: rgba(34,197,94,.12); color: #16a34a; }
+.api-no { background: rgba(239,68,68,.1); color: #dc2626; }
+.api-layer { background: rgba(14,165,233,.12); color: #0369a1; }
+.lock-box { padding: 20px; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.lock-icon { font-size: 22px; display: block; margin-bottom: 8px; }
+.lock-link { display: inline-block; margin-top: 8px; font-size: 12px; font-weight: 600; color: var(--pink-d); cursor: pointer; }
+.attr-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 18px; border-bottom: 1px solid #f0f2f7; }
+.attr-row:last-child { border-bottom: none; }
+.attr-name { font-size: 13px; font-weight: 600; }
+.attr-meta { font-size: 11px; color: var(--muted); }
+.fx-updated { font-size: 11px; color: var(--muted); }
+
+/* BTNS */
+.btn { padding: 7px 14px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; transition: all .15s; }
+.btn-prim { background: var(--navy); color: #fff; }
+.btn-prim:hover { background: var(--navy-l); }
+.btn-sec { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost { background: none; color: var(--pink-d); border: 1px solid rgba(248,180,195,.4); padding: 4px 10px; font-size: 11px; }
+.btn-refresh { background: none; color: var(--muted); border: 1px solid var(--border); padding: 4px 10px; font-size: 11px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.btn-refresh:hover { color: var(--text); border-color: var(--muted); }
+
+/* MODAL */
+.modal-ov { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 100; }
+.modal-ov.open { display: flex; }
+.modal { background: #fff; border-radius: 12px; width: 420px; padding: 24px; }
+.modal-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+.modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+.f-grp { margin-bottom: 14px; }
+.f-lbl { display: block; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 5px; }
+.f-inp { width: 100%; border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; font-size: 13px; color: var(--text); outline: none; transition: border-color .15s; }
+.f-inp:focus { border-color: var(--pink); }
+select.f-inp { cursor: pointer; }
+.modal-act { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+.notice { font-size: 12px; color: var(--muted); margin-bottom: 20px; background: #fff8f0; border: 1px solid #ffe0b2; border-radius: 8px; padding: 10px 14px; }
+
+/* FX rate cell */
+.rate-cell { display: flex; align-items: center; gap: 6px; }
+.rate-live { font-size: 10px; font-weight: 700; color: #16a34a; }
+.rate-stale { font-size: 10px; font-weight: 700; color: #b45309; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="s-logo">
+    <span class="logo-true">TRUE</span>
+    <span class="logo-loyal">LOYAL</span>
+    <span class="logo-sub">Global Admin · Starkford</span>
+  </div>
+  <div class="s-section">
+    <div class="s-label">Analytics</div>
+    <div class="nav active" onclick="go('global',this)"><span class="ni">◈</span> Global Overview</div>
+  </div>
+  <div class="s-section">
+    <div class="s-label">Operations</div>
+    <div class="nav" onclick="go('members',this)"><span class="ni">👥</span> Members</div>
+    <div class="nav" onclick="go('transactions',this)"><span class="ni">⇅</span> Transactions</div>
+    <div class="nav" onclick="go('events',this)"><span class="ni">⚡</span> Webhook Events</div>
+  </div>
+  <div class="s-section">
+    <div class="s-label">Program</div>
+    <div class="nav" onclick="go('config',this)"><span class="ni">⚙</span> Configuration</div>
+  </div>
+  <div class="s-spacer"></div>
+  <div class="s-foot">
+    <div class="avatar">GH</div>
+    <div><div class="u-name">Gailan Hart</div><div class="u-role">Global Admin</div></div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="tb-title" id="tb-title">Global Overview</div>
+    <div class="mkt-wrap">
+      <select class="mkt-sel" id="mkt" onchange="switchMarket()">
+        <option value="all">All Markets (17)</option>
+        <optgroup label="Stylevana">
+          <option value="sv-us">Stylevana US — USD</option>
+          <option value="sv-uk">Stylevana UK — GBP</option>
+          <option value="sv-eu">Stylevana EU — EUR</option>
+          <option value="sv-ca">Stylevana CA — CAD</option>
+          <option value="sv-au">Stylevana AU — AUD</option>
+          <option value="sv-hk">Stylevana HK — HKD</option>
+          <option value="sv-nz">Stylevana NZ — NZD</option>
+          <option value="sv-my">Stylevana MY — MYR</option>
+          <option value="sv-ae">Stylevana AE — AED</option>
+          <option value="sv-mx">Stylevana MX — MXN</option>
+          <option value="sv-pl">Stylevana PL — PLN</option>
+        </optgroup>
+        <optgroup label="Beauty Amora (TSV)">
+          <option value="tsv-us">Beauty Amora US — USD</option>
+          <option value="tsv-uk">Beauty Amora UK — GBP</option>
+          <option value="tsv-eu">Beauty Amora EU — EUR</option>
+          <option value="tsv-hk">Beauty Amora HK — HKD</option>
+          <option value="tsv-my">Beauty Amora MY — MYR</option>
+          <option value="tsv-au">Beauty Amora AU — AUD</option>
+        </optgroup>
+      </select>
+      <span class="mkt-arr">▾</span>
+    </div>
+    <div class="cur-badge" id="cur-badge">All Currencies</div>
+    <div class="live-dot" title="All 9 instances connected"></div>
+  </div>
+
+  <div class="content">
+
+    <!-- GLOBAL OVERVIEW -->
+    <div id="view-global" class="view active">
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-lbl">Total Members</div>
+          <div class="kpi-val" id="k-mem">646,150</div>
+          <div class="kpi-sub"><span class="delta up">↑ 4.2%</span> vs last month</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Points Issued (30d)</div>
+          <div class="kpi-val" id="k-pts">57.2M</div>
+          <div class="kpi-sub"><span class="delta up">↑ 8.1%</span> vs last month</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Redemptions (30d)</div>
+          <div class="kpi-val" id="k-rdm">9.3M pts</div>
+          <div class="kpi-sub"><span class="delta dn">↓ 1.4%</span> vs last month</div>
+        </div>
+        <div class="kpi highlight">
+          <div class="kpi-lbl">Est. GMV (USD, 30d)</div>
+          <div class="kpi-val" id="k-gmv">—</div>
+          <div class="kpi-sub" id="k-gmv-sub"><span class="fx-tag loading">⟳ Fetching rates…</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Active Markets</div>
+          <div class="kpi-val">17</div>
+          <div class="kpi-sub">9 TrueLoyal instances</div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="panel">
+            <div class="p-head"><span class="p-title">Market Performance</span><span class="p-action">Export →</span></div>
+            <table>
+              <thead><tr><th>Market</th><th>Currency</th><th>Members</th><th>Points Issued</th><th>Est. GMV (USD)</th></tr></thead>
+              <tbody id="mkt-tbl"></tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <div class="panel">
+            <div class="p-head"><span class="p-title">Live Events</span><span class="bdg bdg-live">● Streaming</span></div>
+            <div id="ev-feed"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEMBERS -->
+    <div id="view-members" class="view">
+      <div class="panel">
+        <div class="p-head"><span class="p-title">Members</span><span class="p-action" onclick="openModal('adjust')">+ Adjust Points</span></div>
+        <div class="search"><span style="color:var(--muted)">⌕</span><input placeholder="Search by name, email, or member ID…" oninput="filterMem(this.value)"></div>
+        <table>
+          <thead><tr><th>Member</th><th>Market</th><th>Tier</th><th>Points</th><th>Last Activity</th><th></th></tr></thead>
+          <tbody id="mem-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TRANSACTIONS -->
+    <div id="view-transactions" class="view">
+      <div class="panel">
+        <div class="p-head"><span class="p-title">Transaction Log</span><span class="p-action">Export CSV →</span></div>
+        <table>
+          <thead><tr><th>Date</th><th>Member</th><th>Market</th><th>Type</th><th>Amount (Local)</th><th>USD Equiv.</th><th>Points</th></tr></thead>
+          <tbody id="tx-tbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EVENTS -->
+    <div id="view-events" class="view">
+      <div class="panel">
+        <div class="p-head">
+          <span class="p-title">Webhook Event Stream</span>
+          <div style="display:flex;gap:8px"><span class="bdg bdg-live">● Live</span><span class="p-action">Configure Endpoints →</span></div>
+        </div>
+        <div id="ev-full"></div>
+      </div>
+    </div>
+
+    <!-- CONFIGURATION -->
+    <div id="view-config" class="view">
+      <div class="notice">Settings marked <strong style="color:#16a34a">API Writable</strong> are managed from this dashboard. Settings marked <strong style="color:#dc2626">TrueLoyal Admin Only</strong> require per-instance configuration in the TrueLoyal admin panel — no external write API exists for these.</div>
+      <div class="cfg-grid">
+
+        <div class="cfg-sec">
+          <div class="cfg-head">
+            <div class="cfg-title">Custom Attributes <span class="api-tag api-ok">API Writable</span></div>
+            <button class="btn btn-ghost" onclick="openModal('attr')">+ Add</button>
+          </div>
+          <div class="attr-row"><div><div class="attr-name">skin_type</div><div class="attr-meta">String · Member</div></div><button class="btn btn-ghost">Edit</button></div>
+          <div class="attr-row"><div><div class="attr-name">preferred_brand</div><div class="attr-meta">List · Member</div></div><button class="btn btn-ghost">Edit</button></div>
+          <div class="attr-row"><div><div class="attr-name">product_category</div><div class="attr-meta">String · Transaction</div></div><button class="btn btn-ghost">Edit</button></div>
+          <div class="attr-row"><div><div class="attr-name">order_market</div><div class="attr-meta">String · Transaction</div></div><button class="btn btn-ghost">Edit</button></div>
+          <div class="attr-row"><div><div class="attr-name">vip_segment</div><div class="attr-meta">Number · Member</div></div><button class="btn btn-ghost">Edit</button></div>
+        </div>
+
+        <div class="cfg-sec">
+          <div class="cfg-head"><div class="cfg-title">Tier Configuration <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
+          <div class="lock-box"><span class="lock-icon">🔒</span>Tier names, point thresholds, and benefits are configured per-instance in the TrueLoyal admin panel. No external API write endpoint exists.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
+        </div>
+
+        <div class="cfg-sec">
+          <div class="cfg-head"><div class="cfg-title">Earn Rules <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
+          <div class="lock-box"><span class="lock-icon">🔒</span>Point earn rates, multipliers, and SKU-level rules are configured per-instance in the TrueLoyal admin panel. The API exposes archive and reorder only.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
+        </div>
+
+        <div class="cfg-sec">
+          <div class="cfg-head"><div class="cfg-title">Campaigns <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
+          <div class="lock-box"><span class="lock-icon">🔒</span>Campaign creation, scheduling, launch, and stop exist as internal service functions but are not exposed on the merchant REST API.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
+        </div>
+
+        <div class="cfg-sec" style="grid-column:1/-1">
+          <div class="cfg-head">
+            <div class="cfg-title">
+              Currency &amp; Market Config
+              <span class="api-tag api-layer">Dashboard Layer</span>
+              <span id="fx-status" class="fx-tag loading" style="margin-left:4px">⟳ Loading rates…</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="fx-updated" id="fx-updated"></span>
+              <button class="btn-refresh" onclick="fetchRates()">↻ Refresh Rates</button>
+            </div>
+          </div>
+          <table>
+            <thead><tr><th>Market</th><th>Currency</th><th>Earn Rate</th><th>Points → USD</th><th>Exchange Rate (per USD)</th><th>TL Instance</th></tr></thead>
+            <tbody id="cur-tbl"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL: Point Adjustment -->
+<div class="modal-ov" id="modal-adjust" onclick="bgClose(event,'adjust')">
+  <div class="modal">
+    <div class="modal-title">Adjust Points</div>
+    <div class="modal-sub">Award or deduct points for a member via TrueLoyal API.</div>
+    <div class="f-grp"><label class="f-lbl">Member Email</label><input class="f-inp" placeholder="member@email.com"></div>
+    <div class="f-grp"><label class="f-lbl">Market</label>
+      <select class="f-inp">
+        <option>Stylevana US — USD</option><option>Stylevana HK — HKD</option><option>Beauty Amora US — USD</option>
+      </select>
+    </div>
+    <div class="f-grp"><label class="f-lbl">Operation</label><select class="f-inp"><option>Award Points</option><option>Deduct Points</option></select></div>
+    <div class="f-grp"><label class="f-lbl">Points</label><input class="f-inp" type="number" placeholder="500"></div>
+    <div class="f-grp"><label class="f-lbl">Reason / Note</label><input class="f-inp" placeholder="Customer service adjustment"></div>
+    <div class="modal-act"><button class="btn btn-sec" onclick="closeModal('adjust')">Cancel</button><button class="btn btn-prim">Confirm Adjustment</button></div>
+  </div>
+</div>
+
+<!-- MODAL: Add Attribute -->
+<div class="modal-ov" id="modal-attr" onclick="bgClose(event,'attr')">
+  <div class="modal">
+    <div class="modal-title">Add Custom Attribute</div>
+    <div class="modal-sub">Creates the attribute definition across all registered TrueLoyal instances via API.</div>
+    <div class="f-grp"><label class="f-lbl">Attribute Name</label><input class="f-inp" placeholder="e.g. skin_concern"></div>
+    <div class="f-grp"><label class="f-lbl">Scope</label><select class="f-inp"><option>Member attribute</option><option>Transaction attribute</option></select></div>
+    <div class="f-grp"><label class="f-lbl">Data Type</label><select class="f-inp"><option>String</option><option>Number</option><option>List</option><option>Date</option></select></div>
+    <div class="f-grp"><label class="f-lbl">Description</label><input class="f-inp" placeholder="Optional"></div>
+    <div class="modal-act"><button class="btn btn-sec" onclick="closeModal('attr')">Cancel</button><button class="btn btn-prim">Create Attribute</button></div>
+  </div>
+</div>
+
+<script>
+// ---- MARKET DATA ----
+// earnPPU = points earned per 1 unit of local currency
+// e.g. HK$5 = 1pt → earnPPU = 0.2; €1 = 1.5pts → earnPPU = 1.5
+const MKTS = [
+  // inst = TrueLoyal partner_id (staging). API keys stored server-side only.
+  // Staging region assignment (testing phase — production IDs TBD):
+  //   a523097c3a (Stylevana Marketing) → USD group
+  //   3274dec4f9 (Staging US)          → HKD group
+  //   3d1022227d (Staging 3)           → EUR group
+  //   0e3bba8847 (Staging 4)           → GBP group
+  //   95fa76d2ac (Staging 5)           → AUD/NZD group
+  //   81a768aeff (Staging 6)           → MYR group
+  //   fc6ba7950a (Staging DEV)         → AED/MXN group
+  {id:'sv-us', n:'Stylevana US',    b:'SV',  c:'USD',sym:'$',   earnPPU:1,    earn:'$1 = 1 pt',       inst:'a523097c3a', mem:142850, pts:8420000,  rdm:1240000},
+  {id:'sv-uk', n:'Stylevana UK',    b:'SV',  c:'GBP',sym:'£',   earnPPU:1.27, earn:'£1 = 1.27 pts',   inst:'0e3bba8847', mem:38200,  pts:2140000,  rdm:380000},
+  {id:'sv-eu', n:'Stylevana EU',    b:'SV',  c:'EUR',sym:'€',   earnPPU:1.5,  earn:'€1 = 1.5 pts',    inst:'3d1022227d', mem:52100,  pts:3250000,  rdm:520000},
+  {id:'sv-ca', n:'Stylevana CA',    b:'SV',  c:'CAD',sym:'CA$', earnPPU:1,    earn:'CA$1 = 1 pt',     inst:'a523097c3a', mem:28400,  pts:1820000,  rdm:290000},
+  {id:'sv-au', n:'Stylevana AU',    b:'SV',  c:'AUD',sym:'A$',  earnPPU:1,    earn:'A$1 = 1 pt',      inst:'95fa76d2ac', mem:31500,  pts:2100000,  rdm:340000},
+  {id:'sv-hk', n:'Stylevana HK',    b:'SV',  c:'HKD',sym:'HK$', earnPPU:0.2,  earn:'HK$5 = 1 pt',    inst:'3274dec4f9', mem:89200,  pts:12800000, rdm:2400000},
+  {id:'sv-nz', n:'Stylevana NZ',    b:'SV',  c:'NZD',sym:'NZ$', earnPPU:1,    earn:'NZ$1 = 1 pt',    inst:'95fa76d2ac', mem:12800,  pts:840000,   rdm:124000},
+  {id:'sv-my', n:'Stylevana MY',    b:'SV',  c:'MYR',sym:'RM',  earnPPU:0.25, earn:'RM4 = 1 pt',     inst:'81a768aeff', mem:41200,  pts:5200000,  rdm:840000},
+  {id:'sv-ae', n:'Stylevana AE',    b:'SV',  c:'AED',sym:'AED', earnPPU:0.278,earn:'AED3.6 = 1 pt',  inst:'fc6ba7950a', mem:18900,  pts:2100000,  rdm:380000},
+  {id:'sv-mx', n:'Stylevana MX',    b:'SV',  c:'MXN',sym:'MX$', earnPPU:0.1,  earn:'MX$10 = 1 pt',   inst:'fc6ba7950a', mem:35600,  pts:4800000,  rdm:720000},
+  {id:'sv-pl', n:'Stylevana PL',    b:'SV',  c:'PLN',sym:'zł',  earnPPU:0.25, earn:'zł4 = 1 pt',     inst:'3d1022227d', mem:22400,  pts:2800000,  rdm:420000},
+  {id:'tsv-us',n:'Beauty Amora US', b:'TSV', c:'USD',sym:'$',   earnPPU:1,    earn:'$1 = 1 pt',       inst:'c1b1eeeb66', mem:48200,  pts:2840000,  rdm:420000},
+  {id:'tsv-uk',n:'Beauty Amora UK', b:'TSV', c:'GBP',sym:'£',   earnPPU:1.27, earn:'£1 = 1.27 pts',   inst:'c1b1eeeb66', mem:12400,  pts:820000,   rdm:124000},
+  {id:'tsv-eu',n:'Beauty Amora EU', b:'TSV', c:'EUR',sym:'€',   earnPPU:1.5,  earn:'€1 = 1.5 pts',    inst:'c1b1eeeb66', mem:18200,  pts:1240000,  rdm:196000},
+  {id:'tsv-hk',n:'Beauty Amora HK', b:'TSV', c:'HKD',sym:'HK$', earnPPU:0.2,  earn:'HK$5 = 1 pt',    inst:'c1b1eeeb66', mem:28400,  pts:4200000,  rdm:780000},
+  {id:'tsv-my',n:'Beauty Amora MY', b:'TSV', c:'MYR',sym:'RM',  earnPPU:0.25, earn:'RM4 = 1 pt',     inst:'c1b1eeeb66', mem:14800,  pts:1840000,  rdm:280000},
+  {id:'tsv-au',n:'Beauty Amora AU', b:'TSV', c:'AUD',sym:'A$',  earnPPU:1,    earn:'A$1 = 1 pt',     inst:'c1b1eeeb66', mem:9200,   pts:620000,   rdm:92000},
+];
+
+const MEMS = [
+  {n:'Aiko Tanaka',      e:'aiko.t@email.com',   m:'sv-hk',  tier:'Platinum',pts:48200,last:'2 min ago'},
+  {n:'Sophie Müller',    e:'s.muller@email.com', m:'sv-eu',  tier:'Gold',    pts:21400,last:'14 min ago'},
+  {n:'Priya Rajan',      e:'priya.r@email.com',  m:'sv-my',  tier:'Gold',    pts:18900,last:'1 hr ago'},
+  {n:'Emma Wilson',      e:'e.wilson@email.com', m:'sv-us',  tier:'Silver',  pts:9240, last:'2 hr ago'},
+  {n:'Rin Yamamoto',     e:'rin.y@email.com',    m:'tsv-hk', tier:'Platinum',pts:62800,last:'3 hr ago'},
+  {n:'Fatima Al Rashid', e:'f.alr@email.com',    m:'sv-ae',  tier:'Silver',  pts:7400, last:'5 hr ago'},
+  {n:'Lucia García',     e:'lucia.g@email.com',  m:'sv-mx',  tier:'Bronze',  pts:3200, last:'6 hr ago'},
+  {n:'Charlotte Dubois', e:'c.dubois@email.com', m:'sv-eu',  tier:'Gold',    pts:24800,last:'8 hr ago'},
+  {n:'Min-Ji Park',      e:'minji.p@email.com',  m:'sv-hk',  tier:'Platinum',pts:58100,last:'10 hr ago'},
+  {n:'Sarah Thompson',   e:'sarah.t@email.com',  m:'tsv-us', tier:'Silver',  pts:11200,last:'12 hr ago'},
+];
+
+// TXS include local amount and currency for USD conversion
+const TXS = [
+  {d:'Today 14:32',m:'Aiko Tanaka',      mk:'sv-hk', t:'award', localAmt:480,   c:'HKD',display:'HK$480',  pts:'+96 pts'},
+  {d:'Today 14:18',m:'Sophie Müller',    mk:'sv-eu', t:'redeem',localAmt:null,   c:'EUR',display:'—',       pts:'-500 pts'},
+  {d:'Today 13:55',m:'Priya Rajan',      mk:'sv-my', t:'award', localAmt:120,   c:'MYR',display:'RM120',   pts:'+30 pts'},
+  {d:'Today 13:41',m:'Rin Yamamoto',     mk:'tsv-hk',t:'award', localAmt:2400,  c:'HKD',display:'HK$2400', pts:'+480 pts'},
+  {d:'Today 13:20',m:'Emma Wilson',      mk:'sv-us', t:'deduct',localAmt:null,   c:'USD',display:'—',       pts:'-200 pts'},
+  {d:'Today 12:58',m:'Charlotte Dubois', mk:'sv-eu', t:'award', localAmt:96,    c:'EUR',display:'€96',     pts:'+144 pts'},
+  {d:'Today 12:44',m:'Lucia García',     mk:'sv-mx', t:'award', localAmt:340,   c:'MXN',display:'MX$340',  pts:'+34 pts'},
+  {d:'Today 12:21',m:'Fatima Al Rashid', mk:'sv-ae', t:'redeem',localAmt:null,   c:'AED',display:'—',       pts:'-750 pts'},
+  {d:'Today 11:48',m:'Min-Ji Park',      mk:'sv-hk', t:'award', localAmt:960,   c:'HKD',display:'HK$960',  pts:'+192 pts'},
+  {d:'Today 11:30',m:'Sarah Thompson',   mk:'tsv-us',t:'award', localAmt:84,    c:'USD',display:'$84',     pts:'+84 pts'},
+];
+
+const EVS = [
+  {type:'POINTS_EARNED',    mem:'Aiko Tanaka',      mk:'sv-hk',  d:'96 points awarded — purchase HK$480',       t:'2m ago',  c:'#22c55e'},
+  {type:'POINTS_REDEEMED',  mem:'Sophie Müller',    mk:'sv-eu',  d:'500 points redeemed — reward coupon issued', t:'14m ago', c:'#818cf8'},
+  {type:'POINTS_EARNED',    mem:'Priya Rajan',      mk:'sv-my',  d:'30 points awarded — purchase RM120',        t:'22m ago', c:'#22c55e'},
+  {type:'TIER_UPGRADE',     mem:'Rin Yamamoto',     mk:'tsv-hk', d:'Upgraded Gold → Platinum (62,800 pts)',      t:'38m ago', c:'#f59e0b'},
+  {type:'POINTS_DEDUCTED',  mem:'Emma Wilson',      mk:'sv-us',  d:'200 points deducted — CS adjustment',        t:'57m ago', c:'#ef4444'},
+  {type:'MEMBER_ENROLLMENT',mem:'Liu Wei',           mk:'sv-hk',  d:'New member enrolled via web widget',         t:'1hr ago', c:'#0ea5e9'},
+  {type:'POINTS_EARNED',    mem:'Charlotte Dubois', mk:'sv-eu',  d:'144 points awarded — purchase €96',         t:'1hr ago', c:'#22c55e'},
+  {type:'REFERRAL_SUCCESS', mem:'Min-Ji Park',      mk:'sv-hk',  d:'Referral converted — 500 bonus pts awarded', t:'2hr ago', c:'#8b5cf6'},
+  {type:'POINTS_EXPIRED',   mem:'142 members',       mk:'sv-us',  d:'Annual reset — points expired in batch',      t:'3hr ago', c:'#94a3b8'},
+  {type:'WINBACK_OFFER',    mem:'David Nguyen',      mk:'sv-au',  d:'Win-back offer triggered — 60 day lapse',    t:'4hr ago', c:'#f97316'},
+];
+
+// ---- FX STATE ----
+// Rates from ExchangeRate-API: base USD, so rates[currency] = units of that currency per 1 USD
+// e.g. rates.HKD = 7.84 means 1 USD = 7.84 HKD → to convert HKD→USD: amount / rates.HKD
+const FX_API_KEY = 'ddd0fb5e47e557c29224c88c';
+let fxRates = {}; // populated from API
+let fxFetched = false;
+let fxLastUpdated = null;
+
+async function fetchRates() {
+  const statusEl = document.getElementById('fx-status');
+  statusEl.className = 'fx-tag loading';
+  statusEl.textContent = '⟳ Fetching…';
+  document.getElementById('k-gmv').textContent = '—';
+  document.getElementById('k-gmv-sub').innerHTML = '<span class="fx-tag loading">⟳ Fetching rates…</span>';
+
+  try {
+    const res = await fetch(`https://v6.exchangerate-api.com/v6/${FX_API_KEY}/latest/USD`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+
+    if (data.result !== 'success') throw new Error(data['error-type'] || 'API error');
+
+    fxRates = data.conversion_rates;
+    fxFetched = true;
+    fxLastUpdated = new Date();
+
+    statusEl.className = 'fx-tag';
+    statusEl.textContent = '● Live';
+
+    const timeStr = fxLastUpdated.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+    document.getElementById('fx-updated').textContent = `Updated ${timeStr}`;
+
+    // Recalculate and rerender everything that uses rates
+    const gmv = calcTotalGMV(MKTS);
+    document.getElementById('k-gmv').textContent = fmtUSD(gmv);
+    document.getElementById('k-gmv-sub').innerHTML = `<span class="fx-tag">● Live rates</span> <span class="delta up">↑ 6.3%</span>`;
+
+    renderMktTbl(MKTS);
+    renderTxs();
+    renderCurTbl();
+
+  } catch(err) {
+    statusEl.className = 'fx-tag error';
+    statusEl.textContent = '⚠ Rate error';
+    document.getElementById('k-gmv').textContent = '—';
+    document.getElementById('k-gmv-sub').innerHTML = `<span class="fx-tag error">⚠ ${err.message}</span>`;
+    document.getElementById('fx-updated').textContent = '';
+    console.error('FX fetch failed:', err);
+  }
+}
+
+// Convert local currency amount to USD using live rates
+// rates[currency] = local units per 1 USD → localAmount / rates[currency] = USD
+function toUSD(amount, currency) {
+  if (!fxFetched || !fxRates[currency]) return null;
+  return amount / fxRates[currency];
+}
+
+// GMV for a single market: pts / earnPPU = local currency spend → convert to USD
+function marketGMV(m) {
+  if (!fxFetched || !fxRates[m.c]) return null;
+  const localSpend = m.pts / m.earnPPU;
+  return localSpend / fxRates[m.c];
+}
+
+function calcTotalGMV(mkts) {
+  return mkts.reduce((sum, m) => {
+    const g = marketGMV(m);
+    return sum + (g || 0);
+  }, 0);
+}
+
+// ---- HELPERS ----
+function mktName(id) { const m = MKTS.find(x=>x.id===id); return m ? m.n : id; }
+function fmt(n) { if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1e3) return (n/1e3).toFixed(0)+'K'; return n.toLocaleString(); }
+function fmtUSD(n) {
+  if (!n) return '—';
+  if(n>=1e6) return '$'+(n/1e6).toFixed(1)+'M';
+  if(n>=1e3) return '$'+(n/1e3).toFixed(0)+'K';
+  return '$'+n.toLocaleString();
+}
+function fmtRate(currency) {
+  if (!fxFetched || !fxRates[currency]) return '<span style="color:var(--muted)">—</span>';
+  const r = fxRates[currency];
+  return `<div class="rate-cell">${r.toFixed(4)} <span class="rate-live">Live</span></div>`;
+}
+function fmtPtsToUSD(m) {
+  if (!fxFetched || !fxRates[m.c]) return '—';
+  // 1 pt = (1/earnPPU) local units → USD
+  const localPerPt = 1 / m.earnPPU;
+  const usdPerPt = localPerPt / fxRates[m.c];
+  return '$' + usdPerPt.toFixed(4);
+}
+
+// ---- RENDERS ----
+function renderMktTbl(mkts) {
+  document.getElementById('mkt-tbl').innerHTML = mkts.map(m => {
+    const gmv = marketGMV(m);
+    return `<tr>
+      <td><span class="bdg bdg-${m.b.toLowerCase()}" style="margin-right:7px">${m.b}</span>${m.n}</td>
+      <td><span class="bdg bdg-cur">${m.c}</span></td>
+      <td>${m.mem.toLocaleString()}</td>
+      <td>${fmt(m.pts)}</td>
+      <td style="font-weight:600;color:${gmv?'var(--text)':'var(--muted)'}">${gmv ? fmtUSD(gmv) : '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderEvFeed() {
+  document.getElementById('ev-feed').innerHTML = EVS.slice(0,6).map(e=>`<div class="ev">
+    <div class="ev-dot" style="background:${e.c}"></div>
+    <div class="ev-body"><div class="ev-type">${e.type}</div><div class="ev-detail">${e.mem} · ${mktName(e.mk)}</div></div>
+    <div class="ev-time">${e.t}</div>
+  </div>`).join('');
+}
+
+function renderEvFull() {
+  document.getElementById('ev-full').innerHTML = EVS.map(e=>`<div class="ev">
+    <div class="ev-dot" style="background:${e.c}"></div>
+    <div class="ev-body">
+      <div class="ev-type">${e.type} <span class="bdg bdg-cur" style="margin-left:6px;font-size:10px">${mktName(e.mk)}</span></div>
+      <div class="ev-detail">${e.d}</div>
+      <div class="ev-detail" style="margin-top:1px">${e.mem}</div>
+    </div>
+    <div class="ev-time">${e.t}</div>
+  </div>`).join('');
+}
+
+function renderMems(mems) {
+  document.getElementById('mem-tbl').innerHTML = mems.length
+    ? mems.map(m=>`<tr>
+        <td><div style="font-weight:600">${m.n}</div><div style="font-size:12px;color:var(--muted)">${m.e}</div></td>
+        <td style="font-size:12px">${mktName(m.m)}</td>
+        <td><span class="bdg bdg-tier">${m.tier}</span></td>
+        <td style="font-weight:600">${m.pts.toLocaleString()} pts</td>
+        <td style="font-size:12px;color:var(--muted)">${m.last}</td>
+        <td><button class="btn btn-ghost" onclick="openModal('adjust')">Adjust Points</button></td>
+      </tr>`).join('')
+    : '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:30px">No members found for this market.</td></tr>';
+}
+
+function renderTxs() {
+  document.getElementById('tx-tbl').innerHTML = TXS.map(tx => {
+    const usd = (tx.localAmt && fxFetched && fxRates[tx.c])
+      ? fmtUSD(tx.localAmt / fxRates[tx.c])
+      : '—';
+    return `<tr>
+      <td style="font-size:12px;color:var(--muted)">${tx.d}</td>
+      <td>${tx.m}</td>
+      <td style="font-size:12px">${mktName(tx.mk)}</td>
+      <td><span class="bdg bdg-${tx.t}">${tx.t.toUpperCase()}</span></td>
+      <td>${tx.display}</td>
+      <td style="color:var(--muted);font-size:12px">${usd}</td>
+      <td style="font-weight:700;color:${tx.t==='award'?'#16a34a':tx.t==='deduct'?'#dc2626':'#4338ca'}">${tx.pts}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderCurTbl() {
+  document.getElementById('cur-tbl').innerHTML = MKTS.map(m => `<tr>
+    <td><span class="bdg bdg-${m.b.toLowerCase()}" style="margin-right:7px">${m.b}</span>${m.n}</td>
+    <td><span class="bdg bdg-cur">${m.c}</span></td>
+    <td style="font-weight:600">${m.earn}</td>
+    <td style="font-size:12px;color:var(--muted)">${fmtPtsToUSD(m)} / pt</td>
+    <td>${fmtRate(m.c)}</td>
+    <td style="font-size:12px;color:var(--muted);font-family:monospace">${m.inst}</td>
+  </tr>`).join('');
+}
+
+// ---- NAVIGATION ----
+function go(v, el) {
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  el.classList.add('active');
+  const titles = {global:'Global Overview',members:'Members',transactions:'Transaction Log',events:'Webhook Events',config:'Configuration'};
+  document.getElementById('tb-title').textContent = titles[v]||v;
+}
+
+// ---- MARKET SWITCH ----
+function switchMarket() {
+  const v = document.getElementById('mkt').value;
+  const m = MKTS.find(x=>x.id===v);
+  const cb = document.getElementById('cur-badge');
+  if(v==='all') {
+    cb.textContent='All Currencies';
+    document.getElementById('k-mem').textContent='646,150';
+    document.getElementById('k-pts').textContent='57.2M';
+    document.getElementById('k-rdm').textContent='9.3M pts';
+    if(fxFetched) {
+      const gmv = calcTotalGMV(MKTS);
+      document.getElementById('k-gmv').textContent = fmtUSD(gmv);
+    }
+    renderMktTbl(MKTS); renderMems(MEMS);
+  } else if(m) {
+    cb.textContent=m.c+' — '+m.sym;
+    document.getElementById('k-mem').textContent=m.mem.toLocaleString();
+    document.getElementById('k-pts').textContent=fmt(m.pts);
+    document.getElementById('k-rdm').textContent=fmt(m.rdm)+' pts';
+    if(fxFetched) {
+      const gmv = marketGMV(m);
+      document.getElementById('k-gmv').textContent = fmtUSD(gmv);
+    }
+    renderMktTbl([m]); renderMems(MEMS.filter(x=>x.m===v));
+  }
+}
+
+// ---- MODALS ----
+function openModal(id) { document.getElementById('modal-'+id).classList.add('open'); }
+function closeModal(id) { document.getElementById('modal-'+id).classList.remove('open'); }
+function bgClose(e,id) { if(e.target===e.currentTarget) closeModal(id); }
+
+// ---- INIT ----
+renderMktTbl(MKTS);
+renderEvFeed();
+renderEvFull();
+renderMems(MEMS);
+renderTxs();
+renderCurTbl();
+fetchRates(); // kick off live rate fetch immediately
+</script>
+</body>
+</html>
