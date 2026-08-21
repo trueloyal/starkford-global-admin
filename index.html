@@ -68,6 +68,12 @@ tr:hover td { background: #fafbfc; }
 .bdg-sv      { background: rgba(26,39,68,.1); color: var(--navy); }
 .bdg-tsv     { background: rgba(248,180,195,.2); color: #c0446a; }
 .bdg-tier    { background: rgba(245,158,11,.12); color: #b45309; }
+.bdg-vip      { background: rgba(236,72,153,.15); color: #be185d; }
+.bdg-superfan { background: rgba(245,158,11,.15); color: #b45309; }
+.bdg-insiders { background: rgba(99,102,241,.15); color: #4338ca; }
+.bdg-beginner { background: rgba(148,163,184,.2); color: #475569; }
+.bdg-active  { background: rgba(34,197,94,.12); color: #16a34a; }
+.bdg-draft   { background: rgba(245,158,11,.12); color: #b45309; }
 .bdg-award   { background: rgba(34,197,94,.12); color: #16a34a; }
 .bdg-deduct  { background: rgba(239,68,68,.1); color: #dc2626; }
 .bdg-redeem  { background: rgba(99,102,241,.12); color: #4338ca; }
@@ -174,6 +180,11 @@ select.f-inp { cursor: pointer; }
 textarea.f-inp { resize: vertical; font-family: inherit; }
 /* Compare */
 .cmp-selectors { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+/* Campaign cards */
+.camp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.camp-card { background: #fff; border-radius: 10px; border: 1px solid var(--border); padding: 18px 20px; }
+.camp-name { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.camp-meta { font-size: 12px; color: var(--muted); line-height: 1.8; }
 </style>
 </head>
 <body>
@@ -203,6 +214,7 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
   <div class="s-section">
     <div class="s-label">Program</div>
     <div class="nav" onclick="go('config',this)"><span class="ni">⚙</span> Configuration</div>
+    <div class="nav" onclick="go('campaigns',this)"><span class="ni">📢</span> Campaigns</div>
   </div>
   <div class="s-spacer"></div>
   <div class="s-foot">
@@ -303,6 +315,25 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
           <div class="panel">
             <div class="p-head"><span class="p-title">Recent Events</span><button class="btn-refresh" onclick="renderEvFeed()">↻ Refresh</button></div>
             <div id="ev-feed"></div>
+          </div>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:0;grid-template-columns:1fr 1fr">
+        <div class="panel">
+          <div class="p-head"><span class="p-title">Tier Distribution</span></div>
+          <table>
+            <thead><tr><th>Tier</th><th>Members (sample)</th><th>Share</th></tr></thead>
+            <tbody id="tier-dist-tbl"></tbody>
+          </table>
+        </div>
+        <div class="panel">
+          <div class="p-head"><span class="p-title">Loyalty Snapshot</span></div>
+          <div style="padding:4px 0">
+            <div class="attr-row"><div class="attr-name">Referral participation rate</div><div style="font-size:13px;font-weight:700">18.4%</div></div>
+            <div class="attr-row"><div class="attr-name">Referral conversion rate</div><div style="font-size:13px;font-weight:700">34.2%</div></div>
+            <div class="attr-row"><div class="attr-name">Avg points per active member</div><div style="font-size:13px;font-weight:700">14,820</div></div>
+            <div class="attr-row"><div class="attr-name">Points liability (est.)</div><div style="font-size:13px;font-weight:700">57.2M pts</div></div>
+            <div class="attr-row"><div class="attr-name">Redemption rate (30d)</div><div style="font-size:13px;font-weight:700">16.3%</div></div>
           </div>
         </div>
       </div>
@@ -417,6 +448,61 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
       <div class="inst-grid" id="inst-grid"></div>
     </div>
 
+    <!-- CAMPAIGNS -->
+    <div id="view-campaigns" class="view">
+      <div class="notice">Campaign creation and publishing is managed in TrueLoyal Admin. This view shows active campaigns synced from each instance.</div>
+      <div class="camp-grid">
+        <div class="camp-card">
+          <div class="camp-name">Birthday Rewards</div>
+          <div style="display:flex;gap:6px;margin-bottom:10px">
+            <span class="bdg bdg-staging">Automated</span>
+            <span class="bdg bdg-active">Active</span>
+          </div>
+          <div class="camp-meta">
+            <div><strong>Markets:</strong> All</div>
+            <div><strong>Trigger:</strong> Birthday date ≤ today + 14 days</div>
+            <div><strong>Reward:</strong> Points + % coupon per tier</div>
+          </div>
+        </div>
+        <div class="camp-card">
+          <div class="camp-name">VIP Anniversary</div>
+          <div style="display:flex;gap:6px;margin-bottom:10px">
+            <span class="bdg bdg-staging">Automated</span>
+            <span class="bdg bdg-active">Active</span>
+          </div>
+          <div class="camp-meta">
+            <div><strong>Markets:</strong> All</div>
+            <div><strong>Trigger:</strong> Membership anniversary</div>
+            <div><strong>Reward:</strong> 20% coupon</div>
+          </div>
+        </div>
+        <div class="camp-card">
+          <div class="camp-name">Win-Back: 60-Day Inactive</div>
+          <div style="display:flex;gap:6px;margin-bottom:10px">
+            <span class="bdg bdg-staging">Automated</span>
+            <span class="bdg bdg-active">Active</span>
+          </div>
+          <div class="camp-meta">
+            <div><strong>Markets:</strong> US, UK, EU, CA, AU</div>
+            <div><strong>Trigger:</strong> 60 days inactivity</div>
+            <div><strong>Reward:</strong> Win-back offer</div>
+          </div>
+        </div>
+        <div class="camp-card">
+          <div class="camp-name">Super Fan Challenge</div>
+          <div style="display:flex;gap:6px;margin-bottom:10px">
+            <span class="bdg bdg-staging">Custom Activity</span>
+            <span class="bdg bdg-draft">Draft</span>
+          </div>
+          <div class="camp-meta">
+            <div><strong>Markets:</strong> All</div>
+            <div><strong>Trigger:</strong> Manual / scheduled</div>
+            <div><strong>Reward:</strong> Bonus points</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CONFIGURATION -->
     <div id="view-config" class="view">
       <div class="notice">Settings marked <strong style="color:#16a34a">API Writable</strong> are managed from this dashboard. Settings marked <strong style="color:#dc2626">TrueLoyal Admin Only</strong> require per-instance configuration in the TrueLoyal admin panel.</div>
@@ -434,15 +520,53 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
         </div>
         <div class="cfg-sec">
           <div class="cfg-head"><div class="cfg-title">Tier Configuration <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
-          <div class="lock-box"><span class="lock-icon">🔒</span>Tier names, point thresholds, and benefits are configured per-instance in the TrueLoyal admin panel. No external API write endpoint exists.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
+          <table>
+            <thead><tr><th>Tier</th><th>Min Points</th><th>Min Orders</th><th>Market Exceptions</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><span class="bdg bdg-beginner">Beginner</span></td>
+                <td>0</td><td>0</td><td style="font-size:12px;color:var(--muted)">All markets</td>
+              </tr>
+              <tr>
+                <td><span class="bdg bdg-insiders">Insiders</span></td>
+                <td>1</td><td>1</td><td style="font-size:12px;color:var(--muted)">All markets</td>
+              </tr>
+              <tr>
+                <td><span class="bdg bdg-superfan">Super Fan</span></td>
+                <td>300</td><td>3</td><td style="font-size:12px;color:var(--muted)">HK: 2,500 pts · AE: 1,000 pts · MY: 1,200 pts · PL: 1,000 pts</td>
+              </tr>
+              <tr>
+                <td><span class="bdg bdg-vip">VIP</span></td>
+                <td>800</td><td>5</td><td style="font-size:12px;color:var(--muted)">HK: 6,000 pts · AE: 2,500 pts · MY: 3,000 pts · PL: 2,500 pts</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="padding:10px 18px 12px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)">Edit thresholds in the TrueLoyal admin for each instance. Tier term: Rolling Year (Dynamic 12-Month Period).</div>
         </div>
-        <div class="cfg-sec">
+        <div class="cfg-sec" style="grid-column:1/-1">
           <div class="cfg-head"><div class="cfg-title">Earn Rules <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
-          <div class="lock-box"><span class="lock-icon">🔒</span>Point earn rates, multipliers, and SKU-level rules are configured per-instance in the TrueLoyal admin panel.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
-        </div>
-        <div class="cfg-sec">
-          <div class="cfg-head"><div class="cfg-title">Campaigns <span class="api-tag api-no">TrueLoyal Admin Only</span></div></div>
-          <div class="lock-box"><span class="lock-icon">🔒</span>Campaign creation, scheduling, launch, and stop are not exposed on the merchant REST API.<br><span class="lock-link">Open TrueLoyal Admin →</span></div>
+          <div style="padding:12px 18px 6px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px">Purchase Earning — by Market</div>
+          <table>
+            <thead><tr><th>Market</th><th>Earn Rate</th></tr></thead>
+            <tbody id="earn-mkt-tbl"></tbody>
+          </table>
+          <div style="padding:16px 18px 6px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;border-top:1px solid var(--border)">Bonus Activities — Global</div>
+          <table>
+            <thead><tr><th>Activity</th><th>Standard Markets</th><th>HK / AE / MY / PL</th></tr></thead>
+            <tbody>
+              <tr><td>Create account</td><td>100 pts</td><td>HK: 800 · AE: 300 · PL: 300 · MY: 400</td></tr>
+              <tr><td>Leave a review</td><td>25 pts</td><td>HK: 200 · AE: 75 · PL: 75 · MY: 100</td></tr>
+              <tr><td>Photo review</td><td>50 pts</td><td>HK: 400 · AE: 150 · PL: 150 · MY: 200</td></tr>
+              <tr><td>Video review</td><td>75 pts</td><td>HK: 600 · AE: 225 · PL: 225 · MY: 300</td></tr>
+              <tr><td>Follow on Instagram</td><td>15 pts</td><td>HK: 150 · AE: 45 · PL: 45 · MY: 60</td></tr>
+              <tr><td>Newsletter sign-up</td><td>50 pts</td><td>HK: 400 · AE: 150 · PL: 150 · MY: 200</td></tr>
+              <tr><td>Birthday bonus (Insiders)</td><td colspan="2">25 pts + 20% coupon</td></tr>
+              <tr><td>Birthday bonus (VIP)</td><td colspan="2">50 pts + 25% coupon</td></tr>
+              <tr><td>Anniversary</td><td colspan="2">20% coupon</td></tr>
+              <tr><td>Referral (referrer)</td><td colspan="2">100 pts — US, UK, EU, CA, AU only</td></tr>
+            </tbody>
+          </table>
+          <div style="padding:10px 18px 12px;border-top:1px solid var(--border)"><span class="lock-link">Open TrueLoyal Admin →</span></div>
         </div>
         <div class="cfg-sec" style="grid-column:1/-1">
           <div class="cfg-head">
@@ -618,21 +742,21 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
 <script>
 const MKTS = [
   {id:'sv-us', n:'Stylevana US',    b:'SV',  c:'USD',sym:'$',   lang:'en', earnPPU:1,    earn:'$1 = 1 pt',      inst:'a523097c3a', mem:142850, pts:8420000,  rdm:1240000},
-  {id:'sv-uk', n:'Stylevana UK',    b:'SV',  c:'GBP',sym:'£',   lang:'en', earnPPU:1.27, earn:'£1 = 1.27 pts',  inst:'0e3bba8847', mem:38200,  pts:2140000,  rdm:380000},
+  {id:'sv-uk', n:'Stylevana UK',    b:'SV',  c:'GBP',sym:'£',   lang:'en', earnPPU:1.5,  earn:'£1 = 1.5 pts',   inst:'0e3bba8847', mem:38200,  pts:2140000,  rdm:380000},
   {id:'sv-eu', n:'Stylevana EU',    b:'SV',  c:'EUR',sym:'€',   lang:'en', earnPPU:1.5,  earn:'€1 = 1.5 pts',   inst:'3d1022227d', mem:52100,  pts:3250000,  rdm:520000},
   {id:'sv-ca', n:'Stylevana CA',    b:'SV',  c:'CAD',sym:'CA$', lang:'en', earnPPU:1,    earn:'CA$1 = 1 pt',    inst:'a523097c3a', mem:28400,  pts:1820000,  rdm:290000},
   {id:'sv-au', n:'Stylevana AU',    b:'SV',  c:'AUD',sym:'A$',  lang:'en', earnPPU:1,    earn:'A$1 = 1 pt',     inst:'95fa76d2ac', mem:31500,  pts:2100000,  rdm:340000},
-  {id:'sv-hk', n:'Stylevana HK',    b:'SV',  c:'HKD',sym:'HK$', lang:'zh', earnPPU:0.2,  earn:'HK$5 = 1 pt',   inst:'3274dec4f9', mem:89200,  pts:12800000, rdm:2400000},
+  {id:'sv-hk', n:'Stylevana HK',    b:'SV',  c:'HKD',sym:'HK$', lang:'zh', earnPPU:1,    earn:'HK$1 = 1 pt',   inst:'3274dec4f9', mem:89200,  pts:12800000, rdm:2400000},
   {id:'sv-nz', n:'Stylevana NZ',    b:'SV',  c:'NZD',sym:'NZ$', lang:'en', earnPPU:1,    earn:'NZ$1 = 1 pt',   inst:'95fa76d2ac', mem:12800,  pts:840000,   rdm:124000},
-  {id:'sv-my', n:'Stylevana MY',    b:'SV',  c:'MYR',sym:'RM',  lang:'ms', earnPPU:0.25, earn:'RM4 = 1 pt',    inst:'81a768aeff', mem:41200,  pts:5200000,  rdm:840000},
-  {id:'sv-ae', n:'Stylevana AE',    b:'SV',  c:'AED',sym:'AED', lang:'ar', earnPPU:0.278,earn:'AED3.6 = 1 pt', inst:'fc6ba7950a', mem:18900,  pts:2100000,  rdm:380000},
-  {id:'sv-mx', n:'Stylevana MX',    b:'SV',  c:'MXN',sym:'MX$', lang:'es', earnPPU:0.1,  earn:'MX$10 = 1 pt',  inst:'fc6ba7950a', mem:35600,  pts:4800000,  rdm:720000},
-  {id:'sv-pl', n:'Stylevana PL',    b:'SV',  c:'PLN',sym:'zł',  lang:'pl', earnPPU:0.25, earn:'zł4 = 1 pt',    inst:'3d1022227d', mem:22400,  pts:2800000,  rdm:420000},
+  {id:'sv-my', n:'Stylevana MY',    b:'SV',  c:'MYR',sym:'RM',  lang:'ms', earnPPU:1,    earn:'RM1 = 1 pt',    inst:'81a768aeff', mem:41200,  pts:5200000,  rdm:840000},
+  {id:'sv-ae', n:'Stylevana AE',    b:'SV',  c:'AED',sym:'AED', lang:'ar', earnPPU:1,    earn:'AED1 = 1 pt',   inst:'fc6ba7950a', mem:18900,  pts:2100000,  rdm:380000},
+  {id:'sv-mx', n:'Stylevana MX',    b:'SV',  c:'MXN',sym:'MX$', lang:'es', earnPPU:0.056,earn:'MX$18 = 1 pt',  inst:'fc6ba7950a', mem:35600,  pts:4800000,  rdm:720000},
+  {id:'sv-pl', n:'Stylevana PL',    b:'SV',  c:'PLN',sym:'zł',  lang:'pl', earnPPU:1,    earn:'1zł = 1 pt',    inst:'3d1022227d', mem:22400,  pts:2800000,  rdm:420000},
   {id:'tsv-us',n:'Beauty Amora US', b:'TSV', c:'USD',sym:'$',   lang:'en', earnPPU:1,    earn:'$1 = 1 pt',      inst:'c1b1eeeb66', mem:48200,  pts:2840000,  rdm:420000},
-  {id:'tsv-uk',n:'Beauty Amora UK', b:'TSV', c:'GBP',sym:'£',   lang:'en', earnPPU:1.27, earn:'£1 = 1.27 pts',  inst:'c1b1eeeb66', mem:12400,  pts:820000,   rdm:124000},
+  {id:'tsv-uk',n:'Beauty Amora UK', b:'TSV', c:'GBP',sym:'£',   lang:'en', earnPPU:1.5,  earn:'£1 = 1.5 pts',   inst:'c1b1eeeb66', mem:12400,  pts:820000,   rdm:124000},
   {id:'tsv-eu',n:'Beauty Amora EU', b:'TSV', c:'EUR',sym:'€',   lang:'en', earnPPU:1.5,  earn:'€1 = 1.5 pts',   inst:'c1b1eeeb66', mem:18200,  pts:1240000,  rdm:196000},
-  {id:'tsv-hk',n:'Beauty Amora HK', b:'TSV', c:'HKD',sym:'HK$', lang:'zh', earnPPU:0.2,  earn:'HK$5 = 1 pt',   inst:'c1b1eeeb66', mem:28400,  pts:4200000,  rdm:780000},
-  {id:'tsv-my',n:'Beauty Amora MY', b:'TSV', c:'MYR',sym:'RM',  lang:'ms', earnPPU:0.25, earn:'RM4 = 1 pt',    inst:'c1b1eeeb66', mem:14800,  pts:1840000,  rdm:280000},
+  {id:'tsv-hk',n:'Beauty Amora HK', b:'TSV', c:'HKD',sym:'HK$', lang:'zh', earnPPU:1,    earn:'HK$1 = 1 pt',   inst:'c1b1eeeb66', mem:28400,  pts:4200000,  rdm:780000},
+  {id:'tsv-my',n:'Beauty Amora MY', b:'TSV', c:'MYR',sym:'RM',  lang:'ms', earnPPU:1,    earn:'RM1 = 1 pt',    inst:'c1b1eeeb66', mem:14800,  pts:1840000,  rdm:280000},
   {id:'tsv-au',n:'Beauty Amora AU', b:'TSV', c:'AUD',sym:'A$',  lang:'en', earnPPU:1,    earn:'A$1 = 1 pt',    inst:'c1b1eeeb66', mem:9200,   pts:620000,   rdm:92000},
 ];
 
@@ -650,67 +774,67 @@ const INSTANCES = [
 ];
 
 const MEMS = [
-  {n:'Emily Johnson',      e:'emily.j@email.com',    m:'sv-us',  tier:'Platinum', pts:52400, last:'5 min ago'},
-  {n:'Michael Chen',       e:'m.chen@email.com',     m:'sv-us',  tier:'Gold',     pts:24800, last:'1 hr ago'},
-  {n:'Ashley Williams',    e:'ashley.w@email.com',   m:'sv-us',  tier:'Gold',     pts:18200, last:'2 hr ago'},
-  {n:'James Rodriguez',    e:'j.rod@email.com',      m:'sv-us',  tier:'Silver',   pts:9600,  last:'4 hr ago'},
-  {n:'Sarah Thompson',     e:'sarah.t@email.com',    m:'sv-us',  tier:'Silver',   pts:11200, last:'6 hr ago'},
-  {n:'David Kim',          e:'david.k@email.com',    m:'sv-us',  tier:'Bronze',   pts:2800,  last:'2 days ago'},
-  {n:'Charlotte Hughes',   e:'c.hughes@email.com',   m:'sv-uk',  tier:'Platinum', pts:48600, last:'18 min ago'},
-  {n:'Oliver Bennett',     e:'o.bennett@email.com',  m:'sv-uk',  tier:'Gold',     pts:22100, last:'3 hr ago'},
-  {n:'Amelia Clarke',      e:'a.clarke@email.com',   m:'sv-uk',  tier:'Silver',   pts:8400,  last:'1 day ago'},
-  {n:'Harry Walsh',        e:'h.walsh@email.com',    m:'sv-uk',  tier:'Bronze',   pts:3200,  last:'3 days ago'},
-  {n:'Sophie Müller',      e:'s.muller@email.com',   m:'sv-eu',  tier:'Gold',     pts:21400, last:'14 min ago'},
-  {n:'Lars Eriksson',      e:'lars.e@email.com',     m:'sv-eu',  tier:'Platinum', pts:41200, last:'2 hr ago'},
-  {n:'Charlotte Dubois',   e:'c.dubois@email.com',   m:'sv-eu',  tier:'Gold',     pts:24800, last:'8 hr ago'},
-  {n:'Elena Rossi',        e:'e.rossi@email.com',    m:'sv-eu',  tier:'Silver',   pts:12400, last:'5 hr ago'},
-  {n:'Anna Kowalski',      e:'anna.k@email.com',     m:'sv-eu',  tier:'Bronze',   pts:1800,  last:'1 day ago'},
-  {n:'Olivia Martin',      e:'olivia.m@email.com',   m:'sv-ca',  tier:'Gold',     pts:19600, last:'45 min ago'},
-  {n:'Liam Tremblay',      e:'liam.t@email.com',     m:'sv-ca',  tier:'Silver',   pts:7800,  last:'6 hr ago'},
-  {n:'Emma Bouchard',      e:'emma.b@email.com',     m:'sv-ca',  tier:'Bronze',   pts:2400,  last:'2 days ago'},
-  {n:'Chloe Anderson',     e:'chloe.a@email.com',    m:'sv-au',  tier:'Gold',     pts:17800, last:'1 hr ago'},
-  {n:'Jack Morrison',      e:'jack.m@email.com',     m:'sv-au',  tier:'Silver',   pts:6400,  last:'8 hr ago'},
-  {n:'Zoe Campbell',       e:'zoe.c@email.com',      m:'sv-au',  tier:'Bronze',   pts:1600,  last:'4 days ago'},
-  {n:'Aiko Tanaka',        e:'aiko.t@email.com',     m:'sv-hk',  tier:'Platinum', pts:48200, last:'2 min ago'},
-  {n:'Min-Ji Park',        e:'minji.p@email.com',    m:'sv-hk',  tier:'Platinum', pts:58100, last:'10 hr ago'},
-  {n:'Mei Lin',            e:'mei.lin@email.com',    m:'sv-hk',  tier:'Gold',     pts:28400, last:'3 hr ago'},
-  {n:'Kevin Ng',           e:'kevin.ng@email.com',   m:'sv-hk',  tier:'Gold',     pts:21600, last:'6 hr ago'},
-  {n:'Liu Wei',            e:'liu.w@email.com',      m:'sv-hk',  tier:'Silver',   pts:9800,  last:'1 hr ago'},
-  {n:'Yan Fong',           e:'yan.f@email.com',      m:'sv-hk',  tier:'Bronze',   pts:3400,  last:'2 days ago'},
-  {n:'Ruby Cooper',        e:'ruby.c@email.com',     m:'sv-nz',  tier:'Silver',   pts:8200,  last:'3 hr ago'},
-  {n:'Ethan Walker',       e:'ethan.w@email.com',    m:'sv-nz',  tier:'Bronze',   pts:2100,  last:'1 day ago'},
-  {n:'Priya Rajan',        e:'priya.r@email.com',    m:'sv-my',  tier:'Gold',     pts:18900, last:'1 hr ago'},
-  {n:'Ahmad Razali',       e:'ahmad.r@email.com',    m:'sv-my',  tier:'Gold',     pts:22400, last:'4 hr ago'},
-  {n:'Nurul Ain',          e:'nurul.a@email.com',    m:'sv-my',  tier:'Silver',   pts:7600,  last:'10 hr ago'},
-  {n:'Wei Ming',           e:'wei.m@email.com',      m:'sv-my',  tier:'Bronze',   pts:1900,  last:'3 days ago'},
-  {n:'Mohammed Al Zaabi',  e:'m.alz@email.com',      m:'sv-ae',  tier:'Gold',     pts:16800, last:'2 hr ago'},
-  {n:'Fatima Al Rashid',   e:'f.alr@email.com',      m:'sv-ae',  tier:'Silver',   pts:7400,  last:'5 hr ago'},
-  {n:'Layla Hassan',       e:'layla.h@email.com',    m:'sv-ae',  tier:'Bronze',   pts:3100,  last:'1 day ago'},
-  {n:'Isabella Torres',    e:'isabella.t@email.com', m:'sv-mx',  tier:'Gold',     pts:19200, last:'1 hr ago'},
-  {n:'Carlos Mendoza',     e:'carlos.m@email.com',   m:'sv-mx',  tier:'Silver',   pts:8800,  last:'3 hr ago'},
-  {n:'Lucia García',       e:'lucia.g@email.com',    m:'sv-mx',  tier:'Bronze',   pts:3200,  last:'6 hr ago'},
-  {n:'Piotr Wiśniewski',   e:'p.wis@email.com',      m:'sv-pl',  tier:'Gold',     pts:24400, last:'4 hr ago'},
-  {n:'Katarzyna Nowak',    e:'k.nowak@email.com',    m:'sv-pl',  tier:'Silver',   pts:9200,  last:'7 hr ago'},
-  {n:'Monika Kowalczyk',   e:'m.kow@email.com',      m:'sv-pl',  tier:'Bronze',   pts:2600,  last:'2 days ago'},
-  {n:'Madison Lee',        e:'madison.l@email.com',  m:'tsv-us', tier:'Platinum', pts:44200, last:'45 min ago'},
-  {n:'Tyler Brooks',       e:'tyler.b@email.com',    m:'tsv-us', tier:'Gold',     pts:26800, last:'2 hr ago'},
-  {n:'Jordan Casey',       e:'jordan.c@email.com',   m:'tsv-us', tier:'Silver',   pts:11400, last:'5 hr ago'},
-  {n:'Noah Davis',         e:'noah.d@email.com',     m:'tsv-us', tier:'Bronze',   pts:1400,  last:'5 days ago'},
-  {n:'Isla Robertson',     e:'isla.r@email.com',     m:'tsv-uk', tier:'Gold',     pts:23400, last:'3 hr ago'},
-  {n:'Finn Mackenzie',     e:'finn.m@email.com',     m:'tsv-uk', tier:'Silver',   pts:7200,  last:'1 day ago'},
-  {n:'Poppy Graham',       e:'poppy.g@email.com',    m:'tsv-uk', tier:'Bronze',   pts:2800,  last:'4 days ago'},
-  {n:'Emma Schmidt',       e:'emma.s@email.com',     m:'tsv-eu', tier:'Gold',     pts:20600, last:'5 hr ago'},
-  {n:'Lucas Petit',        e:'lucas.p@email.com',    m:'tsv-eu', tier:'Silver',   pts:8800,  last:'2 hr ago'},
-  {n:'Sofia Bianchi',      e:'sofia.b@email.com',    m:'tsv-eu', tier:'Bronze',   pts:3600,  last:'1 day ago'},
-  {n:'Rin Yamamoto',       e:'rin.y@email.com',      m:'tsv-hk', tier:'Platinum', pts:62800, last:'3 hr ago'},
-  {n:'Hana Kim',           e:'hana.k@email.com',     m:'tsv-hk', tier:'Gold',     pts:31200, last:'6 hr ago'},
-  {n:'Chen Jing',          e:'chen.j@email.com',     m:'tsv-hk', tier:'Silver',   pts:12400, last:'8 hr ago'},
-  {n:'Tommy Lam',          e:'tommy.l@email.com',    m:'tsv-hk', tier:'Bronze',   pts:4200,  last:'2 days ago'},
-  {n:'Hafiz Ismail',       e:'hafiz.i@email.com',    m:'tsv-my', tier:'Gold',     pts:18400, last:'7 hr ago'},
-  {n:'Siti Rahimah',       e:'siti.r@email.com',     m:'tsv-my', tier:'Silver',   pts:6800,  last:'4 hr ago'},
-  {n:'Aisyah Zainal',      e:'aisyah.z@email.com',   m:'tsv-my', tier:'Bronze',   pts:2200,  last:'3 days ago'},
-  {n:'Charlotte Brown',    e:'charlotte.b@email.com',m:'tsv-au', tier:'Silver',   pts:9400,  last:'6 hr ago'},
-  {n:'Lachlan Smith',      e:'lachlan.s@email.com',  m:'tsv-au', tier:'Bronze',   pts:1800,  last:'2 days ago'},
+  {n:'Emily Johnson',      e:'emily.j@email.com',    m:'sv-us',  tier:'VIP', pts:52400, last:'5 min ago'},
+  {n:'Michael Chen',       e:'m.chen@email.com',     m:'sv-us',  tier:'Super Fan',     pts:24800, last:'1 hr ago'},
+  {n:'Ashley Williams',    e:'ashley.w@email.com',   m:'sv-us',  tier:'Super Fan',     pts:18200, last:'2 hr ago'},
+  {n:'James Rodriguez',    e:'j.rod@email.com',      m:'sv-us',  tier:'Insiders',   pts:9600,  last:'4 hr ago'},
+  {n:'Sarah Thompson',     e:'sarah.t@email.com',    m:'sv-us',  tier:'Insiders',   pts:11200, last:'6 hr ago'},
+  {n:'David Kim',          e:'david.k@email.com',    m:'sv-us',  tier:'Beginner',   pts:2800,  last:'2 days ago'},
+  {n:'Charlotte Hughes',   e:'c.hughes@email.com',   m:'sv-uk',  tier:'VIP', pts:48600, last:'18 min ago'},
+  {n:'Oliver Bennett',     e:'o.bennett@email.com',  m:'sv-uk',  tier:'Super Fan',     pts:22100, last:'3 hr ago'},
+  {n:'Amelia Clarke',      e:'a.clarke@email.com',   m:'sv-uk',  tier:'Insiders',   pts:8400,  last:'1 day ago'},
+  {n:'Harry Walsh',        e:'h.walsh@email.com',    m:'sv-uk',  tier:'Beginner',   pts:3200,  last:'3 days ago'},
+  {n:'Sophie Müller',      e:'s.muller@email.com',   m:'sv-eu',  tier:'Super Fan',     pts:21400, last:'14 min ago'},
+  {n:'Lars Eriksson',      e:'lars.e@email.com',     m:'sv-eu',  tier:'VIP', pts:41200, last:'2 hr ago'},
+  {n:'Charlotte Dubois',   e:'c.dubois@email.com',   m:'sv-eu',  tier:'Super Fan',     pts:24800, last:'8 hr ago'},
+  {n:'Elena Rossi',        e:'e.rossi@email.com',    m:'sv-eu',  tier:'Insiders',   pts:12400, last:'5 hr ago'},
+  {n:'Anna Kowalski',      e:'anna.k@email.com',     m:'sv-eu',  tier:'Beginner',   pts:1800,  last:'1 day ago'},
+  {n:'Olivia Martin',      e:'olivia.m@email.com',   m:'sv-ca',  tier:'Super Fan',     pts:19600, last:'45 min ago'},
+  {n:'Liam Tremblay',      e:'liam.t@email.com',     m:'sv-ca',  tier:'Insiders',   pts:7800,  last:'6 hr ago'},
+  {n:'Emma Bouchard',      e:'emma.b@email.com',     m:'sv-ca',  tier:'Beginner',   pts:2400,  last:'2 days ago'},
+  {n:'Chloe Anderson',     e:'chloe.a@email.com',    m:'sv-au',  tier:'Super Fan',     pts:17800, last:'1 hr ago'},
+  {n:'Jack Morrison',      e:'jack.m@email.com',     m:'sv-au',  tier:'Insiders',   pts:6400,  last:'8 hr ago'},
+  {n:'Zoe Campbell',       e:'zoe.c@email.com',      m:'sv-au',  tier:'Beginner',   pts:1600,  last:'4 days ago'},
+  {n:'Aiko Tanaka',        e:'aiko.t@email.com',     m:'sv-hk',  tier:'VIP', pts:48200, last:'2 min ago'},
+  {n:'Min-Ji Park',        e:'minji.p@email.com',    m:'sv-hk',  tier:'VIP', pts:58100, last:'10 hr ago'},
+  {n:'Mei Lin',            e:'mei.lin@email.com',    m:'sv-hk',  tier:'Super Fan',     pts:28400, last:'3 hr ago'},
+  {n:'Kevin Ng',           e:'kevin.ng@email.com',   m:'sv-hk',  tier:'Super Fan',     pts:21600, last:'6 hr ago'},
+  {n:'Liu Wei',            e:'liu.w@email.com',      m:'sv-hk',  tier:'Insiders',   pts:9800,  last:'1 hr ago'},
+  {n:'Yan Fong',           e:'yan.f@email.com',      m:'sv-hk',  tier:'Beginner',   pts:3400,  last:'2 days ago'},
+  {n:'Ruby Cooper',        e:'ruby.c@email.com',     m:'sv-nz',  tier:'Insiders',   pts:8200,  last:'3 hr ago'},
+  {n:'Ethan Walker',       e:'ethan.w@email.com',    m:'sv-nz',  tier:'Beginner',   pts:2100,  last:'1 day ago'},
+  {n:'Priya Rajan',        e:'priya.r@email.com',    m:'sv-my',  tier:'Super Fan',     pts:18900, last:'1 hr ago'},
+  {n:'Ahmad Razali',       e:'ahmad.r@email.com',    m:'sv-my',  tier:'Super Fan',     pts:22400, last:'4 hr ago'},
+  {n:'Nurul Ain',          e:'nurul.a@email.com',    m:'sv-my',  tier:'Insiders',   pts:7600,  last:'10 hr ago'},
+  {n:'Wei Ming',           e:'wei.m@email.com',      m:'sv-my',  tier:'Beginner',   pts:1900,  last:'3 days ago'},
+  {n:'Mohammed Al Zaabi',  e:'m.alz@email.com',      m:'sv-ae',  tier:'Super Fan',     pts:16800, last:'2 hr ago'},
+  {n:'Fatima Al Rashid',   e:'f.alr@email.com',      m:'sv-ae',  tier:'Insiders',   pts:7400,  last:'5 hr ago'},
+  {n:'Layla Hassan',       e:'layla.h@email.com',    m:'sv-ae',  tier:'Beginner',   pts:3100,  last:'1 day ago'},
+  {n:'Isabella Torres',    e:'isabella.t@email.com', m:'sv-mx',  tier:'Super Fan',     pts:19200, last:'1 hr ago'},
+  {n:'Carlos Mendoza',     e:'carlos.m@email.com',   m:'sv-mx',  tier:'Insiders',   pts:8800,  last:'3 hr ago'},
+  {n:'Lucia García',       e:'lucia.g@email.com',    m:'sv-mx',  tier:'Beginner',   pts:3200,  last:'6 hr ago'},
+  {n:'Piotr Wiśniewski',   e:'p.wis@email.com',      m:'sv-pl',  tier:'Super Fan',     pts:24400, last:'4 hr ago'},
+  {n:'Katarzyna Nowak',    e:'k.nowak@email.com',    m:'sv-pl',  tier:'Insiders',   pts:9200,  last:'7 hr ago'},
+  {n:'Monika Kowalczyk',   e:'m.kow@email.com',      m:'sv-pl',  tier:'Beginner',   pts:2600,  last:'2 days ago'},
+  {n:'Madison Lee',        e:'madison.l@email.com',  m:'tsv-us', tier:'VIP', pts:44200, last:'45 min ago'},
+  {n:'Tyler Brooks',       e:'tyler.b@email.com',    m:'tsv-us', tier:'Super Fan',     pts:26800, last:'2 hr ago'},
+  {n:'Jordan Casey',       e:'jordan.c@email.com',   m:'tsv-us', tier:'Insiders',   pts:11400, last:'5 hr ago'},
+  {n:'Noah Davis',         e:'noah.d@email.com',     m:'tsv-us', tier:'Beginner',   pts:1400,  last:'5 days ago'},
+  {n:'Isla Robertson',     e:'isla.r@email.com',     m:'tsv-uk', tier:'Super Fan',     pts:23400, last:'3 hr ago'},
+  {n:'Finn Mackenzie',     e:'finn.m@email.com',     m:'tsv-uk', tier:'Insiders',   pts:7200,  last:'1 day ago'},
+  {n:'Poppy Graham',       e:'poppy.g@email.com',    m:'tsv-uk', tier:'Beginner',   pts:2800,  last:'4 days ago'},
+  {n:'Emma Schmidt',       e:'emma.s@email.com',     m:'tsv-eu', tier:'Super Fan',     pts:20600, last:'5 hr ago'},
+  {n:'Lucas Petit',        e:'lucas.p@email.com',    m:'tsv-eu', tier:'Insiders',   pts:8800,  last:'2 hr ago'},
+  {n:'Sofia Bianchi',      e:'sofia.b@email.com',    m:'tsv-eu', tier:'Beginner',   pts:3600,  last:'1 day ago'},
+  {n:'Rin Yamamoto',       e:'rin.y@email.com',      m:'tsv-hk', tier:'VIP', pts:62800, last:'3 hr ago'},
+  {n:'Hana Kim',           e:'hana.k@email.com',     m:'tsv-hk', tier:'Super Fan',     pts:31200, last:'6 hr ago'},
+  {n:'Chen Jing',          e:'chen.j@email.com',     m:'tsv-hk', tier:'Insiders',   pts:12400, last:'8 hr ago'},
+  {n:'Tommy Lam',          e:'tommy.l@email.com',    m:'tsv-hk', tier:'Beginner',   pts:4200,  last:'2 days ago'},
+  {n:'Hafiz Ismail',       e:'hafiz.i@email.com',    m:'tsv-my', tier:'Super Fan',     pts:18400, last:'7 hr ago'},
+  {n:'Siti Rahimah',       e:'siti.r@email.com',     m:'tsv-my', tier:'Insiders',   pts:6800,  last:'4 hr ago'},
+  {n:'Aisyah Zainal',      e:'aisyah.z@email.com',   m:'tsv-my', tier:'Beginner',   pts:2200,  last:'3 days ago'},
+  {n:'Charlotte Brown',    e:'charlotte.b@email.com',m:'tsv-au', tier:'Insiders',   pts:9400,  last:'6 hr ago'},
+  {n:'Lachlan Smith',      e:'lachlan.s@email.com',  m:'tsv-au', tier:'Beginner',   pts:1800,  last:'2 days ago'},
 ];
 
 const TXS = [
@@ -750,7 +874,7 @@ const EVS = [
   {type:'POINTS_EARNED',        mem:'Aiko Tanaka',        mk:'sv-hk',  d:'96 points awarded — purchase HK$480',               t:'2m ago',   c:'#22c55e'},
   {type:'POINTS_REDEEMED',      mem:'Sophie Müller',      mk:'sv-eu',  d:'500 points redeemed — reward coupon issued',         t:'14m ago',  c:'#818cf8'},
   {type:'POINTS_EARNED',        mem:'Priya Rajan',        mk:'sv-my',  d:'30 points awarded — purchase RM120',                t:'22m ago',  c:'#22c55e'},
-  {type:'TIER_UPGRADE',         mem:'Rin Yamamoto',       mk:'tsv-hk', d:'Upgraded Gold → Platinum (62,800 pts)',              t:'38m ago',  c:'#f59e0b'},
+  {type:'TIER_UPGRADE',         mem:'Rin Yamamoto',       mk:'tsv-hk', d:'Upgraded Super Fan → VIP (62,800 pts)',              t:'38m ago',  c:'#f59e0b'},
   {type:'POINTS_DEDUCTED',      mem:'Lars Eriksson',      mk:'sv-eu',  d:'300 points deducted — CS adjustment',                t:'57m ago',  c:'#ef4444'},
   {type:'MEMBER_ENROLLMENT',    mem:'Liu Wei',            mk:'sv-hk',  d:'New member enrolled via web widget',                 t:'1hr ago',  c:'#0ea5e9'},
   {type:'POINTS_EARNED',        mem:'Charlotte Dubois',   mk:'sv-eu',  d:'144 points awarded — purchase €96',                 t:'1hr ago',  c:'#22c55e'},
@@ -767,7 +891,7 @@ const EVS = [
   {type:'POINTS_EARNED',        mem:'Ahmad Razali',       mk:'sv-my',  d:'120 points awarded — purchase RM480',                t:'6hr ago',  c:'#22c55e'},
   {type:'ORDER_UPDATED',        mem:'Madison Lee',        mk:'tsv-us', d:'Order status updated — shipped, tracking added',     t:'6hr ago',  c:'#0ea5e9'},
   {type:'BIRTHDAY_REWARD',      mem:'Hana Kim',           mk:'tsv-hk', d:'Birthday reward issued — 300 bonus pts + coupon',    t:'7hr ago',  c:'#f472b6'},
-  {type:'TIER_DOWNGRADE',       mem:'Jordan Casey',       mk:'tsv-us', d:'Downgraded Gold → Silver — annual review',           t:'8hr ago',  c:'#f97316'},
+  {type:'TIER_DOWNGRADE',       mem:'Jordan Casey',       mk:'tsv-us', d:'Downgraded Super Fan → Insiders — annual review',    t:'8hr ago',  c:'#f97316'},
   {type:'POINTS_REDEEMED',      mem:'Isabella Torres',    mk:'sv-mx',  d:'800 points redeemed — reward voucher MX$80',         t:'9hr ago',  c:'#818cf8'},
   {type:'RETURN_PROCESSED',     mem:'Jack Morrison',      mk:'sv-au',  d:'Return processed — A$45 refunded, 45 pts reversed',  t:'10hr ago', c:'#f97316'},
   {type:'COUPON_EXPIRED',       mem:'Ethan Walker',       mk:'sv-nz',  d:'Coupon NZ-2840 expired — unused after 30 days',      t:'11hr ago', c:'#94a3b8'},
@@ -779,7 +903,7 @@ const EVS = [
   {type:'WINBACK_TRIGGERED',    mem:'Poppy Graham',       mk:'tsv-uk', d:'Win-back offer triggered — 90 day inactivity',       t:'18hr ago', c:'#f97316'},
   {type:'POINTS_DEDUCTED',      mem:'Tommy Lam',          mk:'tsv-hk', d:'1,500 points deducted — order return adjustment',    t:'20hr ago', c:'#ef4444'},
   {type:'REFERRAL_SUCCESS',     mem:'Charlotte Brown',    mk:'tsv-au', d:'Referral converted — AU-friend promo, 200 pts',      t:'22hr ago', c:'#8b5cf6'},
-  {type:'COUPON_ISSUED',        mem:'Hafiz Ismail',       mk:'tsv-my', d:'Tier upgrade coupon — Gold reward, RM20 off',        t:'23hr ago', c:'#0891b2'},
+  {type:'COUPON_ISSUED',        mem:'Hafiz Ismail',       mk:'tsv-my', d:'Tier upgrade coupon — Super Fan reward, RM20 off',   t:'23hr ago', c:'#0891b2'},
   {type:'POINTS_EARNED',        mem:'Lachlan Smith',      mk:'tsv-au', d:'95 points awarded — purchase A$95',                  t:'1 day ago',c:'#22c55e'},
   {type:'MEMBER_PROFILE_UPDATE',mem:'Ruby Cooper',        mk:'sv-nz',  d:'Phone number added — SMS opt-in confirmed',          t:'1 day ago',c:'#0ea5e9'},
   {type:'ANNIVERSARY_REWARD',   mem:'Kevin Ng',           mk:'sv-hk',  d:'2-year anniversary — 1,000 bonus pts awarded',       t:'1 day ago',c:'#f472b6'},
@@ -814,7 +938,7 @@ const COUPONS = [
   {id:'CPV-012',mem:'Charlotte Brown', e:'charlotte.b@email.com',mk:'tsv-au', code:'REF-AU-7790',        type:'Referral A$15 off',        status:'active',  issued:'Aug 18',expires:'Sep 17'},
   {id:'CPV-013',mem:'Poppy Graham',    e:'poppy.g@email.com',    mk:'tsv-uk', code:'WBACK-UK-5521',      type:'Win-back 25% off',         status:'expired', issued:'Jul 1', expires:'Jul 31'},
   {id:'CPV-014',mem:'Isabella Torres', e:'isabella.t@email.com', mk:'sv-mx',  code:'RDMV-MX-4001',       type:'Redemption MX$80 off',     status:'used',    issued:'Aug 17',expires:'Sep 16'},
-  {id:'CPV-015',mem:'Rin Yamamoto',    e:'rin.y@email.com',      mk:'tsv-hk', code:'TIER-PLAT-HK9901',   type:'Platinum Reward HK$100 off',status:'active', issued:'Aug 18',expires:'Sep 17'},
+  {id:'CPV-015',mem:'Rin Yamamoto',    e:'rin.y@email.com',      mk:'tsv-hk', code:'TIER-VIP-HK9901',    type:'VIP Reward HK$100 off',     status:'active', issued:'Aug 18',expires:'Sep 17'},
 ];
 
 const INST_HEALTH = {
@@ -830,7 +954,12 @@ const INST_HEALTH = {
 
 function mktName(id) { const m = MKTS.find(x=>x.id===id); return m ? m.n : id; }
 function fmt(n) { if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1e3) return (n/1e3).toFixed(0)+'K'; return n.toLocaleString(); }
-function tierFor(pts) { if(pts>=40000) return 'Platinum'; if(pts>=15000) return 'Gold'; if(pts>=5000) return 'Silver'; return 'Bronze'; }
+function tierFor(pts) {
+  if(pts>=800) return 'VIP';
+  if(pts>=300) return 'Super Fan';
+  if(pts>=1)   return 'Insiders';
+  return 'Beginner';
+}
 function instMemCount(id) { const mids=(INSTANCES.find(i=>i.id===id)||{}).markets||[]; return MKTS.filter(m=>mids.includes(m.id)).reduce((s,m)=>s+m.mem,0); }
 function instPtsTotal(id) { const mids=(INSTANCES.find(i=>i.id===id)||{}).markets||[]; return MKTS.filter(m=>mids.includes(m.id)).reduce((s,m)=>s+m.pts,0); }
 
@@ -914,7 +1043,7 @@ function renderMems(mems) {
     ? mems.map(m=>`<tr>
         <td><div style="font-weight:600;cursor:pointer;color:var(--navy)" onclick="openDrawer('${m.e}','${m.m}')">${m.n}</div><div style="font-size:12px;color:var(--muted)">${m.e}</div></td>
         <td style="font-size:12px">${mktName(m.m)}</td>
-        <td><span class="bdg bdg-tier">${m.tier}</span></td>
+        <td><span class="bdg ${m.tier==='VIP'?'bdg-vip':m.tier==='Super Fan'?'bdg-superfan':m.tier==='Insiders'?'bdg-insiders':'bdg-beginner'}">${m.tier}</span></td>
         <td style="font-weight:600">${m.pts.toLocaleString()} pts</td>
         <td style="font-size:12px;color:var(--muted)">${m.last}</td>
         <td><button class="btn btn-ghost" onclick="prefillAdjust('${m.e}','${m.m}')">Adjust</button> <button class="btn btn-ghost" style="margin-left:4px" onclick="openDrawer('${m.e}','${m.m}')">View →</button></td>
@@ -969,7 +1098,7 @@ function go(v, el) {
   document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));
   document.getElementById('view-'+v).classList.add('active');
   el.classList.add('active');
-  const titles = {global:'Global Overview',members:'Members',transactions:'Transaction Log',coupons:'Coupons',events:'Webhook Events',compare:'Market Comparison',instances:'Instances',config:'Configuration'};
+  const titles = {global:'Global Overview',members:'Members',transactions:'Transaction Log',coupons:'Coupons',events:'Webhook Events',compare:'Market Comparison',instances:'Instances',config:'Configuration',campaigns:'Campaigns'};
   document.getElementById('tb-title').textContent = titles[v]||v;
 }
 
@@ -993,6 +1122,7 @@ function switchLang() {
     document.getElementById('k-rdm').textContent = fmt(mkts.reduce((s,m)=>s+m.rdm,0))+' pts';
   }
   renderMktTbl(getVisibleMkts());
+  renderTierDist();
   applyMemFilters();
 }
 
@@ -1010,6 +1140,7 @@ function switchMarket() {
     document.getElementById('k-rdm').textContent=fmt(m.rdm)+' pts';
   }
   renderMktTbl(getVisibleMkts());
+  renderTierDist();
   currentFilter = '';
   document.getElementById('mem-search').value = '';
   applyMemFilters();
@@ -1094,10 +1225,10 @@ function closeDrawer() {
   document.getElementById('mem-drawer').classList.remove('open');
 }
 function tierProgress(pts) {
-  if(pts>=40000) return {pct:100,next:'Max tier reached — Platinum',color:'#f59e0b'};
-  if(pts>=15000) return {pct:(pts-15000)/25000*100,next:`${(40000-pts).toLocaleString()} pts to Platinum`,color:'#f59e0b'};
-  if(pts>=5000)  return {pct:(pts-5000)/10000*100, next:`${(15000-pts).toLocaleString()} pts to Gold`,color:'#6366f1'};
-  return {pct:pts/5000*100,next:`${(5000-pts).toLocaleString()} pts to Silver`,color:'#94a3b8'};
+  if(pts>=800)  return {pct:100, next:'Max tier reached — VIP', color:'#ec4899'};
+  if(pts>=300)  return {pct:(pts-300)/500*100, next:`${(800-pts).toLocaleString()} pts to VIP`, color:'#ec4899'};
+  if(pts>=1)    return {pct:(pts/300)*100, next:`${(300-pts).toLocaleString()} pts to Super Fan`, color:'#f59e0b'};
+  return {pct:0, next:'Make your first purchase to become an Insiders member', color:'#94a3b8'};
 }
 
 // ---- RETURN PROCESSING ----
@@ -1254,6 +1385,37 @@ function renderCompare() {
   </table>`;
 }
 
+// ---- TIER DISTRIBUTION ----
+function renderTierDist() {
+  const mktVal = document.getElementById('mkt').value;
+  let mems = mktVal==='all' ? MEMS : MEMS.filter(m=>m.m===mktVal);
+  if(mktVal==='all' && activeLang!=='all') {
+    const ids = MKTS.filter(m=>m.lang===activeLang).map(m=>m.id);
+    mems = mems.filter(m=>ids.includes(m.m));
+  }
+  const tiers = ['VIP','Super Fan','Insiders','Beginner'];
+  const counts = {};
+  tiers.forEach(t=>counts[t]=0);
+  mems.forEach(m=>{ if(counts[m.tier]!==undefined) counts[m.tier]++; });
+  const total = mems.length || 1;
+  const cls = {VIP:'bdg-vip','Super Fan':'bdg-superfan',Insiders:'bdg-insiders',Beginner:'bdg-beginner'};
+  document.getElementById('tier-dist-tbl').innerHTML = tiers.map(t=>`<tr>
+    <td><span class="bdg ${cls[t]}">${t}</span></td>
+    <td style="font-weight:700">${counts[t].toLocaleString()}</td>
+    <td style="color:var(--muted);font-size:12px">${((counts[t]/total)*100).toFixed(1)}%</td>
+  </tr>`).join('');
+}
+
+// ---- EARN MARKET TABLE (for Earn Rules config section) ----
+function renderEarnMktTbl() {
+  const el = document.getElementById('earn-mkt-tbl');
+  if(!el) return;
+  el.innerHTML = MKTS.map(m=>`<tr>
+    <td><span class="bdg bdg-${m.b.toLowerCase()}" style="margin-right:7px">${m.b}</span>${m.n}</td>
+    <td style="font-weight:600">${m.earn}</td>
+  </tr>`).join('');
+}
+
 // ---- INIT ----
 renderMktTbl(MKTS);
 renderEvFeed();
@@ -1266,6 +1428,8 @@ renderCurTbl();
 renderCpnFilters();
 renderCoupons('All');
 renderCompare();
+renderTierDist();
+renderEarnMktTbl();
 </script>
 </body>
 </html>
