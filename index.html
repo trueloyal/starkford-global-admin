@@ -37,12 +37,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .mkt-wrap { position: relative; }
 .mkt-sel { appearance: none; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 30px 7px 12px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; outline: none; min-width: 210px; }
 .mkt-arr { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--muted); font-size: 10px; }
-.cur-badge { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: 700; color: var(--muted); }
 .proto-bar { background: #fff8f0; border-bottom: 1px solid #ffe0b2; padding: 8px 24px; font-size: 12px; color: #92400e; flex-shrink: 0; line-height: 1.5; }
 .content { flex: 1; overflow-y: auto; padding: 24px; }
 .view { display: none; }
 .view.active { display: block; }
-.kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 22px; }
+.kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
 .kpi { background: #fff; border-radius: 10px; padding: 18px 20px; border: 1px solid var(--border); }
 .kpi.highlight { border-color: rgba(248,180,195,.5); background: linear-gradient(135deg, #fff 60%, rgba(248,180,195,.07)); }
 .kpi-lbl { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 8px; }
@@ -51,9 +50,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .delta { display: inline-flex; align-items: center; gap: 2px; font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 20px; }
 .delta.up { background: rgba(34,197,94,.12); color: #16a34a; }
 .delta.dn { background: rgba(239,68,68,.1); color: #dc2626; }
-.fx-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; background: rgba(34,197,94,.12); color: #16a34a; }
-.fx-tag.loading { background: rgba(245,158,11,.12); color: #b45309; }
-.fx-tag.error { background: rgba(239,68,68,.1); color: #dc2626; }
+.lang-wrap { position: relative; }
+.lang-sel { appearance: none; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 30px 7px 12px; font-size: 13px; font-weight: 600; color: var(--text); cursor: pointer; outline: none; min-width: 170px; }
+.lang-arr { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--muted); font-size: 10px; }
 .panel { background: #fff; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
 .p-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border); }
 .p-title { font-size: 14px; font-weight: 700; }
@@ -102,7 +101,6 @@ tr:hover td { background: #fafbfc; }
 .attr-row:last-child { border-bottom: none; }
 .attr-name { font-size: 13px; font-weight: 600; }
 .attr-meta { font-size: 11px; color: var(--muted); }
-.fx-updated { font-size: 11px; color: var(--muted); }
 .btn { padding: 7px 14px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; transition: all .15s; }
 .btn-prim { background: var(--navy); color: #fff; }
 .btn-prim:hover { background: var(--navy-l); }
@@ -126,8 +124,6 @@ select.f-inp { cursor: pointer; }
 .success-icon { font-size: 40px; margin-bottom: 10px; }
 .success-title { font-size: 16px; font-weight: 800; color: #16a34a; margin-bottom: 6px; }
 .success-sub { font-size: 13px; color: var(--muted); line-height: 1.6; }
-.rate-cell { display: flex; align-items: center; gap: 6px; }
-.rate-live { font-size: 10px; font-weight: 700; color: #16a34a; }
 .inst-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
 .inst-card { background: #fff; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
 .inst-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
@@ -245,12 +241,26 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
       </select>
       <span class="mkt-arr">▾</span>
     </div>
-    <div class="cur-badge" id="cur-badge">All Currencies</div>
+    <div class="lang-wrap">
+      <select class="lang-sel" id="lang" onchange="switchLang()">
+        <option value="all">All Languages</option>
+        <option value="en">EN — English</option>
+        <option value="zh">ZH — 中文</option>
+        <option value="ms">MS — Malay</option>
+        <option value="ar">AR — العربية</option>
+        <option value="es">ES — Español</option>
+        <option value="pl">PL — Polski</option>
+        <option value="de">DE — Deutsch</option>
+        <option value="fr">FR — Français</option>
+        <option value="it">IT — Italiano</option>
+      </select>
+      <span class="lang-arr">▾</span>
+    </div>
     <span class="api-tag api-layer" style="font-size:11px;padding:5px 11px">Staging · Mock Data</span>
   </div>
 
   <div class="proto-bar">
-    <strong>Prototype — all figures are placeholder.</strong> Aggregate cross-instance stats require a backend webhook listener and database. API-writable operations (member lookup, point adjustments, custom attributes) will connect to TrueLoyal staging once the backend proxy is in place. Currency conversion via ExchangeRate-API is live.
+    <strong>Prototype — all figures are placeholder.</strong> Aggregate cross-instance stats require a backend webhook listener and database. API-writable operations (member lookup, point adjustments, custom attributes) will connect to TrueLoyal staging once the backend proxy is in place. Currency conversion is handled by Starkford's infrastructure.
   </div>
 
   <div class="content">
@@ -273,11 +283,6 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
           <div class="kpi-val" id="k-rdm">9.3M pts</div>
           <div class="kpi-sub"><span class="delta dn">↓ 1.4%</span> vs last month</div>
         </div>
-        <div class="kpi highlight">
-          <div class="kpi-lbl">Est. GMV (USD, 30d)</div>
-          <div class="kpi-val" id="k-gmv">—</div>
-          <div class="kpi-sub" id="k-gmv-sub"><span class="fx-tag loading">⟳ Fetching rates…</span></div>
-        </div>
         <div class="kpi">
           <div class="kpi-lbl">Active Markets</div>
           <div class="kpi-val">17</div>
@@ -289,7 +294,7 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
           <div class="panel">
             <div class="p-head"><span class="p-title">Market Performance</span><span class="p-action">Export →</span></div>
             <table>
-              <thead><tr><th>Market</th><th>Currency</th><th>Members</th><th>Points Issued</th><th>Est. GMV (USD)</th></tr></thead>
+              <thead><tr><th>Market</th><th>Currency</th><th>Language</th><th>Members</th><th>Points Issued</th></tr></thead>
               <tbody id="mkt-tbl"></tbody>
             </table>
           </div>
@@ -330,7 +335,7 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
       <div class="panel">
         <div class="p-head"><span class="p-title">Transaction Log</span><span class="p-action">Export CSV →</span></div>
         <table>
-          <thead><tr><th>Date</th><th>Member</th><th>Market</th><th>Type</th><th>Amount (Local)</th><th>USD Equiv.</th><th>Points</th><th></th></tr></thead>
+          <thead><tr><th>Date</th><th>Member</th><th>Market</th><th>Type</th><th>Amount (Local)</th><th>Points</th><th></th></tr></thead>
           <tbody id="tx-tbl"></tbody>
         </table>
       </div>
@@ -441,11 +446,10 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
         </div>
         <div class="cfg-sec" style="grid-column:1/-1">
           <div class="cfg-head">
-            <div class="cfg-title">Currency &amp; Market Config <span class="api-tag api-layer">Dashboard Layer</span> <span id="fx-status" class="fx-tag loading" style="margin-left:4px">⟳ Loading…</span></div>
-            <div style="display:flex;align-items:center;gap:10px"><span class="fx-updated" id="fx-updated"></span><button class="btn-refresh" onclick="fetchRates()">↻ Refresh Rates</button></div>
+            <div class="cfg-title">Market &amp; Earn Rate Config <span class="api-tag api-layer">Reference</span></div>
           </div>
           <table>
-            <thead><tr><th>Market</th><th>Currency</th><th>Earn Rate</th><th>Points → USD</th><th>Exchange Rate (per USD)</th><th>TL Instance</th></tr></thead>
+            <thead><tr><th>Market</th><th>Currency</th><th>Language</th><th>Earn Rate</th><th>TL Instance</th></tr></thead>
             <tbody id="cur-tbl"></tbody>
           </table>
         </div>
@@ -613,24 +617,26 @@ textarea.f-inp { resize: vertical; font-family: inherit; }
 
 <script>
 const MKTS = [
-  {id:'sv-us', n:'Stylevana US',    b:'SV',  c:'USD',sym:'$',   earnPPU:1,    earn:'$1 = 1 pt',      inst:'a523097c3a', mem:142850, pts:8420000,  rdm:1240000},
-  {id:'sv-uk', n:'Stylevana UK',    b:'SV',  c:'GBP',sym:'£',   earnPPU:1.27, earn:'£1 = 1.27 pts',  inst:'0e3bba8847', mem:38200,  pts:2140000,  rdm:380000},
-  {id:'sv-eu', n:'Stylevana EU',    b:'SV',  c:'EUR',sym:'€',   earnPPU:1.5,  earn:'€1 = 1.5 pts',   inst:'3d1022227d', mem:52100,  pts:3250000,  rdm:520000},
-  {id:'sv-ca', n:'Stylevana CA',    b:'SV',  c:'CAD',sym:'CA$', earnPPU:1,    earn:'CA$1 = 1 pt',    inst:'a523097c3a', mem:28400,  pts:1820000,  rdm:290000},
-  {id:'sv-au', n:'Stylevana AU',    b:'SV',  c:'AUD',sym:'A$',  earnPPU:1,    earn:'A$1 = 1 pt',     inst:'95fa76d2ac', mem:31500,  pts:2100000,  rdm:340000},
-  {id:'sv-hk', n:'Stylevana HK',    b:'SV',  c:'HKD',sym:'HK$', earnPPU:0.2,  earn:'HK$5 = 1 pt',   inst:'3274dec4f9', mem:89200,  pts:12800000, rdm:2400000},
-  {id:'sv-nz', n:'Stylevana NZ',    b:'SV',  c:'NZD',sym:'NZ$', earnPPU:1,    earn:'NZ$1 = 1 pt',   inst:'95fa76d2ac', mem:12800,  pts:840000,   rdm:124000},
-  {id:'sv-my', n:'Stylevana MY',    b:'SV',  c:'MYR',sym:'RM',  earnPPU:0.25, earn:'RM4 = 1 pt',    inst:'81a768aeff', mem:41200,  pts:5200000,  rdm:840000},
-  {id:'sv-ae', n:'Stylevana AE',    b:'SV',  c:'AED',sym:'AED', earnPPU:0.278,earn:'AED3.6 = 1 pt', inst:'fc6ba7950a', mem:18900,  pts:2100000,  rdm:380000},
-  {id:'sv-mx', n:'Stylevana MX',    b:'SV',  c:'MXN',sym:'MX$', earnPPU:0.1,  earn:'MX$10 = 1 pt',  inst:'fc6ba7950a', mem:35600,  pts:4800000,  rdm:720000},
-  {id:'sv-pl', n:'Stylevana PL',    b:'SV',  c:'PLN',sym:'zł',  earnPPU:0.25, earn:'zł4 = 1 pt',    inst:'3d1022227d', mem:22400,  pts:2800000,  rdm:420000},
-  {id:'tsv-us',n:'Beauty Amora US', b:'TSV', c:'USD',sym:'$',   earnPPU:1,    earn:'$1 = 1 pt',      inst:'c1b1eeeb66', mem:48200,  pts:2840000,  rdm:420000},
-  {id:'tsv-uk',n:'Beauty Amora UK', b:'TSV', c:'GBP',sym:'£',   earnPPU:1.27, earn:'£1 = 1.27 pts',  inst:'c1b1eeeb66', mem:12400,  pts:820000,   rdm:124000},
-  {id:'tsv-eu',n:'Beauty Amora EU', b:'TSV', c:'EUR',sym:'€',   earnPPU:1.5,  earn:'€1 = 1.5 pts',   inst:'c1b1eeeb66', mem:18200,  pts:1240000,  rdm:196000},
-  {id:'tsv-hk',n:'Beauty Amora HK', b:'TSV', c:'HKD',sym:'HK$', earnPPU:0.2,  earn:'HK$5 = 1 pt',   inst:'c1b1eeeb66', mem:28400,  pts:4200000,  rdm:780000},
-  {id:'tsv-my',n:'Beauty Amora MY', b:'TSV', c:'MYR',sym:'RM',  earnPPU:0.25, earn:'RM4 = 1 pt',    inst:'c1b1eeeb66', mem:14800,  pts:1840000,  rdm:280000},
-  {id:'tsv-au',n:'Beauty Amora AU', b:'TSV', c:'AUD',sym:'A$',  earnPPU:1,    earn:'A$1 = 1 pt',    inst:'c1b1eeeb66', mem:9200,   pts:620000,   rdm:92000},
+  {id:'sv-us', n:'Stylevana US',    b:'SV',  c:'USD',sym:'$',   lang:'en', earnPPU:1,    earn:'$1 = 1 pt',      inst:'a523097c3a', mem:142850, pts:8420000,  rdm:1240000},
+  {id:'sv-uk', n:'Stylevana UK',    b:'SV',  c:'GBP',sym:'£',   lang:'en', earnPPU:1.27, earn:'£1 = 1.27 pts',  inst:'0e3bba8847', mem:38200,  pts:2140000,  rdm:380000},
+  {id:'sv-eu', n:'Stylevana EU',    b:'SV',  c:'EUR',sym:'€',   lang:'en', earnPPU:1.5,  earn:'€1 = 1.5 pts',   inst:'3d1022227d', mem:52100,  pts:3250000,  rdm:520000},
+  {id:'sv-ca', n:'Stylevana CA',    b:'SV',  c:'CAD',sym:'CA$', lang:'en', earnPPU:1,    earn:'CA$1 = 1 pt',    inst:'a523097c3a', mem:28400,  pts:1820000,  rdm:290000},
+  {id:'sv-au', n:'Stylevana AU',    b:'SV',  c:'AUD',sym:'A$',  lang:'en', earnPPU:1,    earn:'A$1 = 1 pt',     inst:'95fa76d2ac', mem:31500,  pts:2100000,  rdm:340000},
+  {id:'sv-hk', n:'Stylevana HK',    b:'SV',  c:'HKD',sym:'HK$', lang:'zh', earnPPU:0.2,  earn:'HK$5 = 1 pt',   inst:'3274dec4f9', mem:89200,  pts:12800000, rdm:2400000},
+  {id:'sv-nz', n:'Stylevana NZ',    b:'SV',  c:'NZD',sym:'NZ$', lang:'en', earnPPU:1,    earn:'NZ$1 = 1 pt',   inst:'95fa76d2ac', mem:12800,  pts:840000,   rdm:124000},
+  {id:'sv-my', n:'Stylevana MY',    b:'SV',  c:'MYR',sym:'RM',  lang:'ms', earnPPU:0.25, earn:'RM4 = 1 pt',    inst:'81a768aeff', mem:41200,  pts:5200000,  rdm:840000},
+  {id:'sv-ae', n:'Stylevana AE',    b:'SV',  c:'AED',sym:'AED', lang:'ar', earnPPU:0.278,earn:'AED3.6 = 1 pt', inst:'fc6ba7950a', mem:18900,  pts:2100000,  rdm:380000},
+  {id:'sv-mx', n:'Stylevana MX',    b:'SV',  c:'MXN',sym:'MX$', lang:'es', earnPPU:0.1,  earn:'MX$10 = 1 pt',  inst:'fc6ba7950a', mem:35600,  pts:4800000,  rdm:720000},
+  {id:'sv-pl', n:'Stylevana PL',    b:'SV',  c:'PLN',sym:'zł',  lang:'pl', earnPPU:0.25, earn:'zł4 = 1 pt',    inst:'3d1022227d', mem:22400,  pts:2800000,  rdm:420000},
+  {id:'tsv-us',n:'Beauty Amora US', b:'TSV', c:'USD',sym:'$',   lang:'en', earnPPU:1,    earn:'$1 = 1 pt',      inst:'c1b1eeeb66', mem:48200,  pts:2840000,  rdm:420000},
+  {id:'tsv-uk',n:'Beauty Amora UK', b:'TSV', c:'GBP',sym:'£',   lang:'en', earnPPU:1.27, earn:'£1 = 1.27 pts',  inst:'c1b1eeeb66', mem:12400,  pts:820000,   rdm:124000},
+  {id:'tsv-eu',n:'Beauty Amora EU', b:'TSV', c:'EUR',sym:'€',   lang:'en', earnPPU:1.5,  earn:'€1 = 1.5 pts',   inst:'c1b1eeeb66', mem:18200,  pts:1240000,  rdm:196000},
+  {id:'tsv-hk',n:'Beauty Amora HK', b:'TSV', c:'HKD',sym:'HK$', lang:'zh', earnPPU:0.2,  earn:'HK$5 = 1 pt',   inst:'c1b1eeeb66', mem:28400,  pts:4200000,  rdm:780000},
+  {id:'tsv-my',n:'Beauty Amora MY', b:'TSV', c:'MYR',sym:'RM',  lang:'ms', earnPPU:0.25, earn:'RM4 = 1 pt',    inst:'c1b1eeeb66', mem:14800,  pts:1840000,  rdm:280000},
+  {id:'tsv-au',n:'Beauty Amora AU', b:'TSV', c:'AUD',sym:'A$',  lang:'en', earnPPU:1,    earn:'A$1 = 1 pt',    inst:'c1b1eeeb66', mem:9200,   pts:620000,   rdm:92000},
 ];
+
+const LANG_LABELS = {en:'EN',zh:'ZH',ms:'MS',ar:'AR',es:'ES',pl:'PL',de:'DE',fr:'FR',it:'IT'};
 
 const INSTANCES = [
   {id:'a523097c3a', name:'Stylevana Marketing',  region:'USD',     markets:['sv-us','sv-ca','tsv-us']},
@@ -822,57 +828,21 @@ const INST_HEALTH = {
   'c1b1eeeb66':{lastActive:'3 hr ago',   webhooks:true},
 };
 
-// ---- FX ----
-const FX_API_KEY = 'ddd0fb5e47e557c29224c88c';
-let fxRates = {}, fxFetched = false, fxLastUpdated = null;
-
-async function fetchRates() {
-  const statusEl = document.getElementById('fx-status');
-  statusEl.className = 'fx-tag loading'; statusEl.textContent = '⟳ Fetching…';
-  document.getElementById('k-gmv').textContent = '—';
-  document.getElementById('k-gmv-sub').innerHTML = '<span class="fx-tag loading">⟳ Fetching rates…</span>';
-  try {
-    const res = await fetch(`https://v6.exchangerate-api.com/v6/${FX_API_KEY}/latest/USD`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    if (data.result !== 'success') throw new Error(data['error-type'] || 'API error');
-    fxRates = data.conversion_rates; fxFetched = true; fxLastUpdated = new Date();
-    statusEl.className = 'fx-tag'; statusEl.textContent = '● Live';
-    document.getElementById('fx-updated').textContent = `Updated ${fxLastUpdated.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
-    document.getElementById('k-gmv').textContent = fmtUSD(calcTotalGMV(MKTS));
-    document.getElementById('k-gmv-sub').innerHTML = '<span class="fx-tag">● Live rates</span> <span class="delta up">↑ 6.3%</span>';
-    renderMktTbl(MKTS); renderTxs(); renderCurTbl();
-  } catch(err) {
-    statusEl.className = 'fx-tag error'; statusEl.textContent = '⚠ Rate error';
-    document.getElementById('k-gmv').textContent = '—';
-    document.getElementById('k-gmv-sub').innerHTML = `<span class="fx-tag error">⚠ ${err.message}</span>`;
-    document.getElementById('fx-updated').textContent = '';
-  }
-}
-
-function marketGMV(m) { if (!fxFetched || !fxRates[m.c]) return null; return (m.pts / m.earnPPU) / fxRates[m.c]; }
-function calcTotalGMV(mkts) { return mkts.reduce((s,m) => s + (marketGMV(m)||0), 0); }
 function mktName(id) { const m = MKTS.find(x=>x.id===id); return m ? m.n : id; }
 function fmt(n) { if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1e3) return (n/1e3).toFixed(0)+'K'; return n.toLocaleString(); }
-function fmtUSD(n) { if(!n) return '—'; if(n>=1e6) return '$'+(n/1e6).toFixed(1)+'M'; if(n>=1e3) return '$'+(n/1e3).toFixed(0)+'K'; return '$'+n.toLocaleString(); }
-function fmtRate(c) { if(!fxFetched||!fxRates[c]) return '<span style="color:var(--muted)">—</span>'; return `<div class="rate-cell">${fxRates[c].toFixed(4)} <span class="rate-live">Live</span></div>`; }
-function fmtPtsToUSD(m) { if(!fxFetched||!fxRates[m.c]) return '—'; return '$'+((1/m.earnPPU)/fxRates[m.c]).toFixed(4); }
 function tierFor(pts) { if(pts>=40000) return 'Platinum'; if(pts>=15000) return 'Gold'; if(pts>=5000) return 'Silver'; return 'Bronze'; }
 function instMemCount(id) { const mids=(INSTANCES.find(i=>i.id===id)||{}).markets||[]; return MKTS.filter(m=>mids.includes(m.id)).reduce((s,m)=>s+m.mem,0); }
 function instPtsTotal(id) { const mids=(INSTANCES.find(i=>i.id===id)||{}).markets||[]; return MKTS.filter(m=>mids.includes(m.id)).reduce((s,m)=>s+m.pts,0); }
 
 // ---- RENDERS ----
 function renderMktTbl(mkts) {
-  document.getElementById('mkt-tbl').innerHTML = mkts.map(m => {
-    const gmv = marketGMV(m);
-    return `<tr>
-      <td><span class="bdg bdg-${m.b.toLowerCase()}" style="margin-right:7px">${m.b}</span>${m.n}</td>
-      <td><span class="bdg bdg-cur">${m.c}</span></td>
-      <td>${m.mem.toLocaleString()}</td>
-      <td>${fmt(m.pts)}</td>
-      <td style="font-weight:600">${gmv ? fmtUSD(gmv) : '<span style="color:var(--muted)">—</span>'}</td>
-    </tr>`;
-  }).join('');
+  document.getElementById('mkt-tbl').innerHTML = mkts.map(m => `<tr>
+    <td><span class="bdg bdg-${m.b.toLowerCase()}" style="margin-right:7px">${m.b}</span>${m.n}</td>
+    <td><span class="bdg bdg-cur">${m.c}</span></td>
+    <td><span class="bdg bdg-staging" style="font-size:10px">${LANG_LABELS[m.lang]||m.lang}</span></td>
+    <td>${m.mem.toLocaleString()}</td>
+    <td>${fmt(m.pts)}</td>
+  </tr>`).join('');
 }
 
 function renderEvFeed() {
@@ -956,13 +926,16 @@ function filterMem(val) { currentFilter = val.toLowerCase(); applyMemFilters(); 
 function applyMemFilters() {
   const mktVal = document.getElementById('mkt').value;
   let mems = mktVal==='all' ? MEMS : MEMS.filter(m=>m.m===mktVal);
+  if (mktVal==='all' && activeLang!=='all') {
+    const langMktIds = MKTS.filter(m=>m.lang===activeLang).map(m=>m.id);
+    mems = mems.filter(m=>langMktIds.includes(m.m));
+  }
   if (currentFilter) mems = mems.filter(m=>m.n.toLowerCase().includes(currentFilter)||m.e.toLowerCase().includes(currentFilter));
   renderMems(mems);
 }
 
 function renderTxs() {
   document.getElementById('tx-tbl').innerHTML = TXS.map(tx => {
-    const usd = (tx.localAmt && fxFetched && fxRates[tx.c]) ? fmtUSD(tx.localAmt/fxRates[tx.c]) : '—';
     const act = tx.t==='award'
       ? (tx.returned
           ? '<span class="bdg bdg-return" style="font-size:10px">RETURNED</span>'
@@ -974,7 +947,6 @@ function renderTxs() {
       <td style="font-size:12px">${mktName(tx.mk)}</td>
       <td><span class="bdg bdg-${tx.t}">${tx.t.toUpperCase()}</span></td>
       <td>${tx.display}</td>
-      <td style="color:var(--muted);font-size:12px">${usd}</td>
       <td style="font-weight:700;color:${tx.t==='award'?'#16a34a':tx.t==='deduct'?'#dc2626':'#4338ca'}">${tx.pts}</td>
       <td>${act}</td>
     </tr>`;
@@ -985,9 +957,8 @@ function renderCurTbl() {
   document.getElementById('cur-tbl').innerHTML = MKTS.map(m=>`<tr>
     <td><span class="bdg bdg-${m.b.toLowerCase()}" style="margin-right:7px">${m.b}</span>${m.n}</td>
     <td><span class="bdg bdg-cur">${m.c}</span></td>
+    <td><span class="bdg bdg-staging" style="font-size:10px">${LANG_LABELS[m.lang]||m.lang}</span></td>
     <td style="font-weight:600">${m.earn}</td>
-    <td style="font-size:12px;color:var(--muted)">${fmtPtsToUSD(m)} / pt</td>
-    <td>${fmtRate(m.c)}</td>
     <td style="font-size:12px;color:var(--muted);font-family:monospace">${m.inst}</td>
   </tr>`).join('');
 }
@@ -1002,26 +973,43 @@ function go(v, el) {
   document.getElementById('tb-title').textContent = titles[v]||v;
 }
 
-// ---- MARKET SWITCH ----
+// ---- LANG / MARKET SWITCH ----
+let activeLang = 'all';
+
+function getVisibleMkts() {
+  const v = document.getElementById('mkt').value;
+  if (v !== 'all') return MKTS.filter(m => m.id === v);
+  if (activeLang !== 'all') return MKTS.filter(m => m.lang === activeLang);
+  return MKTS;
+}
+
+function switchLang() {
+  activeLang = document.getElementById('lang').value;
+  const v = document.getElementById('mkt').value;
+  if (v === 'all') {
+    const mkts = getVisibleMkts();
+    document.getElementById('k-mem').textContent = fmt(mkts.reduce((s,m)=>s+m.mem,0));
+    document.getElementById('k-pts').textContent = fmt(mkts.reduce((s,m)=>s+m.pts,0));
+    document.getElementById('k-rdm').textContent = fmt(mkts.reduce((s,m)=>s+m.rdm,0))+' pts';
+  }
+  renderMktTbl(getVisibleMkts());
+  applyMemFilters();
+}
+
 function switchMarket() {
   const v = document.getElementById('mkt').value;
   const m = MKTS.find(x=>x.id===v);
-  const cb = document.getElementById('cur-badge');
   if (v==='all') {
-    cb.textContent='All Currencies';
-    document.getElementById('k-mem').textContent='646,150';
-    document.getElementById('k-pts').textContent='57.2M';
-    document.getElementById('k-rdm').textContent='9.3M pts';
-    if (fxFetched) document.getElementById('k-gmv').textContent = fmtUSD(calcTotalGMV(MKTS));
-    renderMktTbl(MKTS);
+    const mkts = getVisibleMkts();
+    document.getElementById('k-mem').textContent = fmt(mkts.reduce((s,m)=>s+m.mem,0));
+    document.getElementById('k-pts').textContent = fmt(mkts.reduce((s,m)=>s+m.pts,0));
+    document.getElementById('k-rdm').textContent = fmt(mkts.reduce((s,m)=>s+m.rdm,0))+' pts';
   } else if (m) {
-    cb.textContent=m.c+' — '+m.sym;
     document.getElementById('k-mem').textContent=m.mem.toLocaleString();
     document.getElementById('k-pts').textContent=fmt(m.pts);
     document.getElementById('k-rdm').textContent=fmt(m.rdm)+' pts';
-    if (fxFetched) document.getElementById('k-gmv').textContent = fmtUSD(marketGMV(m));
-    renderMktTbl([m]);
   }
+  renderMktTbl(getVisibleMkts());
   currentFilter = '';
   document.getElementById('mem-search').value = '';
   applyMemFilters();
@@ -1252,9 +1240,9 @@ function renderCompare() {
     {label:'Members',     va:a.mem,         vb:b.mem,         fmt:v=>v.toLocaleString(), num:true},
     {label:'Points Issued',va:a.pts,         vb:b.pts,         fmt:v=>fmt(v),             num:true},
     {label:'Redemptions', va:a.rdm,          vb:b.rdm,         fmt:v=>fmt(v),             num:true},
+    {label:'Language',    va:LANG_LABELS[a.lang]||a.lang, vb:LANG_LABELS[b.lang]||b.lang, fmt:v=>v, num:false},
     {label:'Earn Rate',   va:a.earn,         vb:b.earn,        fmt:v=>v,                  num:false},
     {label:'TL Instance', va:a.inst,         vb:b.inst,        fmt:v=>`<span style="font-family:monospace;font-size:11px">${v}</span>`,num:false},
-    {label:'Est. GMV (USD)',va:marketGMV(a)||0,vb:marketGMV(b)||0,fmt:v=>fxFetched?fmtUSD(v):'—',num:true},
   ];
   res.innerHTML=`<table>
     <thead><tr><th>Metric</th><th>${a.n} <span class="bdg bdg-cur" style="margin-left:4px">${a.c}</span></th><th>${b.n} <span class="bdg bdg-cur" style="margin-left:4px">${b.c}</span></th><th>Delta (A vs B)</th></tr></thead>
@@ -1278,7 +1266,6 @@ renderCurTbl();
 renderCpnFilters();
 renderCoupons('All');
 renderCompare();
-fetchRates();
 </script>
 </body>
 </html>
